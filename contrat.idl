@@ -1,0 +1,104 @@
+module modEntreesSortiesZones
+{
+	typedef long IdEmpreinte;
+	typedef string EmpreinteCollab;
+	
+	typedef long Matricule;
+	typedef string NomUsr;
+	typedef string PrenomUsr;
+	typedef string PasswordPerm;
+	typedef string PhotoUsr;
+	
+	typedef string idZone;
+	typedef long JourDebut;
+	typedef long JourFin;
+	typedef long HeureDebut;
+	typedef long HeureFin;
+	
+	typedef long TimeStamp;
+	enum TypeAcces {autorise, nonAutorise, nonAuthentifie}; 
+	
+	exception EmpreinteInconnue {string raison;};
+	exception EmpreinteExistante {string raison;};
+	exception UtilisateurInconnu {string raison;};
+	exception UtilisateurExistant {string raison;};
+	exception AutorisationExistante {string raison;};
+	exception AutorisationInconnue {string raison;};
+	
+	struct Empreinte 
+	{
+		Matricule mat;
+		EmpreinteCollab eC;
+	};
+
+	struct Utilisateur
+	{
+		Matricule mat;
+		NomUsr nU;
+		PrenomUsr preU;
+		PhotoUsr phoU;
+	};
+
+	struct Autorisation
+	{
+		Matricule mat;
+		idZone n;
+		HeureDebut hD;
+		HeureFin hF;
+	};
+	
+	struct LogAcces
+	{
+		Matricule m;
+		idZone n;
+		TimeStamp t;
+		TypeAcces a;
+	};
+	
+	typedef sequence<Utilisateur> LesUtilisateurs;
+        typedef sequence<LogAcces> LogsAcces;
+	
+	interface ServiceAuthentification
+	{
+		void modifierUtilisateur(in Matricule m, in NomUsr n, in PrenomUsr preU, in PhotoUsr phoU) raises (UtilisateurInconnu);
+		Utilisateur getUtilisateur(in Matricule m) raises (UtilisateurInconnu);
+		LesUtilisateurs getUtilisateurs();
+		
+		//verif pour la porte
+		NomUsr verifierAuthentificationPorte(in EmpreinteCollab eC, in PhotoUsr p) raises (UtilisateurInconnu);
+		//verif pour la machine
+		boolean verifierAuthentificationLogiciel(in Matricule m, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		//Utilisateurs temporaires :
+		void ajouterCollaborateurTemp(in Matricule m, in NomUsr n, in PrenomUsr preU, in PhotoUsr phoU) raises (UtilisateurExistant); 
+		//Utilisateurs permanents :
+		void ajouterCollaborateurPerm(in Matricule m, in NomUsr n, in PrenomUsr preU, in PhotoUsr phoU, in PasswordPerm pwd) raises (UtilisateurExistant);
+		//recuperer utilisateurs pour listes
+	};
+
+	interface ServiceEmpreinte
+	{
+		boolean verifierEmpreinte(in EmpreinteCollab eC, in Matricule m) raises (EmpreinteInconnue);
+		void ajouterEmpreinte(in EmpreinteCollab e, in Matricule m) raises (EmpreinteExistante);
+		void modifierEmpreinte(in EmpreinteCollab e, in Matricule m) raises (EmpreinteInconnue);
+	};
+
+	interface ServiceAutorisation
+	{
+		//responsable de zone
+		boolean verifierAutorisation(in Matricule m, in idZone n) raises (AutorisationInconnue); 
+		//Autorisations temporaires :
+		void ajouterAutorisationTemp(in Matricule m, in idZone n, in JourDebut jD, in JourFin jF, in HeureDebut hD, in HeureFin hF) raises (AutorisationExistante);
+		void modifierAutorisationTemp(in Matricule m, in idZone n, in JourDebut jD, in JourFin jF, in HeureDebut hD, in HeureFin hF) raises (AutorisationInconnue); 
+		//Autorisations permanentes :
+		void ajouterAutorisationPerm(in Matricule m, in idZone n, in HeureDebut hD, in HeureFin hF) raises (AutorisationExistante); 
+		void modifierAutorisationPerm(in Matricule m, in idZone n, in HeureDebut hD, in HeureFin hF) raises (AutorisationInconnue); 
+		void supprimerAutorisation(in Matricule m, in idZone n) raises (AutorisationInconnue);
+	};
+	
+	interface ServiceJournalisation
+	{
+            void ajouterEntree(in Matricule m, in idZone n, in TimeStamp t, in TypeAcces a);
+            LogsAcces consulterAcces();
+            LogsAcces consulterRefus();
+	};
+};
