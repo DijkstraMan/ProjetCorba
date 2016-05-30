@@ -46,7 +46,6 @@ create table collaborateurPerm
 	CONSTRAINT fk_CollaborateurPerm_matricule_utilisateur FOREIGN KEY (matricule_utilisateur) REFERENCES utilisateur(matricule)
 );
 
-
 create table gestionCollaborateur
 (
 	idGestionCollab integer(5) NOT NULL AUTO_INCREMENT,
@@ -103,7 +102,7 @@ create table gZone
 create table porte
 (
 	idPorte integer(5) NOT NULL AUTO_INCREMENT,
-	nomZone varchar(100),
+	nomPorte varchar(100),
 	PRIMARY KEY(idPorte)
 );
 
@@ -113,7 +112,8 @@ create table autorisation
 	idZone_zone integer(5) NOT NULL,
 	heureDebut int(4),
 	heureFin int(4),
-	PRIMARY KEY(matricule_utilisateur,idZone_zone)
+	PRIMARY KEY(matricule_utilisateur,idZone_zone),
+	CONSTRAINT fk_autorisation_idZone_zone FOREIGN KEY (idZone_zone) REFERENCES gzone(idZone)
 );
 
 create table autorisationTemp
