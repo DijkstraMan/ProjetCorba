@@ -76,4 +76,34 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA{
                     e.printStackTrace();
             }
     } // main
+
+    @Override
+    public boolean verifierAutorisation(String m, String n) throws AutorisationInconnue {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF) throws AutorisationExistante {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF) throws AutorisationInconnue {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void ajouterAutorisationPerm(String m, String n, int hD, int hF) throws AutorisationExistante {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void modifierAutorisationPerm(String m, String n, int hD, int hF) throws AutorisationInconnue {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void supprimerAutorisation(String m, String n) throws AutorisationInconnue {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
