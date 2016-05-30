@@ -23,7 +23,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation modifierUtilisateur
      */
-    public void modifierUtilisateur(int m, String n, String preU, String phoU)
+    public void modifierUtilisateur(String m, String n, String preU, String phoU)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -82,7 +82,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation getUtilisateur
      */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(int m)
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String m)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -244,7 +244,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation verifierAuthentificationLogiciel
      */
-    public boolean verifierAuthentificationLogiciel(int m, String pwd)
+    public boolean verifierAuthentificationLogiciel(String m, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -301,7 +301,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation ajouterCollaborateurTemp
      */
-    public void ajouterCollaborateurTemp(int m, String n, String preU, String phoU)
+    public void ajouterCollaborateurTemp(String m, String n, String preU, String phoU)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         while(true)
@@ -360,7 +360,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation ajouterCollaborateurPerm
      */
-    public void ajouterCollaborateurPerm(int m, String n, String preU, String phoU, String pwd)
+    public void ajouterCollaborateurPerm(String m, String n, String preU, String phoU, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         while(true)

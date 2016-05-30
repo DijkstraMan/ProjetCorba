@@ -22,35 +22,7 @@ import org.omg.PortableServer.POAHelper;
  */
 public class ServiceAutorisationImpl extends ServiceAutorisationPOA{
 
-    @Override
-    public boolean verifierAutorisation(int m, String n) throws AutorisationInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void ajouterAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF) throws AutorisationExistante {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void modifierAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF) throws AutorisationInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void ajouterAutorisationPerm(int m, String n, int hD, int hF) throws AutorisationExistante {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void modifierAutorisationPerm(int m, String n, int hD, int hF) throws AutorisationInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void supprimerAutorisation(int m, String n) throws AutorisationInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
     
     public static void main(String[] args) {
     try {

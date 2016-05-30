@@ -50,7 +50,7 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.EmpreinteCollabHelper.read(_is);
-        int arg1_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg1_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
 
         try
         {
@@ -73,7 +73,7 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.EmpreinteCollabHelper.read(_is);
-        int arg1_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg1_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
 
         try
         {
@@ -95,7 +95,7 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.EmpreinteCollabHelper.read(_is);
-        int arg1_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg1_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
 
         try
         {

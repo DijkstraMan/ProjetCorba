@@ -10,7 +10,7 @@ public final class LogAcces implements org.omg.CORBA.portable.IDLEntity
     /**
      * Struct member m
      */
-    public int m;
+    public String m;
 
     /**
      * Struct member n
@@ -40,7 +40,7 @@ public final class LogAcces implements org.omg.CORBA.portable.IDLEntity
      * @param t t struct member
      * @param a a struct member
      */
-    public LogAcces(int m, String n, int t, modEntreesSortiesZones.TypeAcces a)
+    public LogAcces(String m, String n, int t, modEntreesSortiesZones.TypeAcces a)
     {
         this.m = m;
         this.n = n;

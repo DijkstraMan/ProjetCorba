@@ -65,7 +65,7 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation verifierAutorisation
      */
-    public boolean verifierAutorisation(int m, String n)
+    public boolean verifierAutorisation(String m, String n)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         return _tie.verifierAutorisation( m,  n);
@@ -74,7 +74,7 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF)
+    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationExistante
     {
         _tie.ajouterAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
@@ -83,7 +83,7 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF)
+    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         _tie.modifierAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
@@ -92,7 +92,7 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation ajouterAutorisationPerm
      */
-    public void ajouterAutorisationPerm(int m, String n, int hD, int hF)
+    public void ajouterAutorisationPerm(String m, String n, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationExistante
     {
         _tie.ajouterAutorisationPerm( m,  n,  hD,  hF);
@@ -101,7 +101,7 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation modifierAutorisationPerm
      */
-    public void modifierAutorisationPerm(int m, String n, int hD, int hF)
+    public void modifierAutorisationPerm(String m, String n, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         _tie.modifierAutorisationPerm( m,  n,  hD,  hF);
@@ -110,7 +110,7 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation supprimerAutorisation
      */
-    public void supprimerAutorisation(int m, String n)
+    public void supprimerAutorisation(String m, String n)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         _tie.supprimerAutorisation( m,  n);

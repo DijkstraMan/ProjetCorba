@@ -10,13 +10,13 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation modifierUtilisateur
      */
-    public void modifierUtilisateur(int m, String n, String preU, String phoU)
+    public void modifierUtilisateur(String m, String n, String preU, String phoU)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation getUtilisateur
      */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(int m)
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String m)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
@@ -33,19 +33,19 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation verifierAuthentificationLogiciel
      */
-    public boolean verifierAuthentificationLogiciel(int m, String pwd)
+    public boolean verifierAuthentificationLogiciel(String m, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation ajouterCollaborateurTemp
      */
-    public void ajouterCollaborateurTemp(int m, String n, String preU, String phoU)
+    public void ajouterCollaborateurTemp(String m, String n, String preU, String phoU)
         throws modEntreesSortiesZones.UtilisateurExistant;
 
     /**
      * Operation ajouterCollaborateurPerm
      */
-    public void ajouterCollaborateurPerm(int m, String n, String preU, String phoU, String pwd)
+    public void ajouterCollaborateurPerm(String m, String n, String preU, String phoU, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant;
 
 }

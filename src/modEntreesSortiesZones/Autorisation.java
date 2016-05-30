@@ -10,7 +10,7 @@ public final class Autorisation implements org.omg.CORBA.portable.IDLEntity
     /**
      * Struct member mat
      */
-    public int mat;
+    public String mat;
 
     /**
      * Struct member n
@@ -40,7 +40,7 @@ public final class Autorisation implements org.omg.CORBA.portable.IDLEntity
      * @param hD hD struct member
      * @param hF hF struct member
      */
-    public Autorisation(int mat, String n, int hD, int hF)
+    public Autorisation(String mat, String n, int hD, int hF)
     {
         this.mat = mat;
         this.n = n;

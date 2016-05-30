@@ -57,7 +57,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        int arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
         String arg1_in = modEntreesSortiesZones.NomUsrHelper.read(_is);
         String arg2_in = modEntreesSortiesZones.PrenomUsrHelper.read(_is);
         String arg3_in = modEntreesSortiesZones.PhotoUsrHelper.read(_is);
@@ -81,7 +81,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        int arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
 
         try
         {
@@ -139,7 +139,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        int arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
         String arg1_in = modEntreesSortiesZones.PasswordPermHelper.read(_is);
 
         try
@@ -162,7 +162,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        int arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
         String arg1_in = modEntreesSortiesZones.NomUsrHelper.read(_is);
         String arg2_in = modEntreesSortiesZones.PrenomUsrHelper.read(_is);
         String arg3_in = modEntreesSortiesZones.PhotoUsrHelper.read(_is);
@@ -186,7 +186,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        int arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
         String arg1_in = modEntreesSortiesZones.NomUsrHelper.read(_is);
         String arg2_in = modEntreesSortiesZones.PrenomUsrHelper.read(_is);
         String arg3_in = modEntreesSortiesZones.PhotoUsrHelper.read(_is);

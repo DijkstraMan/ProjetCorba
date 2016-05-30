@@ -10,7 +10,7 @@ public final class Utilisateur implements org.omg.CORBA.portable.IDLEntity
     /**
      * Struct member mat
      */
-    public int mat;
+    public String mat;
 
     /**
      * Struct member nU
@@ -40,7 +40,7 @@ public final class Utilisateur implements org.omg.CORBA.portable.IDLEntity
      * @param preU preU struct member
      * @param phoU phoU struct member
      */
-    public Utilisateur(int mat, String nU, String preU, String phoU)
+    public Utilisateur(String mat, String nU, String preU, String phoU)
     {
         this.mat = mat;
         this.nU = nU;

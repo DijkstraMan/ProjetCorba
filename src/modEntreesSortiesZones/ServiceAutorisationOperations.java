@@ -10,37 +10,37 @@ public interface ServiceAutorisationOperations
     /**
      * Operation verifierAutorisation
      */
-    public boolean verifierAutorisation(int m, String n)
+    public boolean verifierAutorisation(String m, String n)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF)
+    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationExistante;
 
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF)
+    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
      * Operation ajouterAutorisationPerm
      */
-    public void ajouterAutorisationPerm(int m, String n, int hD, int hF)
+    public void ajouterAutorisationPerm(String m, String n, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationExistante;
 
     /**
      * Operation modifierAutorisationPerm
      */
-    public void modifierAutorisationPerm(int m, String n, int hD, int hF)
+    public void modifierAutorisationPerm(String m, String n, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
      * Operation supprimerAutorisation
      */
-    public void supprimerAutorisation(int m, String n)
+    public void supprimerAutorisation(String m, String n)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
 }

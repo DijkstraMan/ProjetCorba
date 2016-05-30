@@ -1,17 +1,16 @@
 module modEntreesSortiesZones
 {
-	typedef long IdEmpreinte;
 	typedef string EmpreinteCollab;
 	
-	typedef long Matricule;
+	typedef string Matricule;
 	typedef string NomUsr;
 	typedef string PrenomUsr;
 	typedef string PasswordPerm;
 	typedef string PhotoUsr;
 	
 	typedef string idZone;
-	typedef long JourDebut;
-	typedef long JourFin;
+	typedef string JourDebut;
+	typedef string JourFin;
 	typedef long HeureDebut;
 	typedef long HeureFin;
 	
@@ -97,8 +96,8 @@ module modEntreesSortiesZones
 	
 	interface ServiceJournalisation
 	{
-            void ajouterEntree(in Matricule m, in idZone n, in TimeStamp t, in TypeAcces a);
-            LogsAcces consulterAcces();
-            LogsAcces consulterRefus();
+		void ajouterEntree(in Matricule m, in idZone n, in TimeStamp t, in TypeAcces a);
+		LogsAcces consulterAcces();
+		LogsAcces consulterRefus();
 	};
 };

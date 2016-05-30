@@ -10,7 +10,7 @@ public final class Empreinte implements org.omg.CORBA.portable.IDLEntity
     /**
      * Struct member mat
      */
-    public int mat;
+    public String mat;
 
     /**
      * Struct member eC
@@ -28,7 +28,7 @@ public final class Empreinte implements org.omg.CORBA.portable.IDLEntity
      * @param mat mat struct member
      * @param eC eC struct member
      */
-    public Empreinte(int mat, String eC)
+    public Empreinte(String mat, String eC)
     {
         this.mat = mat;
         this.eC = eC;

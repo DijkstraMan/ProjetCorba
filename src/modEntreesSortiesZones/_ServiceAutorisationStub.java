@@ -23,7 +23,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation verifierAutorisation
      */
-    public boolean verifierAutorisation(int m, String n)
+    public boolean verifierAutorisation(String m, String n)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -80,7 +80,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF)
+    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationExistante
     {
         while(true)
@@ -141,7 +141,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(int m, String n, int jD, int jF, int hD, int hF)
+    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -202,7 +202,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterAutorisationPerm
      */
-    public void ajouterAutorisationPerm(int m, String n, int hD, int hF)
+    public void ajouterAutorisationPerm(String m, String n, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationExistante
     {
         while(true)
@@ -261,7 +261,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierAutorisationPerm
      */
-    public void modifierAutorisationPerm(int m, String n, int hD, int hF)
+    public void modifierAutorisationPerm(String m, String n, int hD, int hF)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -320,7 +320,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation supprimerAutorisation
      */
-    public void supprimerAutorisation(int m, String n)
+    public void supprimerAutorisation(String m, String n)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)

@@ -65,7 +65,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation modifierUtilisateur
      */
-    public void modifierUtilisateur(int m, String n, String preU, String phoU)
+    public void modifierUtilisateur(String m, String n, String preU, String phoU)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         _tie.modifierUtilisateur( m,  n,  preU,  phoU);
@@ -74,7 +74,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation getUtilisateur
      */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(int m)
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String m)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         return _tie.getUtilisateur( m);
@@ -100,7 +100,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation verifierAuthentificationLogiciel
      */
-    public boolean verifierAuthentificationLogiciel(int m, String pwd)
+    public boolean verifierAuthentificationLogiciel(String m, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         return _tie.verifierAuthentificationLogiciel( m,  pwd);
@@ -109,7 +109,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation ajouterCollaborateurTemp
      */
-    public void ajouterCollaborateurTemp(int m, String n, String preU, String phoU)
+    public void ajouterCollaborateurTemp(String m, String n, String preU, String phoU)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         _tie.ajouterCollaborateurTemp( m,  n,  preU,  phoU);
@@ -118,7 +118,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation ajouterCollaborateurPerm
      */
-    public void ajouterCollaborateurPerm(int m, String n, String preU, String phoU, String pwd)
+    public void ajouterCollaborateurPerm(String m, String n, String preU, String phoU, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         _tie.ajouterCollaborateurPerm( m,  n,  preU,  phoU,  pwd);

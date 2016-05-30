@@ -23,7 +23,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
     /**
      * Operation ajouterEntree
      */
-    public void ajouterEntree(int m, String n, int t, modEntreesSortiesZones.TypeAcces a)
+    public void ajouterEntree(String m, String n, int t, modEntreesSortiesZones.TypeAcces a)
     {
         while(true)
         {

@@ -10,7 +10,7 @@ public interface ServiceJournalisationOperations
     /**
      * Operation ajouterEntree
      */
-    public void ajouterEntree(int m, String n, int t, modEntreesSortiesZones.TypeAcces a);
+    public void ajouterEntree(String m, String n, int t, modEntreesSortiesZones.TypeAcces a);
 
     /**
      * Operation consulterAcces
