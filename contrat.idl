@@ -13,7 +13,7 @@ module modEntreesSortiesZones
 	typedef string JourFin;
 	typedef long HeureDebut;
 	typedef long HeureFin;
-	
+	typedef string dateLog;
 	typedef long TimeStamp;
 	enum TypeAcces {autorise, nonAutorise, nonAuthentifie}; 
 	
@@ -86,8 +86,8 @@ module modEntreesSortiesZones
 		//responsable de zone
 		boolean verifierAutorisation(in Matricule m, in idZone n) raises (AutorisationInconnue); 
 		//Autorisations temporaires :
-		void ajouterAutorisationTemp(in Matricule m, in idZone n, in JourDebut jD, in JourFin jF, in HeureDebut hD, in HeureFin hF) raises (AutorisationExistante);
-		void modifierAutorisationTemp(in Matricule m, in idZone n, in JourDebut jD, in JourFin jF, in HeureDebut hD, in HeureFin hF) raises (AutorisationInconnue); 
+		void ajouterAutorisationTemp(in Matricule m, in idZone n, in JourDebut jD, in JourFin jF) raises (AutorisationExistante);
+		void modifierAutorisationTemp(in Matricule m, in idZone n, in JourDebut jD, in JourFin jF) raises (AutorisationInconnue);
 		//Autorisations permanentes :
 		void ajouterAutorisationPerm(in Matricule m, in idZone n, in HeureDebut hD, in HeureFin hF) raises (AutorisationExistante); 
 		void modifierAutorisationPerm(in Matricule m, in idZone n, in HeureDebut hD, in HeureFin hF) raises (AutorisationInconnue); 
@@ -96,7 +96,7 @@ module modEntreesSortiesZones
 	
 	interface ServiceJournalisation
 	{
-		void ajouterEntree(in Matricule m, in idZone n, in TimeStamp t, in TypeAcces a);
+		void ajouterEntree(in Matricule m, in idZone n, in dateLog t, in TypeAcces a);
 		LogsAcces consulterAcces();
 		LogsAcces consulterRefus();
 	};

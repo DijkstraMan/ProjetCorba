@@ -23,7 +23,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
     /**
      * Operation ajouterEntree
      */
-    public void ajouterEntree(String m, String n, int t, modEntreesSortiesZones.TypeAcces a)
+    public void ajouterEntree(String m, String n, String t, modEntreesSortiesZones.TypeAcces a)
     {
         while(true)
         {
@@ -35,7 +35,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterEntree",true);
                     modEntreesSortiesZones.MatriculeHelper.write(_output,m);
                     modEntreesSortiesZones.idZoneHelper.write(_output,n);
-                    modEntreesSortiesZones.TimeStampHelper.write(_output,t);
+                    modEntreesSortiesZones.dateLogHelper.write(_output,t);
                     modEntreesSortiesZones.TypeAccesHelper.write(_output,a);
                     _input = this._invoke(_output);
                     return;

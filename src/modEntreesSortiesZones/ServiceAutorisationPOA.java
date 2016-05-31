@@ -82,12 +82,10 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         String arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
         String arg2_in = modEntreesSortiesZones.JourDebutHelper.read(_is);
         String arg3_in = modEntreesSortiesZones.JourFinHelper.read(_is);
-        int arg4_in = modEntreesSortiesZones.HeureDebutHelper.read(_is);
-        int arg5_in = modEntreesSortiesZones.HeureFinHelper.read(_is);
 
         try
         {
-            ajouterAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in, arg5_in);
+            ajouterAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in);
 
             _output = handler.createReply();
 
@@ -108,12 +106,10 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         String arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
         String arg2_in = modEntreesSortiesZones.JourDebutHelper.read(_is);
         String arg3_in = modEntreesSortiesZones.JourFinHelper.read(_is);
-        int arg4_in = modEntreesSortiesZones.HeureDebutHelper.read(_is);
-        int arg5_in = modEntreesSortiesZones.HeureFinHelper.read(_is);
 
         try
         {
-            modifierAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in, arg5_in);
+            modifierAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in);
 
             _output = handler.createReply();
 

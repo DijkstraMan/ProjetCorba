@@ -80,7 +80,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void ajouterAutorisationTemp(String m, String n, String jD, String jF)
         throws modEntreesSortiesZones.AutorisationExistante
     {
         while(true)
@@ -95,8 +95,6 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                     modEntreesSortiesZones.idZoneHelper.write(_output,n);
                     modEntreesSortiesZones.JourDebutHelper.write(_output,jD);
                     modEntreesSortiesZones.JourFinHelper.write(_output,jF);
-                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hD);
-                    modEntreesSortiesZones.HeureFinHelper.write(_output,hF);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -127,7 +125,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
+                    _self.ajouterAutorisationTemp( m,  n,  jD,  jF);
                     return;
                 }
                 finally
@@ -141,7 +139,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void modifierAutorisationTemp(String m, String n, String jD, String jF)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -156,8 +154,6 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                     modEntreesSortiesZones.idZoneHelper.write(_output,n);
                     modEntreesSortiesZones.JourDebutHelper.write(_output,jD);
                     modEntreesSortiesZones.JourFinHelper.write(_output,jF);
-                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hD);
-                    modEntreesSortiesZones.HeureFinHelper.write(_output,hF);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -188,7 +184,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    _self.modifierAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
+                    _self.modifierAutorisationTemp( m,  n,  jD,  jF);
                     return;
                 }
                 finally

@@ -16,13 +16,13 @@ public interface ServiceAutorisationOperations
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void ajouterAutorisationTemp(String m, String n, String jD, String jF)
         throws modEntreesSortiesZones.AutorisationExistante;
 
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void modifierAutorisationTemp(String m, String n, String jD, String jF)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
