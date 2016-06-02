@@ -65,19 +65,19 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation modifierUtilisateur
      */
-    public void modifierUtilisateur(String m, String n, String preU, String phoU)
+    public void modifierUtilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        _tie.modifierUtilisateur( m,  n,  preU,  phoU);
+        _tie.modifierUtilisateur( matricule,  nomUsr,  preUsr,  phoUsr);
     }
 
     /**
      * Operation getUtilisateur
      */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(String m)
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        return _tie.getUtilisateur( m);
+        return _tie.getUtilisateur( matricule);
     }
 
     /**
@@ -91,37 +91,37 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String eC, String p)
+    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        return _tie.verifierAuthentificationPorte( eC,  p);
+        return _tie.verifierAuthentificationPorte( empCollab,  phoUsr);
     }
 
     /**
      * Operation verifierAuthentificationLogiciel
      */
-    public boolean verifierAuthentificationLogiciel(String m, String pwd)
+    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        return _tie.verifierAuthentificationLogiciel( m,  pwd);
+        return _tie.verifierAuthentificationLogiciel( matricule,  pwd);
     }
 
     /**
      * Operation ajouterCollaborateurTemp
      */
-    public void ajouterCollaborateurTemp(String m, String n, String preU, String phoU)
+    public void ajouterCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
-        _tie.ajouterCollaborateurTemp( m,  n,  preU,  phoU);
+        _tie.ajouterCollaborateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
     }
 
     /**
      * Operation ajouterCollaborateurPerm
      */
-    public void ajouterCollaborateurPerm(String m, String n, String preU, String phoU, String pwd)
+    public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
-        _tie.ajouterCollaborateurPerm( m,  n,  preU,  phoU,  pwd);
+        _tie.ajouterCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr,  pwd);
     }
 
 }

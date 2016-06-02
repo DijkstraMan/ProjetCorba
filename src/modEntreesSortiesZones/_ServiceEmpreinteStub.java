@@ -23,7 +23,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation verifierEmpreinte
      */
-    public boolean verifierEmpreinte(String eC, String m)
+    public boolean verifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue
     {
         while(true)
@@ -34,8 +34,8 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierEmpreinte",true);
-                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,eC);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
+                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,empCollab);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     _input = this._invoke(_output);
                     boolean _arg_ret = _input.read_boolean();
                     return _arg_ret;
@@ -67,7 +67,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceEmpreinteOperations _self = (modEntreesSortiesZones.ServiceEmpreinteOperations) _so.servant;
                 try
                 {
-                    return _self.verifierEmpreinte( eC,  m);
+                    return _self.verifierEmpreinte( empCollab,  matricule);
                 }
                 finally
                 {
@@ -80,7 +80,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterEmpreinte
      */
-    public void ajouterEmpreinte(String e, String m)
+    public void ajouterEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteExistante
     {
         while(true)
@@ -91,8 +91,8 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterEmpreinte",true);
-                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,e);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
+                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,empCollab);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -123,7 +123,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceEmpreinteOperations _self = (modEntreesSortiesZones.ServiceEmpreinteOperations) _so.servant;
                 try
                 {
-                    _self.ajouterEmpreinte( e,  m);
+                    _self.ajouterEmpreinte( empCollab,  matricule);
                     return;
                 }
                 finally
@@ -137,7 +137,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierEmpreinte
      */
-    public void modifierEmpreinte(String e, String m)
+    public void modifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue
     {
         while(true)
@@ -148,8 +148,8 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("modifierEmpreinte",true);
-                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,e);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
+                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,empCollab);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -180,7 +180,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceEmpreinteOperations _self = (modEntreesSortiesZones.ServiceEmpreinteOperations) _so.servant;
                 try
                 {
-                    _self.modifierEmpreinte( e,  m);
+                    _self.modifierEmpreinte( empCollab,  matricule);
                     return;
                 }
                 finally

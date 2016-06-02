@@ -8,24 +8,24 @@ package modEntreesSortiesZones;
 public final class Utilisateur implements org.omg.CORBA.portable.IDLEntity
 {
     /**
-     * Struct member mat
+     * Struct member matricule
      */
-    public String mat;
+    public String matricule;
 
     /**
-     * Struct member nU
+     * Struct member nomUsr
      */
-    public String nU;
+    public String nomUsr;
 
     /**
-     * Struct member preU
+     * Struct member preUsr
      */
-    public String preU;
+    public String preUsr;
 
     /**
-     * Struct member phoU
+     * Struct member phoUsr
      */
-    public String phoU;
+    public String phoUsr;
 
     /**
      * Default constructor
@@ -35,17 +35,17 @@ public final class Utilisateur implements org.omg.CORBA.portable.IDLEntity
 
     /**
      * Constructor with fields initialization
-     * @param mat mat struct member
-     * @param nU nU struct member
-     * @param preU preU struct member
-     * @param phoU phoU struct member
+     * @param matricule matricule struct member
+     * @param nomUsr nomUsr struct member
+     * @param preUsr preUsr struct member
+     * @param phoUsr phoUsr struct member
      */
-    public Utilisateur(String mat, String nU, String preU, String phoU)
+    public Utilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
     {
-        this.mat = mat;
-        this.nU = nU;
-        this.preU = preU;
-        this.phoU = phoU;
+        this.matricule = matricule;
+        this.nomUsr = nomUsr;
+        this.preUsr = preUsr;
+        this.phoUsr = phoUsr;
     }
 
 }

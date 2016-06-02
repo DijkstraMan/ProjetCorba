@@ -8,24 +8,24 @@ package modEntreesSortiesZones;
 public final class Autorisation implements org.omg.CORBA.portable.IDLEntity
 {
     /**
-     * Struct member mat
+     * Struct member matricule
      */
-    public String mat;
+    public String matricule;
 
     /**
-     * Struct member n
+     * Struct member idZone
      */
-    public String n;
+    public int idZone;
 
     /**
-     * Struct member hD
+     * Struct member hrDebut
      */
-    public int hD;
+    public int hrDebut;
 
     /**
-     * Struct member hF
+     * Struct member hrFin
      */
-    public int hF;
+    public int hrFin;
 
     /**
      * Default constructor
@@ -35,17 +35,17 @@ public final class Autorisation implements org.omg.CORBA.portable.IDLEntity
 
     /**
      * Constructor with fields initialization
-     * @param mat mat struct member
-     * @param n n struct member
-     * @param hD hD struct member
-     * @param hF hF struct member
+     * @param matricule matricule struct member
+     * @param idZone idZone struct member
+     * @param hrDebut hrDebut struct member
+     * @param hrFin hrFin struct member
      */
-    public Autorisation(String mat, String n, int hD, int hF)
+    public Autorisation(String matricule, int idZone, int hrDebut, int hrFin)
     {
-        this.mat = mat;
-        this.n = n;
-        this.hD = hD;
-        this.hF = hF;
+        this.matricule = matricule;
+        this.idZone = idZone;
+        this.hrDebut = hrDebut;
+        this.hrFin = hrFin;
     }
 
 }

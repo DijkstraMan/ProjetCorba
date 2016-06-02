@@ -23,7 +23,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation modifierUtilisateur
      */
-    public void modifierUtilisateur(String m, String n, String preU, String phoU)
+    public void modifierUtilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -34,10 +34,10 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("modifierUtilisateur",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.NomUsrHelper.write(_output,n);
-                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preU);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoU);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
+                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -68,7 +68,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    _self.modifierUtilisateur( m,  n,  preU,  phoU);
+                    _self.modifierUtilisateur( matricule,  nomUsr,  preUsr,  phoUsr);
                     return;
                 }
                 finally
@@ -82,7 +82,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation getUtilisateur
      */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(String m)
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -93,7 +93,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getUtilisateur",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     _input = this._invoke(_output);
                     modEntreesSortiesZones.Utilisateur _arg_ret = modEntreesSortiesZones.UtilisateurHelper.read(_input);
                     return _arg_ret;
@@ -125,7 +125,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.getUtilisateur( m);
+                    return _self.getUtilisateur( matricule);
                 }
                 finally
                 {
@@ -187,7 +187,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String eC, String p)
+    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -198,8 +198,8 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationPorte",true);
-                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,eC);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,p);
+                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,empCollab);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     _input = this._invoke(_output);
                     String _arg_ret = modEntreesSortiesZones.NomUsrHelper.read(_input);
                     return _arg_ret;
@@ -231,7 +231,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAuthentificationPorte( eC,  p);
+                    return _self.verifierAuthentificationPorte( empCollab,  phoUsr);
                 }
                 finally
                 {
@@ -244,7 +244,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation verifierAuthentificationLogiciel
      */
-    public boolean verifierAuthentificationLogiciel(String m, String pwd)
+    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -255,7 +255,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogiciel",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
                     _input = this._invoke(_output);
                     boolean _arg_ret = _input.read_boolean();
@@ -288,7 +288,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAuthentificationLogiciel( m,  pwd);
+                    return _self.verifierAuthentificationLogiciel( matricule,  pwd);
                 }
                 finally
                 {
@@ -301,7 +301,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation ajouterCollaborateurTemp
      */
-    public void ajouterCollaborateurTemp(String m, String n, String preU, String phoU)
+    public void ajouterCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         while(true)
@@ -312,10 +312,10 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterCollaborateurTemp",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.NomUsrHelper.write(_output,n);
-                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preU);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoU);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
+                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -346,7 +346,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterCollaborateurTemp( m,  n,  preU,  phoU);
+                    _self.ajouterCollaborateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
                     return;
                 }
                 finally
@@ -360,7 +360,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation ajouterCollaborateurPerm
      */
-    public void ajouterCollaborateurPerm(String m, String n, String preU, String phoU, String pwd)
+    public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         while(true)
@@ -371,10 +371,10 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterCollaborateurPerm",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.NomUsrHelper.write(_output,n);
-                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preU);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoU);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
+                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
                     _input = this._invoke(_output);
                     return;
@@ -406,7 +406,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterCollaborateurPerm( m,  n,  preU,  phoU,  pwd);
+                    _self.ajouterCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr,  pwd);
                     return;
                 }
                 finally

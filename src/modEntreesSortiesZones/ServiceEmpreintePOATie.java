@@ -65,28 +65,28 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
     /**
      * Operation verifierEmpreinte
      */
-    public boolean verifierEmpreinte(String eC, String m)
+    public boolean verifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue
     {
-        return _tie.verifierEmpreinte( eC,  m);
+        return _tie.verifierEmpreinte( empCollab,  matricule);
     }
 
     /**
      * Operation ajouterEmpreinte
      */
-    public void ajouterEmpreinte(String e, String m)
+    public void ajouterEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteExistante
     {
-        _tie.ajouterEmpreinte( e,  m);
+        _tie.ajouterEmpreinte( empCollab,  matricule);
     }
 
     /**
      * Operation modifierEmpreinte
      */
-    public void modifierEmpreinte(String e, String m)
+    public void modifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue
     {
-        _tie.modifierEmpreinte( e,  m);
+        _tie.modifierEmpreinte( empCollab,  matricule);
     }
 
 }

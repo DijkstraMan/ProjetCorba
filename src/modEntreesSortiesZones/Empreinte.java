@@ -8,14 +8,14 @@ package modEntreesSortiesZones;
 public final class Empreinte implements org.omg.CORBA.portable.IDLEntity
 {
     /**
-     * Struct member mat
+     * Struct member matricule
      */
-    public String mat;
+    public String matricule;
 
     /**
-     * Struct member eC
+     * Struct member empCollab
      */
-    public String eC;
+    public String empCollab;
 
     /**
      * Default constructor
@@ -25,13 +25,13 @@ public final class Empreinte implements org.omg.CORBA.portable.IDLEntity
 
     /**
      * Constructor with fields initialization
-     * @param mat mat struct member
-     * @param eC eC struct member
+     * @param matricule matricule struct member
+     * @param empCollab empCollab struct member
      */
-    public Empreinte(String mat, String eC)
+    public Empreinte(String matricule, String empCollab)
     {
-        this.mat = mat;
-        this.eC = eC;
+        this.matricule = matricule;
+        this.empCollab = empCollab;
     }
 
 }

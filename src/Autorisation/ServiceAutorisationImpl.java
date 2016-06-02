@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
@@ -54,40 +54,34 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         nomDB="bdZone";
     }
     
-    public void connexion() throws ClassNotFoundException, SQLException {
+    private void connexion() throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
         conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/Documents/ProjetCorba/h2_db/"+nomDB+";IGNORECASE=TRUE", "sa", "");
     }
 
-    public void closeConnexion() throws SQLException {
+    private void closeConnexion() throws SQLException {
         conn.close();
     }
     
     /*Méthode générique pour les requêtes de manipulation 
     INSERT, UPDATE, DELETE ne nécessitant pas de récupérer
     un quelconque résultat */
-    public boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
+    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
         boolean res = true;
-
         //connexion a la bdd
-        connexion();
         // on cree un objet Statement qui va permettre l'execution des requetes
         Statement s = conn.createStatement();
         int cr = s.executeUpdate(query);
         if (cr <= 0) {
             res = false;
         }
-        closeConnexion();
         return res;
     }
 
     /*Méthode générique pour les requêtes d'interrogation 
     SELECT nécessitant de récupérer un résultat */
-    public ResultSet lancerInterrogation(String query) throws ClassNotFoundException, SQLException {
+    private ResultSet lancerInterrogation(String query) throws ClassNotFoundException, SQLException {
         ResultSet res;
-
-        //connexion a la bdd
-        connexion();
         // on cree un objet Statement qui va permettre l'execution des requetes
         Statement s = conn.createStatement();
         res = s.executeQuery(query);
@@ -95,25 +89,110 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         return res;
     }
     
-    @Override
-    public boolean verifierAutorisation(String m, String n) throws AutorisationInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean verifierAutorisationPerm(String matricule,int idZone)
+    {
+        boolean res = false;
+        try {
+            int hr=(LocalDateTime.now().getHour()*10)+LocalDateTime.now().getMinute();
+            String query = "SELECT COUNT(*) AS rowcount FROM autorisation "
+                    + "WHERE matricule_utilisateur='"+ matricule +"' "
+                    + "and idZone ='"+ idZone +"' "
+                    + "and heureDebut>='"+ hr +"'"
+                    + "and heureFin<='"+ hr +"'";
+            ResultSet rs;
+            rs = lancerInterrogation(query);
+            rs.next();
+            if (rs.getInt("rowcount") > 0) {
+                res = true;
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return res;
+    }
+    
+    private boolean verifierAutorisationTemp(String matricule,int idZone)
+    {
+               
+        boolean res = false;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String query = "SELECT COUNT(*) AS rowcount FROM autorisationTemp "
+                    + "WHERE matricule_utilisateur='"+ matricule +"' "
+                    + "and idZone ='"+ idZone +"' "
+                    + "and jourDebut>='"+ dateFormat +"'"
+                    + "and jourFin<='"+ dateFormat +"'";
+            ResultSet rs;
+            rs = lancerInterrogation(query);
+            rs.next();
+            if (rs.getInt("rowcount") > 0) {
+                res = true;
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return res;
     }
     
     @Override
-    public void ajouterAutorisationTemp(String m, String n, String jD, String jF) throws AutorisationExistante {
+    public boolean verifierAutorisation(String matricule, int idZone) throws AutorisationInconnue {
+        boolean res = false;
+        try {
+            connexion();
+            if(verifierAutorisationPerm(matricule, idZone) || verifierAutorisationTemp(matricule, idZone))
+                res = true;
+            closeConnexion();
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+    
+    @Override
+    public void ajouterAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin) throws AutorisationExistante {
+        
         DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            String dateDebut= formatSQL.format(formatFR.parse(jD));
-            String dateFin= formatSQL.format(formatFR.parse(jF));
-            String query = "insert into autorisationTemp values ('"+ m +"','"+ n +"','"+ dateDebut +"','"+ dateFin +"')";
-           
+            String dateDebut= formatSQL.format(formatFR.parse(jrDebut));
+            String dateFin= formatSQL.format(formatFR.parse(jrFin));
+            String query = "insert into autorisationTemp values ('"+ matricule +"','"+ idZone +"','"+ dateDebut +"','"+ dateFin +"')";
+            //connexion à la bd
+            connexion();
             if(lancerManipulation(query))
-                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation temporaire ajouté matricule"+n+"\n");
+                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation temporaire ajouté matricule "+matricule+" zone "+idZone+"\n");
             else
-                areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation temporaire matricule"+n+"\n");
-           
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
+        } catch (ParseException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    @Override
+    public void modifierAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin) throws AutorisationInconnue {
+        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            String dateDebut= formatSQL.format(formatFR.parse(jrDebut));
+            String dateFin= formatSQL.format(formatFR.parse(jrFin));
+            String query = "update autorisationTemp set jourDebut='"+ dateDebut +"', jourFin='"+ dateFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+            connexion();
+            if(lancerManipulation(query))
+                areaTextEvent.setText(areaTextEvent.getText()+"Modification temporaire effectué matricule "+matricule+" zone "+idZone+"\n");
+            else
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
         } catch (ParseException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -124,21 +203,15 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void modifierAutorisationTemp(String m, String n, String jD, String jF) throws AutorisationInconnue {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-        DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationExistante {
+        String query = "insert into autorisation values ('"+ matricule +"','"+ idZone +"','"+ hrDebut +"','"+ hrFin +"')";
         try {
-            String dateDebut= formatSQL.format(formatFR.parse(jD));
-            String dateFin= formatSQL.format(formatFR.parse(jF));
-            String query = "update autorisationTemp set jourDebut='"+ jD +"', jourFin='"+ dateDebut +"' where matricule_utilisateur='"+ m +"' and idZone ='"+ n +"'";
-           
+            connexion();
             if(lancerManipulation(query))
-                areaTextEvent.setText(areaTextEvent.getText()+"Modification temporaire ajouté matricule"+m+" zone"+m+"\n");
+                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation permanente ajouté matricule "+matricule+" zone "+idZone+"\n");
             else
-                areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation temporaire matricule"+m+" zone"+m+"\n");
-           
-        } catch (ParseException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -147,13 +220,15 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void ajouterAutorisationPerm(String m, String n, int hD, int hF) throws AutorisationExistante {
-        String query = "insert into autorisation values ('"+ m +"','"+ n +"','"+ hD +"','"+ hF +"')";
+    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationInconnue {
+        String query = "update autorisationTemp set heureDebut='"+ hrDebut +"', heureFin='"+ hrFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
         try {
+            connexion();
             if(lancerManipulation(query))
-                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation permanente ajouté matricule"+m+" zone"+n+"\n");
+                areaTextEvent.setText(areaTextEvent.getText()+"Modification permanente ajouté effectué matricule "+matricule+" zone "+idZone+"\n");
             else
-                areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation permanente matricule"+m+" zone"+m+"\n");
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -162,13 +237,21 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void modifierAutorisationPerm(String m, String n, int hD, int hF) throws AutorisationInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void supprimerAutorisation(String m, String n) throws AutorisationInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void supprimerAutorisation(String matricule, int idZone) throws AutorisationInconnue {
+        String query = "delete from autorisation where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+        String query2 = "delete from autorisationTemp where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+        try {
+            connexion();
+            if(lancerManipulation(query) && lancerManipulation(query2))
+                areaTextEvent.setText(areaTextEvent.getText()+"Suppression de l'autorisation effectué matricule "+matricule+" zone "+idZone+"\n");
+            else
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -221,11 +304,8 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             // Lancement de l'ORB et mise en attente de requete
             //**************************************************
             orb.run();
-            ajouterAutorisationTemp("mm", "2", "02/04/2006 15:03", "02/04/2007 16h05");
             areaTextEvent.setText(areaTextEvent.getText()+"Fin du serv\n");
         } catch (InvalidName | ServantAlreadyActive | WrongPolicy | AdapterInactive | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | ServantNotActive ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutorisationExistante ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

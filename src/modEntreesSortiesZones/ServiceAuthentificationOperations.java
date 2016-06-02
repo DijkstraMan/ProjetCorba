@@ -10,13 +10,13 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation modifierUtilisateur
      */
-    public void modifierUtilisateur(String m, String n, String preU, String phoU)
+    public void modifierUtilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation getUtilisateur
      */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(String m)
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
@@ -27,25 +27,25 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String eC, String p)
+    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation verifierAuthentificationLogiciel
      */
-    public boolean verifierAuthentificationLogiciel(String m, String pwd)
+    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation ajouterCollaborateurTemp
      */
-    public void ajouterCollaborateurTemp(String m, String n, String preU, String phoU)
+    public void ajouterCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurExistant;
 
     /**
      * Operation ajouterCollaborateurPerm
      */
-    public void ajouterCollaborateurPerm(String m, String n, String preU, String phoU, String pwd)
+    public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant;
 
 }

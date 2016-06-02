@@ -76,16 +76,16 @@ public class UtilisateurHelper
                 org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[4];
 
                 _members[0] = new org.omg.CORBA.StructMember();
-                _members[0].name = "mat";
+                _members[0].name = "matricule";
                 _members[0].type = modEntreesSortiesZones.MatriculeHelper.type();
                 _members[1] = new org.omg.CORBA.StructMember();
-                _members[1].name = "nU";
+                _members[1].name = "nomUsr";
                 _members[1].type = modEntreesSortiesZones.NomUsrHelper.type();
                 _members[2] = new org.omg.CORBA.StructMember();
-                _members[2].name = "preU";
+                _members[2].name = "preUsr";
                 _members[2].type = modEntreesSortiesZones.PrenomUsrHelper.type();
                 _members[3] = new org.omg.CORBA.StructMember();
-                _members[3].name = "phoU";
+                _members[3].name = "phoUsr";
                 _members[3].type = modEntreesSortiesZones.PhotoUsrHelper.type();
                 _tc = orb.create_struct_tc(id(),"Utilisateur",_members);
                 _working = false;
@@ -114,10 +114,10 @@ public class UtilisateurHelper
     {
         modEntreesSortiesZones.Utilisateur new_one = new modEntreesSortiesZones.Utilisateur();
 
-        new_one.mat = modEntreesSortiesZones.MatriculeHelper.read(istream);
-        new_one.nU = modEntreesSortiesZones.NomUsrHelper.read(istream);
-        new_one.preU = modEntreesSortiesZones.PrenomUsrHelper.read(istream);
-        new_one.phoU = modEntreesSortiesZones.PhotoUsrHelper.read(istream);
+        new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
+        new_one.nomUsr = modEntreesSortiesZones.NomUsrHelper.read(istream);
+        new_one.preUsr = modEntreesSortiesZones.PrenomUsrHelper.read(istream);
+        new_one.phoUsr = modEntreesSortiesZones.PhotoUsrHelper.read(istream);
 
         return new_one;
     }
@@ -129,10 +129,10 @@ public class UtilisateurHelper
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.Utilisateur value)
     {
-        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.mat);
-        modEntreesSortiesZones.NomUsrHelper.write(ostream,value.nU);
-        modEntreesSortiesZones.PrenomUsrHelper.write(ostream,value.preU);
-        modEntreesSortiesZones.PhotoUsrHelper.write(ostream,value.phoU);
+        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
+        modEntreesSortiesZones.NomUsrHelper.write(ostream,value.nomUsr);
+        modEntreesSortiesZones.PrenomUsrHelper.write(ostream,value.preUsr);
+        modEntreesSortiesZones.PhotoUsrHelper.write(ostream,value.phoUsr);
     }
 
 }

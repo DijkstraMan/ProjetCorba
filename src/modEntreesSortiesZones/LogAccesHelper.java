@@ -76,16 +76,16 @@ public class LogAccesHelper
                 org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[4];
 
                 _members[0] = new org.omg.CORBA.StructMember();
-                _members[0].name = "m";
+                _members[0].name = "matricule";
                 _members[0].type = modEntreesSortiesZones.MatriculeHelper.type();
                 _members[1] = new org.omg.CORBA.StructMember();
-                _members[1].name = "n";
+                _members[1].name = "idZone";
                 _members[1].type = modEntreesSortiesZones.idZoneHelper.type();
                 _members[2] = new org.omg.CORBA.StructMember();
                 _members[2].name = "t";
                 _members[2].type = modEntreesSortiesZones.TimeStampHelper.type();
                 _members[3] = new org.omg.CORBA.StructMember();
-                _members[3].name = "a";
+                _members[3].name = "typeAcces";
                 _members[3].type = modEntreesSortiesZones.TypeAccesHelper.type();
                 _tc = orb.create_struct_tc(id(),"LogAcces",_members);
                 _working = false;
@@ -114,10 +114,10 @@ public class LogAccesHelper
     {
         modEntreesSortiesZones.LogAcces new_one = new modEntreesSortiesZones.LogAcces();
 
-        new_one.m = modEntreesSortiesZones.MatriculeHelper.read(istream);
-        new_one.n = modEntreesSortiesZones.idZoneHelper.read(istream);
+        new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
+        new_one.idZone = modEntreesSortiesZones.idZoneHelper.read(istream);
         new_one.t = modEntreesSortiesZones.TimeStampHelper.read(istream);
-        new_one.a = modEntreesSortiesZones.TypeAccesHelper.read(istream);
+        new_one.typeAcces = modEntreesSortiesZones.TypeAccesHelper.read(istream);
 
         return new_one;
     }
@@ -129,10 +129,10 @@ public class LogAccesHelper
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.LogAcces value)
     {
-        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.m);
-        modEntreesSortiesZones.idZoneHelper.write(ostream,value.n);
+        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
+        modEntreesSortiesZones.idZoneHelper.write(ostream,value.idZone);
         modEntreesSortiesZones.TimeStampHelper.write(ostream,value.t);
-        modEntreesSortiesZones.TypeAccesHelper.write(ostream,value.a);
+        modEntreesSortiesZones.TypeAccesHelper.write(ostream,value.typeAcces);
     }
 
 }

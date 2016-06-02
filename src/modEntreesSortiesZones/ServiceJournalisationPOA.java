@@ -50,7 +50,7 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
-        String arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
+        int arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
         String arg2_in = modEntreesSortiesZones.dateLogHelper.read(_is);
         modEntreesSortiesZones.TypeAcces arg3_in = modEntreesSortiesZones.TypeAccesHelper.read(_is);
 

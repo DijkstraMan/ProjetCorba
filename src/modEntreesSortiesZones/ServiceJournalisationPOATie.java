@@ -65,9 +65,9 @@ public class ServiceJournalisationPOATie extends ServiceJournalisationPOA
     /**
      * Operation ajouterEntree
      */
-    public void ajouterEntree(String m, String n, String t, modEntreesSortiesZones.TypeAcces a)
+    public void ajouterEntree(String matricule, int idZone, String t, modEntreesSortiesZones.TypeAcces typeAcces)
     {
-        _tie.ajouterEntree( m,  n,  t,  a);
+        _tie.ajouterEntree( matricule,  idZone,  t,  typeAcces);
     }
 
     /**
