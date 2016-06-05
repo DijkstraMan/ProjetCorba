@@ -31,9 +31,21 @@ public interface ServiceAuthentificationOperations
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
-     * Operation verifierAuthentificationLogiciel
+     * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
+     * Operation verifierAuthentificationLogicielRH
+     */
+    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
+     * Operation verifierAuthentificationLogicielAccueil
+     */
+    public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**

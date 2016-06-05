@@ -37,6 +37,8 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
                 return _invoke_ajouterAutorisationPerm(_is, handler);
         } else if (opName.equals("ajouterAutorisationTemp")) {
                 return _invoke_ajouterAutorisationTemp(_is, handler);
+        } else if (opName.equals("getZone")) {
+                return _invoke_getZone(_is, handler);
         } else if (opName.equals("modifierAutorisationPerm")) {
                 return _invoke_modifierAutorisationPerm(_is, handler);
         } else if (opName.equals("modifierAutorisationTemp")) {
@@ -189,6 +191,19 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
             _output = handler.createExceptionReply();
             modEntreesSortiesZones.AutorisationInconnueHelper.write(_output,_exception);
         }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_getZone(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        modEntreesSortiesZones.Zone[] _arg_result = getZone();
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.lesZonesHelper.write(_output,_arg_result);
+
         return _output;
     }
 

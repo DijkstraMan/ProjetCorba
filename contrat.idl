@@ -9,6 +9,7 @@ module modEntreesSortiesZones
 	typedef string PhotoUsr;
 	
 	typedef long idZone;
+	typedef string nomZone;
 	typedef string JourDebut;
 	typedef string JourFin;
 	typedef long HeureDebut;
@@ -54,19 +55,31 @@ module modEntreesSortiesZones
 		TypeAcces typeAcces;
 	};
 	
-	typedef sequence<Utilisateur> LesUtilisateurs;
-        typedef sequence<LogAcces> LogsAcces;
+	struct Zone
+	{
+		idZone idZne;
+		nomZone nomZne;
+	};
+	
+	typedef sequence<Zone> lesZones;
+	
+	typedef sequence<Utilisateur> lesUtilisateurs;
+    typedef sequence<LogAcces> logsAcces;
 	
 	interface ServiceAuthentification
 	{
 		void modifierUtilisateur(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
 		Utilisateur getUtilisateur(in Matricule matricule) raises (UtilisateurInconnu);
-		LesUtilisateurs getUtilisateurs();
+		lesUtilisateurs getUtilisateurs();
 		
-		//verif pour la porte
+		//verif d'indentité pour la porte
 		NomUsr verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
-		//verif pour la machine
-		boolean verifierAuthentificationLogiciel(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		//verif de connexion pour les resp
+		boolean verifierAuthentificationLogicielResp(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		//verif de connexion pour les rh
+		boolean verifierAuthentificationLogicielRH(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		//verif de connexion pour l'accueil
+		boolean verifierAuthentificationLogicielAccueil(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
 		//Utilisateurs temporaires :
 		void ajouterCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurExistant); 
 		//Utilisateurs permanents :
@@ -92,12 +105,14 @@ module modEntreesSortiesZones
 		void ajouterAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationExistante); 
 		void modifierAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationInconnue); 
 		void supprimerAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
+		//retourne les zones existantes
+		lesZones getZone();
 	};
 	
 	interface ServiceJournalisation
 	{
 		void ajouterEntree(in Matricule matricule, in idZone idZone, in dateLog t, in TypeAcces typeAcces);
-		LogsAcces consulterAcces();
-		LogsAcces consulterRefus();
+		logsAcces consulterAcces();
+		logsAcces consulterRefus();
 	};
 };

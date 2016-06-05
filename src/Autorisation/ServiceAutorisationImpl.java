@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import modEntreesSortiesZones.AutorisationExistante;
 import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.ServiceAutorisationPOA;
+import modEntreesSortiesZones.Zone;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -177,6 +178,30 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+    @Override
+    public Zone[] getZone(){
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des zones\n");
+        Zone[] lesZones = new Zone[20];
+        try {
+            String query = "SELECT idZone, nomZone from gZone order by idZone";
+            ResultSet rs;
+            connexion();
+            rs = lancerInterrogation(query);
+            int i=0;
+            while(rs.next())
+            {
+                lesZones[i]=new Zone(rs.getInt("idZone"), rs.getString("nomZone"));
+                i++;
+            }
+            closeConnexion();
+            areaTextEvent.setText(areaTextEvent.getText()+"Listes des zones envoyé\n");
+        } catch (ClassNotFoundException | SQLException ex) {
+            areaTextEvent.setText(areaTextEvent.getText()+"Erreur pendant l'envoi de la liste des zones\n");
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lesZones;
     }
 
     @Override

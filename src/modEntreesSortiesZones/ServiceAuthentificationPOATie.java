@@ -98,12 +98,30 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
-     * Operation verifierAuthentificationLogiciel
+     * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        return _tie.verifierAuthentificationLogiciel( matricule,  pwd);
+        return _tie.verifierAuthentificationLogicielResp( matricule,  pwd);
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielRH
+     */
+    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationLogicielRH( matricule,  pwd);
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielAccueil
+     */
+    public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationLogicielAccueil( matricule,  pwd);
     }
 
     /**

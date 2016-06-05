@@ -149,7 +149,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getUtilisateurs",true);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.Utilisateur[] _arg_ret = modEntreesSortiesZones.LesUtilisateursHelper.read(_input);
+                    modEntreesSortiesZones.Utilisateur[] _arg_ret = modEntreesSortiesZones.lesUtilisateursHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -242,9 +242,9 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     }
 
     /**
-     * Operation verifierAuthentificationLogiciel
+     * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -254,7 +254,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 org.omg.CORBA.portable.InputStream _input = null;
                 try
                 {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogiciel",true);
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogicielResp",true);
                     modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
                     _input = this._invoke(_output);
@@ -282,13 +282,127 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogiciel",_opsClass);
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogicielResp",_opsClass);
                 if (_so == null)
                    continue;
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAuthentificationLogiciel( matricule,  pwd);
+                    return _self.verifierAuthentificationLogicielResp( matricule,  pwd);
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielRH
+     */
+    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogicielRH",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
+                    _input = this._invoke(_output);
+                    boolean _arg_ret = _input.read_boolean();
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogicielRH",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    return _self.verifierAuthentificationLogicielRH( matricule,  pwd);
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielAccueil
+     */
+    public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogicielAccueil",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
+                    _input = this._invoke(_output);
+                    boolean _arg_ret = _input.read_boolean();
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogicielAccueil",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    return _self.verifierAuthentificationLogicielAccueil( matricule,  pwd);
                 }
                 finally
                 {
