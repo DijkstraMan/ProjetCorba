@@ -14,11 +14,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import modEntreesSortiesZones.AutorisationExistante;
 import modEntreesSortiesZones.AutorisationInconnue;
+import modEntreesSortiesZones.SQLERROR;
 import modEntreesSortiesZones.ServiceAutorisationPOA;
 import modEntreesSortiesZones.Zone;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -181,27 +184,27 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
     
     @Override
-    public Zone[] getZone(){
-        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des zones\n");
-        Zone[] lesZones = new Zone[20];
+    public Zone[] getZone() throws SQLERROR{
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des zones\n"); 
+        List<Zone> tabZone= new ArrayList();
         try {
             String query = "SELECT idZone, nomZone from gZone order by idZone";
             ResultSet rs;
             connexion();
             rs = lancerInterrogation(query);
-            int i=0;
             while(rs.next())
             {
-                lesZones[i]=new Zone(rs.getInt("idZone"), rs.getString("nomZone"));
-                i++;
+                tabZone.add(new Zone(rs.getInt("idZone"), rs.getString("nomZone")));           
             }
             closeConnexion();
+            Zone[] lesZones = new Zone[tabZone.size()];
+            lesZones = tabZone.toArray(lesZones);
+                    
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des zones envoyé\n");
+            return lesZones;
         } catch (ClassNotFoundException | SQLException ex) {
-            areaTextEvent.setText(areaTextEvent.getText()+"Erreur pendant l'envoi de la liste des zones\n");
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new SQLERROR (ex.getMessage ());
         }
-        return lesZones;
     }
 
     @Override

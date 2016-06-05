@@ -1,58 +1,58 @@
 package modEntreesSortiesZones;
 
 /**
- * Holder class for : test
+ * Holder class for : SQLERROR
  * 
  * @author OpenORB Compiler
  */
-final public class testHolder
+final public class SQLERRORHolder
         implements org.omg.CORBA.portable.Streamable
 {
     /**
-     * Internal test value
+     * Internal SQLERROR value
      */
-    public modEntreesSortiesZones.test value;
+    public modEntreesSortiesZones.SQLERROR value;
 
     /**
      * Default constructor
      */
-    public testHolder()
+    public SQLERRORHolder()
     { }
 
     /**
      * Constructor with value initialisation
      * @param initial the initial value
      */
-    public testHolder(modEntreesSortiesZones.test initial)
+    public SQLERRORHolder(modEntreesSortiesZones.SQLERROR initial)
     {
         value = initial;
     }
 
     /**
-     * Read test from a marshalled stream
+     * Read SQLERROR from a marshalled stream
      * @param istream the input stream
      */
     public void _read(org.omg.CORBA.portable.InputStream istream)
     {
-        value = testHelper.read(istream);
+        value = SQLERRORHelper.read(istream);
     }
 
     /**
-     * Write test into a marshalled stream
+     * Write SQLERROR into a marshalled stream
      * @param ostream the output stream
      */
     public void _write(org.omg.CORBA.portable.OutputStream ostream)
     {
-        testHelper.write(ostream,value);
+        SQLERRORHelper.write(ostream,value);
     }
 
     /**
-     * Return the test TypeCode
+     * Return the SQLERROR TypeCode
      * @return a TypeCode
      */
     public org.omg.CORBA.TypeCode _type()
     {
-        return testHelper.type();
+        return SQLERRORHelper.type();
     }
 
 }

@@ -1,11 +1,11 @@
 package modEntreesSortiesZones;
 
 /** 
- * Helper class for : test
+ * Helper class for : SQLERROR
  *  
  * @author OpenORB Compiler
  */ 
-public class testHelper
+public class SQLERRORHelper
 {
     private static final boolean HAS_OPENORB;
     static {
@@ -19,21 +19,21 @@ public class testHelper
         HAS_OPENORB = hasOpenORB;
     }
     /**
-     * Insert test into an any
+     * Insert SQLERROR into an any
      * @param a an any
-     * @param t test value
+     * @param t SQLERROR value
      */
-    public static void insert(org.omg.CORBA.Any a, modEntreesSortiesZones.test t)
+    public static void insert(org.omg.CORBA.Any a, modEntreesSortiesZones.SQLERROR t)
     {
-        a.insert_Streamable(new modEntreesSortiesZones.testHolder(t));
+        a.insert_Streamable(new modEntreesSortiesZones.SQLERRORHolder(t));
     }
 
     /**
-     * Extract test from an any
+     * Extract SQLERROR from an any
      * @param a an any
-     * @return the extracted test value
+     * @return the extracted SQLERROR value
      */
-    public static modEntreesSortiesZones.test extract(org.omg.CORBA.Any a)
+    public static modEntreesSortiesZones.SQLERROR extract(org.omg.CORBA.Any a)
     {
         if (!a.type().equal(type()))
             throw new org.omg.CORBA.MARSHAL();
@@ -42,11 +42,11 @@ public class testHelper
             org.openorb.CORBA.Any any = (org.openorb.CORBA.Any)a;
             try {
                 org.omg.CORBA.portable.Streamable s = any.extract_Streamable();
-                if(s instanceof modEntreesSortiesZones.testHolder)
-                    return ((modEntreesSortiesZones.testHolder)s).value;
+                if(s instanceof modEntreesSortiesZones.SQLERRORHolder)
+                    return ((modEntreesSortiesZones.SQLERRORHolder)s).value;
             } catch (org.omg.CORBA.BAD_INV_ORDER ex) {
             }
-            modEntreesSortiesZones.testHolder h = new modEntreesSortiesZones.testHolder(read(a.create_input_stream()));
+            modEntreesSortiesZones.SQLERRORHolder h = new modEntreesSortiesZones.SQLERRORHolder(read(a.create_input_stream()));
             a.insert_Streamable(h);
             return h.value;
         }
@@ -60,7 +60,7 @@ public class testHelper
     private static boolean _working = false;
 
     /**
-     * Return the test TypeCode
+     * Return the SQLERROR TypeCode
      * @return a TypeCode
      */
     public static org.omg.CORBA.TypeCode type()
@@ -78,7 +78,7 @@ public class testHelper
                 _members[0] = new org.omg.CORBA.StructMember();
                 _members[0].name = "raison";
                 _members[0].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
-                _tc = orb.create_exception_tc(id(),"test",_members);
+                _tc = orb.create_exception_tc(id(),"SQLERROR",_members);
                 _working = false;
             }
         }
@@ -86,7 +86,7 @@ public class testHelper
     }
 
     /**
-     * Return the test IDL ID
+     * Return the SQLERROR IDL ID
      * @return an ID
      */
     public static String id()
@@ -94,16 +94,16 @@ public class testHelper
         return _id;
     }
 
-    private final static String _id = "IDL:modEntreesSortiesZones/test:1.0";
+    private final static String _id = "IDL:modEntreesSortiesZones/SQLERROR:1.0";
 
     /**
-     * Read test from a marshalled stream
+     * Read SQLERROR from a marshalled stream
      * @param istream the input stream
-     * @return the readed test value
+     * @return the readed SQLERROR value
      */
-    public static modEntreesSortiesZones.test read(org.omg.CORBA.portable.InputStream istream)
+    public static modEntreesSortiesZones.SQLERROR read(org.omg.CORBA.portable.InputStream istream)
     {
-        modEntreesSortiesZones.test new_one = new modEntreesSortiesZones.test();
+        modEntreesSortiesZones.SQLERROR new_one = new modEntreesSortiesZones.SQLERROR();
 
         if (!istream.read_string().equals(id()))
          throw new org.omg.CORBA.MARSHAL();
@@ -113,11 +113,11 @@ public class testHelper
     }
 
     /**
-     * Write test into a marshalled stream
+     * Write SQLERROR into a marshalled stream
      * @param ostream the output stream
-     * @param value test value
+     * @param value SQLERROR value
      */
-    public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.test value)
+    public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.SQLERROR value)
     {
         ostream.write_string(id());
         ostream.write_string(value.raison);

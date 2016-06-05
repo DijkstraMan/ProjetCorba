@@ -24,6 +24,7 @@ module modEntreesSortiesZones
 	exception UtilisateurExistant {string raison;};
 	exception AutorisationExistante {string raison;};
 	exception AutorisationInconnue {string raison;};
+	exception SQLERROR {string raison;};
 	
 	struct Empreinte 
 	{
@@ -106,7 +107,7 @@ module modEntreesSortiesZones
 		void modifierAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationInconnue); 
 		void supprimerAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
 		//retourne les zones existantes
-		lesZones getZone();
+		lesZones getZone() raises (SQLERROR);
 	};
 	
 	interface ServiceJournalisation

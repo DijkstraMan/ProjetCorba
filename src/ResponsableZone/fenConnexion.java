@@ -8,10 +8,9 @@ package ResponsableZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import modEntreesSortiesZones.AutorisationInconnue;
+import modEntreesSortiesZones.SQLERROR;
 import modEntreesSortiesZones.ServiceAutorisation;
 import modEntreesSortiesZones.ServiceAutorisationHelper;
-import modEntreesSortiesZones.Testrer;
 import modEntreesSortiesZones.Zone;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -30,22 +29,31 @@ public class fenConnexion extends javax.swing.JFrame {
         initComponents();
         nomCorbaServAuthentification="CQUOISONNOM?";
         nomCorbaServAutorisation="SAUTH";
+        jSelectZone.removeAllItems();
         getZoneA();
-        //jSelectZone=new JComboBox((ComboBoxModel) getZone());
     }
     
     public final JComboBox<ComboItem> getZoneA()
     {
-        org.omg.CORBA.Object distantServAuto = connexionCorba(nomCorbaServAutorisation);
-        ServiceAutorisation servAuto= ServiceAutorisationHelper.narrow(distantServAuto);
-        Zone[] tabZ=servAuto.getZone();
-        ComboItem[] items = new ComboItem[20];
-        int nbZone=tabZ.length;
-        for (int i = 0; i < nbZone; i++) {
-            items[i]=new ComboItem(tabZ[i].idZne,tabZ[i].nomZne);
-            System.out.println(items[i]);
+        try {
+            org.omg.CORBA.Object distantServAuto = connexionCorba(nomCorbaServAutorisation);
+            ServiceAutorisation servAuto= ServiceAutorisationHelper.narrow(distantServAuto);
+            Zone[] lesZones=servAuto.getZone();
+            
+            int nbZone=lesZones.length;;
+            for (int i = 0; i < nbZone; i++) {
+                jSelectZone.addItem(new ComboItem(lesZones[i].idZne,lesZones[i].nomZne));
+            }
+            return null;
+        } catch (SQLERROR ex) {
+            System.out.println("lsdhfj");
+            Logger.getLogger(fenConnexion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new JComboBox(items);
+        catch (Exception e){
+            System.out.println("JE COMPRENDS PASDJVSDGUFIV");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -85,8 +93,6 @@ public class fenConnexion extends javax.swing.JFrame {
         jLabel2.setText("Mot de passe");
 
         jLabel3.setText("Nom de la zone");
-
-        jSelectZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

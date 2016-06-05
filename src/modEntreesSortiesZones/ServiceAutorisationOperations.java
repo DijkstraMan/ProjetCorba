@@ -46,6 +46,7 @@ public interface ServiceAutorisationOperations
     /**
      * Operation getZone
      */
-    public modEntreesSortiesZones.Zone[] getZone();
+    public modEntreesSortiesZones.Zone[] getZone()
+        throws modEntreesSortiesZones.SQLERROR;
 
 }

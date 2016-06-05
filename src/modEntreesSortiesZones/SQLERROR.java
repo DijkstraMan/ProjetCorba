@@ -1,11 +1,11 @@
 package modEntreesSortiesZones;
 
 /**
- * Exception definition : test
+ * Exception definition : SQLERROR
  * 
  * @author OpenORB Compiler
  */
-public final class test extends org.omg.CORBA.UserException
+public final class SQLERROR extends org.omg.CORBA.UserException
 {
     /**
      * Exception member raison
@@ -15,18 +15,18 @@ public final class test extends org.omg.CORBA.UserException
     /**
      * Default constructor
      */
-    public test()
+    public SQLERROR()
     {
-        super(testHelper.id());
+        super(SQLERRORHelper.id());
     }
 
     /**
      * Constructor with fields initialization
      * @param raison raison exception member
      */
-    public test(String raison)
+    public SQLERROR(String raison)
     {
-        super(testHelper.id());
+        super(SQLERRORHelper.id());
         this.raison = raison;
     }
 
@@ -34,9 +34,9 @@ public final class test extends org.omg.CORBA.UserException
      * Full constructor with fields initialization
      * @param raison raison exception member
      */
-    public test(String orb_reason, String raison)
+    public SQLERROR(String orb_reason, String raison)
     {
-        super(testHelper.id() +" " +  orb_reason);
+        super(SQLERRORHelper.id() +" " +  orb_reason);
         this.raison = raison;
     }
 
