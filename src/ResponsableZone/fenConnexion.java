@@ -28,7 +28,7 @@ public class fenConnexion extends javax.swing.JFrame {
     public fenConnexion() {
         initComponents();
         nomCorbaServAuthentification="CQUOISONNOM?";
-        nomCorbaServAutorisation="SAUTH";
+        nomCorbaServAutorisation="SAUTO";
         jSelectZone.removeAllItems();
         getZoneA();
     }
