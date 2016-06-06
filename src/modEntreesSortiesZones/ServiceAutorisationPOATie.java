@@ -65,55 +65,64 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation verifierAutorisation
      */
-    public boolean verifierAutorisation(String m, String n)
+    public boolean verifierAutorisation(String matricule, int idZone)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
-        return _tie.verifierAutorisation( m,  n);
+        return _tie.verifierAutorisation( matricule,  idZone);
     }
 
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void ajouterAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationExistante
     {
-        _tie.ajouterAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
+        _tie.ajouterAutorisationTemp( matricule,  idZone,  jrDebut,  jrFin);
     }
 
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void modifierAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
-        _tie.modifierAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
+        _tie.modifierAutorisationTemp( matricule,  idZone,  jrDebut,  jrFin);
     }
 
     /**
      * Operation ajouterAutorisationPerm
      */
-    public void ajouterAutorisationPerm(String m, String n, int hD, int hF)
+    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
         throws modEntreesSortiesZones.AutorisationExistante
     {
-        _tie.ajouterAutorisationPerm( m,  n,  hD,  hF);
+        _tie.ajouterAutorisationPerm( matricule,  idZone,  hrDebut,  hrFin);
     }
 
     /**
      * Operation modifierAutorisationPerm
      */
-    public void modifierAutorisationPerm(String m, String n, int hD, int hF)
+    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
-        _tie.modifierAutorisationPerm( m,  n,  hD,  hF);
+        _tie.modifierAutorisationPerm( matricule,  idZone,  hrDebut,  hrFin);
     }
 
     /**
      * Operation supprimerAutorisation
      */
-    public void supprimerAutorisation(String m, String n)
+    public void supprimerAutorisation(String matricule, int idZone)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
-        _tie.supprimerAutorisation( m,  n);
+        _tie.supprimerAutorisation( matricule,  idZone);
+    }
+
+    /**
+     * Operation getZone
+     */
+    public modEntreesSortiesZones.Zone[] getZone()
+        throws modEntreesSortiesZones.SQLERROR
+    {
+        return _tie.getZone();
     }
 
 }

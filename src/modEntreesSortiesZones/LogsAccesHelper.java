@@ -1,11 +1,11 @@
 package modEntreesSortiesZones;
 
 /** 
- * Helper class for : LogsAcces
+ * Helper class for : logsAcces
  *  
  * @author OpenORB Compiler
  */ 
-public class LogsAccesHelper
+public class logsAccesHelper
 {
     private static final boolean HAS_OPENORB;
     static {
@@ -19,19 +19,19 @@ public class LogsAccesHelper
         HAS_OPENORB = hasOpenORB;
     }
     /**
-     * Insert LogsAcces into an any
+     * Insert logsAcces into an any
      * @param a an any
-     * @param t LogsAcces value
+     * @param t logsAcces value
      */
     public static void insert(org.omg.CORBA.Any a, modEntreesSortiesZones.LogAcces[] t)
     {
-        a.insert_Streamable(new modEntreesSortiesZones.LogsAccesHolder(t));
+        a.insert_Streamable(new modEntreesSortiesZones.logsAccesHolder(t));
     }
 
     /**
-     * Extract LogsAcces from an any
+     * Extract logsAcces from an any
      * @param a an any
-     * @return the extracted LogsAcces value
+     * @return the extracted logsAcces value
      */
     public static modEntreesSortiesZones.LogAcces[] extract(org.omg.CORBA.Any a)
     {
@@ -42,11 +42,11 @@ public class LogsAccesHelper
             org.openorb.CORBA.Any any = (org.openorb.CORBA.Any)a;
             try {
                 org.omg.CORBA.portable.Streamable s = any.extract_Streamable();
-                if(s instanceof modEntreesSortiesZones.LogsAccesHolder)
-                    return ((modEntreesSortiesZones.LogsAccesHolder)s).value;
+                if(s instanceof modEntreesSortiesZones.logsAccesHolder)
+                    return ((modEntreesSortiesZones.logsAccesHolder)s).value;
             } catch (org.omg.CORBA.BAD_INV_ORDER ex) {
             }
-            modEntreesSortiesZones.LogsAccesHolder h = new modEntreesSortiesZones.LogsAccesHolder(read(a.create_input_stream()));
+            modEntreesSortiesZones.logsAccesHolder h = new modEntreesSortiesZones.logsAccesHolder(read(a.create_input_stream()));
             a.insert_Streamable(h);
             return h.value;
         }
@@ -59,20 +59,20 @@ public class LogsAccesHelper
     private static org.omg.CORBA.TypeCode _tc = null;
 
     /**
-     * Return the LogsAcces TypeCode
+     * Return the logsAcces TypeCode
      * @return a TypeCode
      */
     public static org.omg.CORBA.TypeCode type()
     {
         if (_tc == null) {
             org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-            _tc = orb.create_alias_tc(id(),"LogsAcces",orb.create_sequence_tc(0,modEntreesSortiesZones.LogAccesHelper.type()));
+            _tc = orb.create_alias_tc(id(),"logsAcces",orb.create_sequence_tc(0,modEntreesSortiesZones.LogAccesHelper.type()));
         }
         return _tc;
     }
 
     /**
-     * Return the LogsAcces IDL ID
+     * Return the logsAcces IDL ID
      * @return an ID
      */
     public static String id()
@@ -80,12 +80,12 @@ public class LogsAccesHelper
         return _id;
     }
 
-    private final static String _id = "IDL:modEntreesSortiesZones/LogsAcces:1.0";
+    private final static String _id = "IDL:modEntreesSortiesZones/logsAcces:1.0";
 
     /**
-     * Read LogsAcces from a marshalled stream
+     * Read logsAcces from a marshalled stream
      * @param istream the input stream
-     * @return the readed LogsAcces value
+     * @return the readed logsAcces value
      */
     public static modEntreesSortiesZones.LogAcces[] read(org.omg.CORBA.portable.InputStream istream)
     {
@@ -104,9 +104,9 @@ public class LogsAccesHelper
     }
 
     /**
-     * Write LogsAcces into a marshalled stream
+     * Write logsAcces into a marshalled stream
      * @param ostream the output stream
-     * @param value LogsAcces value
+     * @param value logsAcces value
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.LogAcces[] value)
     {

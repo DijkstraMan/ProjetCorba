@@ -1,58 +1,58 @@
 package modEntreesSortiesZones;
 
 /**
- * Holder class for : LogsAcces
+ * Holder class for : logsAcces
  * 
  * @author OpenORB Compiler
  */
-final public class LogsAccesHolder
+final public class logsAccesHolder
         implements org.omg.CORBA.portable.Streamable
 {
     /**
-     * Internal LogsAcces value
+     * Internal logsAcces value
      */
     public modEntreesSortiesZones.LogAcces[] value;
 
     /**
      * Default constructor
      */
-    public LogsAccesHolder()
+    public logsAccesHolder()
     { }
 
     /**
      * Constructor with value initialisation
      * @param initial the initial value
      */
-    public LogsAccesHolder(modEntreesSortiesZones.LogAcces[] initial)
+    public logsAccesHolder(modEntreesSortiesZones.LogAcces[] initial)
     {
         value = initial;
     }
 
     /**
-     * Read LogsAcces from a marshalled stream
+     * Read logsAcces from a marshalled stream
      * @param istream the input stream
      */
     public void _read(org.omg.CORBA.portable.InputStream istream)
     {
-        value = LogsAccesHelper.read(istream);
+        value = logsAccesHelper.read(istream);
     }
 
     /**
-     * Write LogsAcces into a marshalled stream
+     * Write logsAcces into a marshalled stream
      * @param ostream the output stream
      */
     public void _write(org.omg.CORBA.portable.OutputStream ostream)
     {
-        LogsAccesHelper.write(ostream,value);
+        logsAccesHelper.write(ostream,value);
     }
 
     /**
-     * Return the LogsAcces TypeCode
+     * Return the logsAcces TypeCode
      * @return a TypeCode
      */
     public org.omg.CORBA.TypeCode _type()
     {
-        return LogsAccesHelper.type();
+        return logsAccesHelper.type();
     }
 
 }

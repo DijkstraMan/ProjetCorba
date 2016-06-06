@@ -21,68 +21,9 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     private final static Class _opsClass = modEntreesSortiesZones.ServiceAuthentificationOperations.class;
 
     /**
-     * Operation modifierUtilisateur
-     */
-    public void modifierUtilisateur(String m, String n, String preU, String phoU)
-        throws modEntreesSortiesZones.UtilisateurInconnu
-    {
-        while(true)
-        {
-            if (!this._is_local())
-            {
-                org.omg.CORBA.portable.InputStream _input = null;
-                try
-                {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("modifierUtilisateur",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.NomUsrHelper.write(_output,n);
-                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preU);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoU);
-                    _input = this._invoke(_output);
-                    return;
-                }
-                catch(org.omg.CORBA.portable.RemarshalException _exception)
-                {
-                    continue;
-                }
-                catch(org.omg.CORBA.portable.ApplicationException _exception)
-                {
-                    String _exception_id = _exception.getId();
-                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
-                    {
-                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
-                    }
-
-                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
-                }
-                finally
-                {
-                    this._releaseReply(_input);
-                }
-            }
-            else
-            {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("modifierUtilisateur",_opsClass);
-                if (_so == null)
-                   continue;
-                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
-                try
-                {
-                    _self.modifierUtilisateur( m,  n,  preU,  phoU);
-                    return;
-                }
-                finally
-                {
-                    _servant_postinvoke(_so);
-                }
-            }
-        }
-    }
-
-    /**
      * Operation getUtilisateur
      */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(String m)
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -93,7 +34,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getUtilisateur",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     _input = this._invoke(_output);
                     modEntreesSortiesZones.Utilisateur _arg_ret = modEntreesSortiesZones.UtilisateurHelper.read(_input);
                     return _arg_ret;
@@ -125,56 +66,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.getUtilisateur( m);
-                }
-                finally
-                {
-                    _servant_postinvoke(_so);
-                }
-            }
-        }
-    }
-
-    /**
-     * Operation getUtilisateurs
-     */
-    public modEntreesSortiesZones.Utilisateur[] getUtilisateurs()
-    {
-        while(true)
-        {
-            if (!this._is_local())
-            {
-                org.omg.CORBA.portable.InputStream _input = null;
-                try
-                {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("getUtilisateurs",true);
-                    _input = this._invoke(_output);
-                    modEntreesSortiesZones.Utilisateur[] _arg_ret = modEntreesSortiesZones.LesUtilisateursHelper.read(_input);
-                    return _arg_ret;
-                }
-                catch(org.omg.CORBA.portable.RemarshalException _exception)
-                {
-                    continue;
-                }
-                catch(org.omg.CORBA.portable.ApplicationException _exception)
-                {
-                    String _exception_id = _exception.getId();
-                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
-                }
-                finally
-                {
-                    this._releaseReply(_input);
-                }
-            }
-            else
-            {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getUtilisateurs",_opsClass);
-                if (_so == null)
-                   continue;
-                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
-                try
-                {
-                    return _self.getUtilisateurs();
+                    return _self.getUtilisateur( matricule);
                 }
                 finally
                 {
@@ -187,8 +79,8 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String eC, String p)
-        throws modEntreesSortiesZones.UtilisateurInconnu
+    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue
     {
         while(true)
         {
@@ -198,8 +90,8 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationPorte",true);
-                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,eC);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,p);
+                    modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,empCollab);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     _input = this._invoke(_output);
                     String _arg_ret = modEntreesSortiesZones.NomUsrHelper.read(_input);
                     return _arg_ret;
@@ -214,6 +106,11 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                     if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
                     {
                         throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    if (_exception_id.equals(modEntreesSortiesZones.EmpreinteInconnueHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.EmpreinteInconnueHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
@@ -231,7 +128,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAuthentificationPorte( eC,  p);
+                    return _self.verifierAuthentificationPorte( empCollab,  phoUsr);
                 }
                 finally
                 {
@@ -242,9 +139,9 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     }
 
     /**
-     * Operation verifierAuthentificationLogiciel
+     * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogiciel(String m, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -254,8 +151,8 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 org.omg.CORBA.portable.InputStream _input = null;
                 try
                 {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogiciel",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogicielResp",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
                     _input = this._invoke(_output);
                     boolean _arg_ret = _input.read_boolean();
@@ -282,13 +179,127 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogiciel",_opsClass);
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogicielResp",_opsClass);
                 if (_so == null)
                    continue;
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAuthentificationLogiciel( m,  pwd);
+                    return _self.verifierAuthentificationLogicielResp( matricule,  pwd);
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielRH
+     */
+    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogicielRH",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
+                    _input = this._invoke(_output);
+                    boolean _arg_ret = _input.read_boolean();
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogicielRH",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    return _self.verifierAuthentificationLogicielRH( matricule,  pwd);
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielAccueil
+     */
+    public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogicielAccueil",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
+                    _input = this._invoke(_output);
+                    boolean _arg_ret = _input.read_boolean();
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationLogicielAccueil",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    return _self.verifierAuthentificationLogicielAccueil( matricule,  pwd);
                 }
                 finally
                 {
@@ -301,7 +312,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation ajouterCollaborateurTemp
      */
-    public void ajouterCollaborateurTemp(String m, String n, String preU, String phoU)
+    public void ajouterCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         while(true)
@@ -312,10 +323,10 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterCollaborateurTemp",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.NomUsrHelper.write(_output,n);
-                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preU);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoU);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
+                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -346,7 +357,66 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterCollaborateurTemp( m,  n,  preU,  phoU);
+                    _self.ajouterCollaborateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation modifierUtilisateurTemp
+     */
+    public void modifierUtilisateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("modifierUtilisateurTemp",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
+                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
+                    _input = this._invoke(_output);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("modifierUtilisateurTemp",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    _self.modifierUtilisateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
                     return;
                 }
                 finally
@@ -360,7 +430,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation ajouterCollaborateurPerm
      */
-    public void ajouterCollaborateurPerm(String m, String n, String preU, String phoU, String pwd)
+    public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         while(true)
@@ -371,10 +441,10 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterCollaborateurPerm",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.NomUsrHelper.write(_output,n);
-                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preU);
-                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoU);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
+                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
                     _input = this._invoke(_output);
                     return;
@@ -406,8 +476,116 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterCollaborateurPerm( m,  n,  preU,  phoU,  pwd);
+                    _self.ajouterCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr,  pwd);
                     return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation modifierUtilisateurPerm
+     */
+    public void modifierUtilisateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("modifierUtilisateurPerm",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
+                    modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
+                    modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
+                    _input = this._invoke(_output);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("modifierUtilisateurPerm",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    _self.modifierUtilisateurPerm( matricule,  nomUsr,  preUsr,  phoUsr);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation getUtilisateurs
+     */
+    public modEntreesSortiesZones.Utilisateur[] getUtilisateurs()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getUtilisateurs",true);
+                    _input = this._invoke(_output);
+                    modEntreesSortiesZones.Utilisateur[] _arg_ret = modEntreesSortiesZones.lesUtilisateursHelper.read(_input);
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getUtilisateurs",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    return _self.getUtilisateurs();
                 }
                 finally
                 {

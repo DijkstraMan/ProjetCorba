@@ -10,19 +10,19 @@ public interface ServiceEmpreinteOperations
     /**
      * Operation verifierEmpreinte
      */
-    public boolean verifierEmpreinte(String eC, String m)
+    public boolean verifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
     /**
      * Operation ajouterEmpreinte
      */
-    public void ajouterEmpreinte(String e, String m)
+    public void ajouterEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteExistante;
 
     /**
      * Operation modifierEmpreinte
      */
-    public void modifierEmpreinte(String e, String m)
+    public void modifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
 }

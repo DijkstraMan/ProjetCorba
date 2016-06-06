@@ -76,10 +76,10 @@ public class EmpreinteHelper
                 org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[2];
 
                 _members[0] = new org.omg.CORBA.StructMember();
-                _members[0].name = "mat";
+                _members[0].name = "matricule";
                 _members[0].type = modEntreesSortiesZones.MatriculeHelper.type();
                 _members[1] = new org.omg.CORBA.StructMember();
-                _members[1].name = "eC";
+                _members[1].name = "empCollab";
                 _members[1].type = modEntreesSortiesZones.EmpreinteCollabHelper.type();
                 _tc = orb.create_struct_tc(id(),"Empreinte",_members);
                 _working = false;
@@ -108,8 +108,8 @@ public class EmpreinteHelper
     {
         modEntreesSortiesZones.Empreinte new_one = new modEntreesSortiesZones.Empreinte();
 
-        new_one.mat = modEntreesSortiesZones.MatriculeHelper.read(istream);
-        new_one.eC = modEntreesSortiesZones.EmpreinteCollabHelper.read(istream);
+        new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
+        new_one.empCollab = modEntreesSortiesZones.EmpreinteCollabHelper.read(istream);
 
         return new_one;
     }
@@ -121,8 +121,8 @@ public class EmpreinteHelper
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.Empreinte value)
     {
-        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.mat);
-        modEntreesSortiesZones.EmpreinteCollabHelper.write(ostream,value.eC);
+        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
+        modEntreesSortiesZones.EmpreinteCollabHelper.write(ostream,value.empCollab);
     }
 
 }

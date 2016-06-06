@@ -50,8 +50,8 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
-        String arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
-        int arg2_in = modEntreesSortiesZones.TimeStampHelper.read(_is);
+        int arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
+        String arg2_in = modEntreesSortiesZones.dateLogHelper.read(_is);
         modEntreesSortiesZones.TypeAcces arg3_in = modEntreesSortiesZones.TypeAccesHelper.read(_is);
 
         ajouterEntree(arg0_in, arg1_in, arg2_in, arg3_in);
@@ -69,7 +69,7 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         modEntreesSortiesZones.LogAcces[] _arg_result = consulterAcces();
 
         _output = handler.createReply();
-        modEntreesSortiesZones.LogsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
 
         return _output;
     }
@@ -82,7 +82,7 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         modEntreesSortiesZones.LogAcces[] _arg_result = consulterRefus();
 
         _output = handler.createReply();
-        modEntreesSortiesZones.LogsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
 
         return _output;
     }

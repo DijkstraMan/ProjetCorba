@@ -76,16 +76,16 @@ public class AutorisationHelper
                 org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[4];
 
                 _members[0] = new org.omg.CORBA.StructMember();
-                _members[0].name = "mat";
+                _members[0].name = "matricule";
                 _members[0].type = modEntreesSortiesZones.MatriculeHelper.type();
                 _members[1] = new org.omg.CORBA.StructMember();
-                _members[1].name = "n";
+                _members[1].name = "idZone";
                 _members[1].type = modEntreesSortiesZones.idZoneHelper.type();
                 _members[2] = new org.omg.CORBA.StructMember();
-                _members[2].name = "hD";
+                _members[2].name = "hrDebut";
                 _members[2].type = modEntreesSortiesZones.HeureDebutHelper.type();
                 _members[3] = new org.omg.CORBA.StructMember();
-                _members[3].name = "hF";
+                _members[3].name = "hrFin";
                 _members[3].type = modEntreesSortiesZones.HeureFinHelper.type();
                 _tc = orb.create_struct_tc(id(),"Autorisation",_members);
                 _working = false;
@@ -114,10 +114,10 @@ public class AutorisationHelper
     {
         modEntreesSortiesZones.Autorisation new_one = new modEntreesSortiesZones.Autorisation();
 
-        new_one.mat = modEntreesSortiesZones.MatriculeHelper.read(istream);
-        new_one.n = modEntreesSortiesZones.idZoneHelper.read(istream);
-        new_one.hD = modEntreesSortiesZones.HeureDebutHelper.read(istream);
-        new_one.hF = modEntreesSortiesZones.HeureFinHelper.read(istream);
+        new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
+        new_one.idZone = modEntreesSortiesZones.idZoneHelper.read(istream);
+        new_one.hrDebut = modEntreesSortiesZones.HeureDebutHelper.read(istream);
+        new_one.hrFin = modEntreesSortiesZones.HeureFinHelper.read(istream);
 
         return new_one;
     }
@@ -129,10 +129,10 @@ public class AutorisationHelper
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.Autorisation value)
     {
-        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.mat);
-        modEntreesSortiesZones.idZoneHelper.write(ostream,value.n);
-        modEntreesSortiesZones.HeureDebutHelper.write(ostream,value.hD);
-        modEntreesSortiesZones.HeureFinHelper.write(ostream,value.hF);
+        modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
+        modEntreesSortiesZones.idZoneHelper.write(ostream,value.idZone);
+        modEntreesSortiesZones.HeureDebutHelper.write(ostream,value.hrDebut);
+        modEntreesSortiesZones.HeureFinHelper.write(ostream,value.hrFin);
     }
 
 }

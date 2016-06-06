@@ -12,7 +12,7 @@ public class idZoneHelper
      * @param a an any
      * @param t idZone value
      */
-    public static void insert(org.omg.CORBA.Any a, String t)
+    public static void insert(org.omg.CORBA.Any a, int t)
     {
         a.type(type());
         write(a.create_output_stream(),t);
@@ -23,7 +23,7 @@ public class idZoneHelper
      * @param a an any
      * @return the extracted idZone value
      */
-    public static String extract(org.omg.CORBA.Any a)
+    public static int extract(org.omg.CORBA.Any a)
     {
         if (!a.type().equal(type()))
             throw new org.omg.CORBA.MARSHAL();
@@ -43,7 +43,7 @@ public class idZoneHelper
     {
         if (_tc == null) {
             org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-            _tc = orb.create_alias_tc(id(),"idZone",orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string));
+            _tc = orb.create_alias_tc(id(),"idZone",orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_long));
         }
         return _tc;
     }
@@ -64,10 +64,10 @@ public class idZoneHelper
      * @param istream the input stream
      * @return the readed idZone value
      */
-    public static String read(org.omg.CORBA.portable.InputStream istream)
+    public static int read(org.omg.CORBA.portable.InputStream istream)
     {
-        String new_one;
-        new_one = istream.read_string();
+        int new_one;
+        new_one = istream.read_long();
 
         return new_one;
     }
@@ -77,9 +77,9 @@ public class idZoneHelper
      * @param ostream the output stream
      * @param value idZone value
      */
-    public static void write(org.omg.CORBA.portable.OutputStream ostream, String value)
+    public static void write(org.omg.CORBA.portable.OutputStream ostream, int value)
     {
-        ostream.write_string(value);
+        ostream.write_long(value);
     }
 
 }

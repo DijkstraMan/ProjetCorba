@@ -23,7 +23,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
     /**
      * Operation ajouterEntree
      */
-    public void ajouterEntree(String m, String n, int t, modEntreesSortiesZones.TypeAcces a)
+    public void ajouterEntree(String matricule, int idZone, String t, modEntreesSortiesZones.TypeAcces typeAcces)
     {
         while(true)
         {
@@ -33,10 +33,10 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterEntree",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.idZoneHelper.write(_output,n);
-                    modEntreesSortiesZones.TimeStampHelper.write(_output,t);
-                    modEntreesSortiesZones.TypeAccesHelper.write(_output,a);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
+                    modEntreesSortiesZones.dateLogHelper.write(_output,t);
+                    modEntreesSortiesZones.TypeAccesHelper.write(_output,typeAcces);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -62,7 +62,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                 modEntreesSortiesZones.ServiceJournalisationOperations _self = (modEntreesSortiesZones.ServiceJournalisationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterEntree( m,  n,  t,  a);
+                    _self.ajouterEntree( matricule,  idZone,  t,  typeAcces);
                     return;
                 }
                 finally
@@ -87,7 +87,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("consulterAcces",true);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.LogsAccesHelper.read(_input);
+                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.logsAccesHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -136,7 +136,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("consulterRefus",true);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.LogsAccesHelper.read(_input);
+                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.logsAccesHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)

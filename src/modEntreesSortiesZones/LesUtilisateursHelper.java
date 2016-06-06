@@ -1,11 +1,11 @@
 package modEntreesSortiesZones;
 
 /** 
- * Helper class for : LesUtilisateurs
+ * Helper class for : lesUtilisateurs
  *  
  * @author OpenORB Compiler
  */ 
-public class LesUtilisateursHelper
+public class lesUtilisateursHelper
 {
     private static final boolean HAS_OPENORB;
     static {
@@ -19,19 +19,19 @@ public class LesUtilisateursHelper
         HAS_OPENORB = hasOpenORB;
     }
     /**
-     * Insert LesUtilisateurs into an any
+     * Insert lesUtilisateurs into an any
      * @param a an any
-     * @param t LesUtilisateurs value
+     * @param t lesUtilisateurs value
      */
     public static void insert(org.omg.CORBA.Any a, modEntreesSortiesZones.Utilisateur[] t)
     {
-        a.insert_Streamable(new modEntreesSortiesZones.LesUtilisateursHolder(t));
+        a.insert_Streamable(new modEntreesSortiesZones.lesUtilisateursHolder(t));
     }
 
     /**
-     * Extract LesUtilisateurs from an any
+     * Extract lesUtilisateurs from an any
      * @param a an any
-     * @return the extracted LesUtilisateurs value
+     * @return the extracted lesUtilisateurs value
      */
     public static modEntreesSortiesZones.Utilisateur[] extract(org.omg.CORBA.Any a)
     {
@@ -42,11 +42,11 @@ public class LesUtilisateursHelper
             org.openorb.CORBA.Any any = (org.openorb.CORBA.Any)a;
             try {
                 org.omg.CORBA.portable.Streamable s = any.extract_Streamable();
-                if(s instanceof modEntreesSortiesZones.LesUtilisateursHolder)
-                    return ((modEntreesSortiesZones.LesUtilisateursHolder)s).value;
+                if(s instanceof modEntreesSortiesZones.lesUtilisateursHolder)
+                    return ((modEntreesSortiesZones.lesUtilisateursHolder)s).value;
             } catch (org.omg.CORBA.BAD_INV_ORDER ex) {
             }
-            modEntreesSortiesZones.LesUtilisateursHolder h = new modEntreesSortiesZones.LesUtilisateursHolder(read(a.create_input_stream()));
+            modEntreesSortiesZones.lesUtilisateursHolder h = new modEntreesSortiesZones.lesUtilisateursHolder(read(a.create_input_stream()));
             a.insert_Streamable(h);
             return h.value;
         }
@@ -59,20 +59,20 @@ public class LesUtilisateursHelper
     private static org.omg.CORBA.TypeCode _tc = null;
 
     /**
-     * Return the LesUtilisateurs TypeCode
+     * Return the lesUtilisateurs TypeCode
      * @return a TypeCode
      */
     public static org.omg.CORBA.TypeCode type()
     {
         if (_tc == null) {
             org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-            _tc = orb.create_alias_tc(id(),"LesUtilisateurs",orb.create_sequence_tc(0,modEntreesSortiesZones.UtilisateurHelper.type()));
+            _tc = orb.create_alias_tc(id(),"lesUtilisateurs",orb.create_sequence_tc(0,modEntreesSortiesZones.UtilisateurHelper.type()));
         }
         return _tc;
     }
 
     /**
-     * Return the LesUtilisateurs IDL ID
+     * Return the lesUtilisateurs IDL ID
      * @return an ID
      */
     public static String id()
@@ -80,12 +80,12 @@ public class LesUtilisateursHelper
         return _id;
     }
 
-    private final static String _id = "IDL:modEntreesSortiesZones/LesUtilisateurs:1.0";
+    private final static String _id = "IDL:modEntreesSortiesZones/lesUtilisateurs:1.0";
 
     /**
-     * Read LesUtilisateurs from a marshalled stream
+     * Read lesUtilisateurs from a marshalled stream
      * @param istream the input stream
-     * @return the readed LesUtilisateurs value
+     * @return the readed lesUtilisateurs value
      */
     public static modEntreesSortiesZones.Utilisateur[] read(org.omg.CORBA.portable.InputStream istream)
     {
@@ -104,9 +104,9 @@ public class LesUtilisateursHelper
     }
 
     /**
-     * Write LesUtilisateurs into a marshalled stream
+     * Write lesUtilisateurs into a marshalled stream
      * @param ostream the output stream
-     * @param value LesUtilisateurs value
+     * @param value lesUtilisateurs value
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, modEntreesSortiesZones.Utilisateur[] value)
     {

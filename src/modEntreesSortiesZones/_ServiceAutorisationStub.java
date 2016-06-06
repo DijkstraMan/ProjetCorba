@@ -23,7 +23,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation verifierAutorisation
      */
-    public boolean verifierAutorisation(String m, String n)
+    public boolean verifierAutorisation(String matricule, int idZone)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -34,8 +34,8 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierAutorisation",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.idZoneHelper.write(_output,n);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
                     _input = this._invoke(_output);
                     boolean _arg_ret = _input.read_boolean();
                     return _arg_ret;
@@ -67,7 +67,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAutorisation( m,  n);
+                    return _self.verifierAutorisation( matricule,  idZone);
                 }
                 finally
                 {
@@ -80,7 +80,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void ajouterAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationExistante
     {
         while(true)
@@ -91,12 +91,10 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterAutorisationTemp",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.idZoneHelper.write(_output,n);
-                    modEntreesSortiesZones.JourDebutHelper.write(_output,jD);
-                    modEntreesSortiesZones.JourFinHelper.write(_output,jF);
-                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hD);
-                    modEntreesSortiesZones.HeureFinHelper.write(_output,hF);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
+                    modEntreesSortiesZones.JourDebutHelper.write(_output,jrDebut);
+                    modEntreesSortiesZones.JourFinHelper.write(_output,jrFin);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -127,7 +125,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
+                    _self.ajouterAutorisationTemp( matricule,  idZone,  jrDebut,  jrFin);
                     return;
                 }
                 finally
@@ -141,7 +139,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(String m, String n, String jD, String jF, int hD, int hF)
+    public void modifierAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -152,12 +150,10 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("modifierAutorisationTemp",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.idZoneHelper.write(_output,n);
-                    modEntreesSortiesZones.JourDebutHelper.write(_output,jD);
-                    modEntreesSortiesZones.JourFinHelper.write(_output,jF);
-                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hD);
-                    modEntreesSortiesZones.HeureFinHelper.write(_output,hF);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
+                    modEntreesSortiesZones.JourDebutHelper.write(_output,jrDebut);
+                    modEntreesSortiesZones.JourFinHelper.write(_output,jrFin);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -188,7 +184,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    _self.modifierAutorisationTemp( m,  n,  jD,  jF,  hD,  hF);
+                    _self.modifierAutorisationTemp( matricule,  idZone,  jrDebut,  jrFin);
                     return;
                 }
                 finally
@@ -202,7 +198,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterAutorisationPerm
      */
-    public void ajouterAutorisationPerm(String m, String n, int hD, int hF)
+    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
         throws modEntreesSortiesZones.AutorisationExistante
     {
         while(true)
@@ -213,10 +209,10 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterAutorisationPerm",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.idZoneHelper.write(_output,n);
-                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hD);
-                    modEntreesSortiesZones.HeureFinHelper.write(_output,hF);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
+                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hrDebut);
+                    modEntreesSortiesZones.HeureFinHelper.write(_output,hrFin);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -247,7 +243,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    _self.ajouterAutorisationPerm( m,  n,  hD,  hF);
+                    _self.ajouterAutorisationPerm( matricule,  idZone,  hrDebut,  hrFin);
                     return;
                 }
                 finally
@@ -261,7 +257,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierAutorisationPerm
      */
-    public void modifierAutorisationPerm(String m, String n, int hD, int hF)
+    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -272,10 +268,10 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("modifierAutorisationPerm",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.idZoneHelper.write(_output,n);
-                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hD);
-                    modEntreesSortiesZones.HeureFinHelper.write(_output,hF);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
+                    modEntreesSortiesZones.HeureDebutHelper.write(_output,hrDebut);
+                    modEntreesSortiesZones.HeureFinHelper.write(_output,hrFin);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -306,7 +302,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    _self.modifierAutorisationPerm( m,  n,  hD,  hF);
+                    _self.modifierAutorisationPerm( matricule,  idZone,  hrDebut,  hrFin);
                     return;
                 }
                 finally
@@ -320,7 +316,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation supprimerAutorisation
      */
-    public void supprimerAutorisation(String m, String n)
+    public void supprimerAutorisation(String matricule, int idZone)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -331,8 +327,8 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("supprimerAutorisation",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,m);
-                    modEntreesSortiesZones.idZoneHelper.write(_output,n);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -363,8 +359,63 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    _self.supprimerAutorisation( m,  n);
+                    _self.supprimerAutorisation( matricule,  idZone);
                     return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation getZone
+     */
+    public modEntreesSortiesZones.Zone[] getZone()
+        throws modEntreesSortiesZones.SQLERROR
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getZone",true);
+                    _input = this._invoke(_output);
+                    modEntreesSortiesZones.Zone[] _arg_ret = modEntreesSortiesZones.lesZonesHelper.read(_input);
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.SQLERRORHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.SQLERRORHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getZone",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
+                try
+                {
+                    return _self.getZone();
                 }
                 finally
                 {

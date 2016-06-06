@@ -8,14 +8,14 @@ package modEntreesSortiesZones;
 public final class LogAcces implements org.omg.CORBA.portable.IDLEntity
 {
     /**
-     * Struct member m
+     * Struct member matricule
      */
-    public String m;
+    public String matricule;
 
     /**
-     * Struct member n
+     * Struct member idZone
      */
-    public String n;
+    public int idZone;
 
     /**
      * Struct member t
@@ -23,9 +23,9 @@ public final class LogAcces implements org.omg.CORBA.portable.IDLEntity
     public int t;
 
     /**
-     * Struct member a
+     * Struct member typeAcces
      */
-    public modEntreesSortiesZones.TypeAcces a;
+    public modEntreesSortiesZones.TypeAcces typeAcces;
 
     /**
      * Default constructor
@@ -35,17 +35,17 @@ public final class LogAcces implements org.omg.CORBA.portable.IDLEntity
 
     /**
      * Constructor with fields initialization
-     * @param m m struct member
-     * @param n n struct member
+     * @param matricule matricule struct member
+     * @param idZone idZone struct member
      * @param t t struct member
-     * @param a a struct member
+     * @param typeAcces typeAcces struct member
      */
-    public LogAcces(String m, String n, int t, modEntreesSortiesZones.TypeAcces a)
+    public LogAcces(String matricule, int idZone, int t, modEntreesSortiesZones.TypeAcces typeAcces)
     {
-        this.m = m;
-        this.n = n;
+        this.matricule = matricule;
+        this.idZone = idZone;
         this.t = t;
-        this.a = a;
+        this.typeAcces = typeAcces;
     }
 
 }
