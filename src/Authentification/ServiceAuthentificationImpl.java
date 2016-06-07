@@ -96,7 +96,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         org.omg.CORBA.Object distantSEmp = nameRoot.resolve(nameToFind);
         areaTextEvent.setText(areaTextEvent.getText()+"ServiceEmpreinte '" + idObj + "' trouvé auprès du service de noms. IOR de l'objet : \n"
                                 +orb.object_to_string(distantSEmp)+"\n");
-        // Casting de l'objet CORBA au type empreinte
+        // Casting de l'objet CORBA au type ServiceEmpreinte
         monServEmp = modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(distantSEmp);   
         //Finalement, on vérifie l'empreinte
         return monServEmp.verifierEmpreinte(empCollab, matricule);
@@ -134,7 +134,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 //lancerVerifierEmpreinte(empCollab, matricule);
             }
             else {
-                //On tente de chercher dans la basePerm
+                //On tente de chercher dans la baseTemp
                 closeConnexion();
                 connexion("Temp");
                 rs = lancerInterrogation(query);
