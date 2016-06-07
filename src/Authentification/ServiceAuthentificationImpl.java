@@ -214,7 +214,8 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 throw new UtilisateurInconnu("Erreur: utilisateur inconnu.");
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UtilisateurInconnu("Erreur: utilisateur inconnu.\n" + ex.getMessage());
         }
         return res;
     }
