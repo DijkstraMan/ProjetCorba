@@ -547,9 +547,9 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     }
 
     /**
-     * Operation getUtilisateurs
+     * Operation getCollaborateursTemporaires
      */
-    public modEntreesSortiesZones.Utilisateur[] getUtilisateurs()
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursTemporaires()
     {
         while(true)
         {
@@ -558,7 +558,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 org.omg.CORBA.portable.InputStream _input = null;
                 try
                 {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("getUtilisateurs",true);
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getCollaborateursTemporaires",true);
                     _input = this._invoke(_output);
                     modEntreesSortiesZones.Utilisateur[] _arg_ret = modEntreesSortiesZones.lesUtilisateursHelper.read(_input);
                     return _arg_ret;
@@ -579,13 +579,62 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getUtilisateurs",_opsClass);
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getCollaborateursTemporaires",_opsClass);
                 if (_so == null)
                    continue;
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.getUtilisateurs();
+                    return _self.getCollaborateursTemporaires();
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation getCollaborateursPermanents
+     */
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursPermanents()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getCollaborateursPermanents",true);
+                    _input = this._invoke(_output);
+                    modEntreesSortiesZones.Utilisateur[] _arg_ret = modEntreesSortiesZones.lesUtilisateursHelper.read(_input);
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getCollaborateursPermanents",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
+                try
+                {
+                    return _self.getCollaborateursPermanents();
                 }
                 finally
                 {

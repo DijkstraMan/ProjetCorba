@@ -144,11 +144,19 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
-     * Operation getUtilisateurs
+     * Operation getCollaborateursTemporaires
      */
-    public modEntreesSortiesZones.Utilisateur[] getUtilisateurs()
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursTemporaires()
     {
-        return _tie.getUtilisateurs();
+        return _tie.getCollaborateursTemporaires();
+    }
+
+    /**
+     * Operation getCollaborateursPermanents
+     */
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursPermanents()
+    {
+        return _tie.getCollaborateursPermanents();
     }
 
 }

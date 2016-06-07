@@ -86,7 +86,8 @@ module modEntreesSortiesZones
 		void ajouterCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr, in PasswordPerm pwd) raises (UtilisateurExistant);
                 void modifierUtilisateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
 		//recuperer utilisateurs pour listes
-                lesUtilisateurs getUtilisateurs();
+                lesUtilisateurs getCollaborateursTemporaires();
+                lesUtilisateurs getCollaborateursPermanents();
 	};
 
 	interface ServiceEmpreinte

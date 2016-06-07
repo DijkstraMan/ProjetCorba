@@ -35,10 +35,12 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                     new Operation_ajouterCollaborateurPerm());
             operationMap.put("ajouterCollaborateurTemp",
                     new Operation_ajouterCollaborateurTemp());
+            operationMap.put("getCollaborateursPermanents",
+                    new Operation_getCollaborateursPermanents());
+            operationMap.put("getCollaborateursTemporaires",
+                    new Operation_getCollaborateursTemporaires());
             operationMap.put("getUtilisateur",
                     new Operation_getUtilisateur());
-            operationMap.put("getUtilisateurs",
-                    new Operation_getUtilisateurs());
             operationMap.put("modifierUtilisateurPerm",
                     new Operation_modifierUtilisateurPerm());
             operationMap.put("modifierUtilisateurTemp",
@@ -284,12 +286,25 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         return _output;
     }
 
-    private org.omg.CORBA.portable.OutputStream _invoke_getUtilisateurs(
+    private org.omg.CORBA.portable.OutputStream _invoke_getCollaborateursTemporaires(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
 
-        modEntreesSortiesZones.Utilisateur[] _arg_result = getUtilisateurs();
+        modEntreesSortiesZones.Utilisateur[] _arg_result = getCollaborateursTemporaires();
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.lesUtilisateursHelper.write(_output,_arg_result);
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_getCollaborateursPermanents(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        modEntreesSortiesZones.Utilisateur[] _arg_result = getCollaborateursPermanents();
 
         _output = handler.createReply();
         modEntreesSortiesZones.lesUtilisateursHelper.write(_output,_arg_result);
@@ -395,13 +410,23 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         }
     }
 
-    private static final class Operation_getUtilisateurs extends AbstractOperation
+    private static final class Operation_getCollaborateursTemporaires extends AbstractOperation
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
-            return target._invoke_getUtilisateurs(_is, handler);
+            return target._invoke_getCollaborateursTemporaires(_is, handler);
+        }
+    }
+
+    private static final class Operation_getCollaborateursPermanents extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAuthentificationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_getCollaborateursPermanents(_is, handler);
         }
     }
 

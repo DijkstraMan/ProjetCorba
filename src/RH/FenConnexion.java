@@ -23,19 +23,12 @@ public class FenConnexion extends javax.swing.JFrame {
     
     private ServiceAuthentification monServAuth;
 
-    public ServiceAuthentification getMonServAuth() {
-        return monServAuth;
-    }
-
-    public void setMonServAuth(ServiceAuthentification monServAuth) {
-        monServAuth = monServAuth;
-    }
-    
     /**
      * Creates new form FenConnexion
      */
-    public FenConnexion() {
+    public FenConnexion(ServiceAuthentification monServAuth) {
         initComponents();
+        this.monServAuth = monServAuth;
     }
 
     /**
@@ -116,14 +109,18 @@ public class FenConnexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
-        try {
-            if(monServAuth.verifierAuthentificationLogicielRH(jTextFieldMatricule.getText(), Arrays.toString(jPasswordField.getPassword()))) {
-                  
+        /*try {
+            if(monServAuth.verifierAuthentificationLogicielRH(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
+                
             } else {
-            }
+                
+            }             
         } catch (UtilisateurInconnu ex) {
-            Logger.getLogger(FenConnexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            //Logger.getLogger(FenConnexion.class.getName()).log(Level.SEVERE, null, ex);
+        }*/ 
+        FenGestion fg = new FenGestion(monServAuth);
+        this.setVisible(false);
+        fg.setVisible(true);
     }//GEN-LAST:event_jButtonConnexionActionPerformed
 
     /**
@@ -168,16 +165,19 @@ public class FenConnexion extends javax.swing.JFrame {
                 nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
                 // Recherche aupres du naming service
                 org.omg.CORBA.Object distantSAuth = nameRoot.resolve(nameToFind);
+                System.out.println("Objet '" + idObj + "' trouve aupres du service de noms. IOR de l'objet :");
+                System.out.println(orb.object_to_string(distantSAuth));
                 // Casting de l'objet CORBA au type ServiceAuthentification
                 ServiceAuthentification monSAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
                 
                 // Appel de l'interface graphique
-                FenConnexion myFen = new FenConnexion();
+                FenConnexion myFen = new FenConnexion(monSAuth);
                 myFen.setVisible(true);
                 myFen.setLocationRelativeTo(null);
-                myFen.setMonServAuth(monSAuth);
+                //myFen.setMonServAuth(monSAuth);
             }
             catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
+                Logger.getLogger(FenConnexion.class.getName()).log(Level.SEVERE, null, e);
             }
         });
     }

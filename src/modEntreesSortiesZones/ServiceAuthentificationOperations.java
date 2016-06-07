@@ -62,8 +62,13 @@ public interface ServiceAuthentificationOperations
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
-     * Operation getUtilisateurs
+     * Operation getCollaborateursTemporaires
      */
-    public modEntreesSortiesZones.Utilisateur[] getUtilisateurs();
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursTemporaires();
+
+    /**
+     * Operation getCollaborateursPermanents
+     */
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursPermanents();
 
 }
