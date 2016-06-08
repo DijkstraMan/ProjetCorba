@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTextArea;
 import modEntreesSortiesZones.EmpreinteExistante;
 import modEntreesSortiesZones.EmpreinteInconnue;
@@ -18,6 +20,7 @@ import org.omg.CosNaming.NamingContext;
 import org.omg.PortableServer.POA;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modEntreesSortiesZones.Empreinte;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -136,6 +139,32 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
         } catch (Exception ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public Empreinte[] getEmpreintes() {
+        mAreaTextEvent.setText(mAreaTextEvent.getText()+"Demande de la liste des empreintes\n"); 
+        List<Empreinte> lTabEmpreintes = new ArrayList();
+        try {
+            String lQuery = "SELECT matricule_utilisateur, empreintecollab "
+                    + "from empreinte"
+                    + "order by matricule_utilisateur;";
+            ResultSet lRs;
+            connexion();
+            lRs = lancerInterrogation(lQuery);
+            while(lRs.next())
+            {
+                lTabEmpreintes.add(new Empreinte(lRs.getString("empreintecollab"), lRs.getString("matricule_utilisateur")));           
+            }
+            closeConnexion();
+            Empreinte[] lLesEmpreintes = new Empreinte[lTabEmpreintes.size()];
+            lLesEmpreintes = lTabEmpreintes.toArray(lLesEmpreintes);
+                    
+            mAreaTextEvent.setText(mAreaTextEvent.getText()+"Liste des empreintes envoyée\n");
+            return lLesEmpreintes;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     @Override
