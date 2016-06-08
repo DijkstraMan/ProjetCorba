@@ -93,11 +93,11 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jButtonValider" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldMatricule" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldNom" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldPrenom" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldPhoto" max="32767" attributes="0"/>
+                                  <Component id="jButtonAjouter" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldMatriculeAjout" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldNomAjout" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldPrenomAjout" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldPhotoAjout" max="32767" attributes="0"/>
                                   <Component id="jPasswordField" min="-2" pref="227" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -114,22 +114,22 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldMatricule" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldMatriculeAjout" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldNom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldNomAjout" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldPrenom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldPrenomAjout" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldPhoto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldPhotoAjout" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -137,7 +137,7 @@
                           <Component id="jPasswordField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButtonValider" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jButtonAjouter" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -184,17 +184,17 @@
                 <Property name="text" type="java.lang.String" value="Mot de passe : "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldMatricule">
+            <Component class="javax.swing.JTextField" name="jTextFieldMatriculeAjout">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldNom">
+            <Component class="javax.swing.JTextField" name="jTextFieldNomAjout">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldPrenom">
+            <Component class="javax.swing.JTextField" name="jTextFieldPrenomAjout">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldPhoto">
+            <Component class="javax.swing.JTextField" name="jTextFieldPhotoAjout">
             </Component>
             <Component class="javax.swing.JPasswordField" name="jPasswordField">
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonValider">
+            <Component class="javax.swing.JButton" name="jButtonAjouter">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
@@ -202,7 +202,7 @@
                 <Property name="text" type="java.lang.String" value="Ajouter"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonValiderActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAjouterActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel11">
@@ -240,11 +240,11 @@
                               </Group>
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jButtonValider1" alignment="0" pref="227" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldMatricule1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldNom1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldPrenom1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldPhoto1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jButtonModifier" alignment="0" pref="227" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldNomModif" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldPrenomModif" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldPhotoModif" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabelMatriculeModif" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -259,26 +259,29 @@
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldMatricule1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                              <Component id="jLabelMatriculeModif" min="-2" pref="19" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldNom1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldNomModif" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldPrenom1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldPrenomModif" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldPhoto1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldPhotoModif" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButtonValider1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jButtonModifier" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -317,15 +320,13 @@
                 <Property name="text" type="java.lang.String" value="Photo : "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldMatricule1">
+            <Component class="javax.swing.JTextField" name="jTextFieldNomModif">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldNom1">
+            <Component class="javax.swing.JTextField" name="jTextFieldPrenomModif">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldPrenom1">
+            <Component class="javax.swing.JTextField" name="jTextFieldPhotoModif">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldPhoto1">
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonValider1">
+            <Component class="javax.swing.JButton" name="jButtonModifier">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
@@ -333,7 +334,7 @@
                 <Property name="text" type="java.lang.String" value="Modifier"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonValider1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModifierActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
@@ -342,6 +343,13 @@
                   <Font name="Roboto" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Modifier un collaborateur permanent"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabelMatriculeModif">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Roboto Light" size="11" style="0"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>
@@ -359,14 +367,6 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto Light" size="11" style="0"/>
-            </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                <Column editable="true" title="Title 4" type="java.lang.Object"/>
-              </Table>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="fillsViewportHeight" type="boolean" value="true"/>

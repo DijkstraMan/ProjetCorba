@@ -42,6 +42,20 @@ public class UserTableModel extends AbstractTableModel {
         rowData.addAll(usr);
         fireTableDataChanged();
     }
+    
+    public void majAffichage(Utilisateur usr) {
+        int nbUsr = rowData.size();
+        boolean trouve = false;
+        Utilisateur usrTemp;
+        for(int i = 0;!trouve && i < nbUsr; i++) {
+            usrTemp = rowData.get(i);
+            if(usrTemp.matricule.equals(usr.matricule)){
+                usrTemp.nomUsr = usr.nomUsr;
+                usrTemp.preUsr = usr.preUsr;
+                usrTemp.phoUsr = usr.phoUsr;
+            }
+        }
+    }
 
     @Override
     public int getRowCount() {

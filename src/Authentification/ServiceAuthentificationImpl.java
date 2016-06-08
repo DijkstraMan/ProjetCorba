@@ -55,7 +55,10 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     
     private void connexion(String typeCollab) throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
+
+            
         conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
+        areaTextEvent.setText(areaTextEvent.getText()+"Connecté "+conn.toString()+"\n");
     }
 
     private void closeConnexion() throws SQLException {
@@ -67,7 +70,6 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     un quelconque résultat */
     private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
         boolean res = true;
-        //connexion a la bdd
         // on cree un objet Statement qui va permettre l'execution des requetes
         Statement s = conn.createStatement();
         int cr = s.executeUpdate(query);
@@ -143,13 +145,15 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         try {
             String query = "SELECT u.matricule AS matricule, u.nomUrs AS nomUsr, u.prenomUsr AS prenomUsr, u.photoUsr AS photoUsr "
                     + "from utilisateur u, collaborateurPerm c "
-                    + "WHERE u.matricule = c.matricule_utilisateur "
-                    + "order by u.matricule";
+                    + "WHERE u.matricule = c.matricule_utilisateur ";
             ResultSet rs;
             connexion("Perm");
+            areaTextEvent.setText(areaTextEvent.getText()+"Connexion OK\n");
             rs = lancerInterrogation(query);
+            areaTextEvent.setText(areaTextEvent.getText()+"Select ok\n");
             while(rs.next())
             {
+                areaTextEvent.setText(areaTextEvent.getText()+rs.getString("matricule")+"\n");
                 tabUtilisateurs.add(new Utilisateur(rs.getString("matricule"), rs.getString("nomUsr"), rs.getString("prenomUsr"), rs.getString("photoUsr")));           
             }
             closeConnexion();
@@ -159,14 +163,16 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des collaborateurs permanents envoyée\n");
             return lesUtilisateurs;
         } catch (ClassNotFoundException | SQLException ex) {
-            return new Utilisateur[0];
+           ex.printStackTrace();
         } 
+        return null;
     }
 
     @Override
-    public String verifierAuthentificationPorte(String empCollab, String phoUsr) throws UtilisateurInconnu, EmpreinteInconnue {
+    public Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr) throws UtilisateurInconnu, EmpreinteInconnue {
         String nomUsr = null;
         String matricule = null;
+        Utilisateur usr = null;
         String query = "SELECT matricule, nomUrs FROM utilisateur "
                     + "WHERE photoUsr='"+ phoUsr +"'";
         ResultSet rs;
@@ -180,6 +186,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             nomUsr = rs.getString("nomUrs");
             matricule = rs.getString("matricule");
             if (matricule != null ) {
+                usr = new Utilisateur(matricule, nomUsr, null, null);
                 // Matricule => OK => Vérifier empreinte auprès du serviceEmpreinte : 
                 // /!\ DECOMMENTER CETTE LIGNE NECESSITE DE DECOMMENTER LES CATCH !
                 //lancerVerifierEmpreinte(empCollab, matricule);
@@ -193,6 +200,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 nomUsr = rs.getString("nomUrs");
                 matricule = rs.getString("matricule");
                 if (matricule != null ) {
+                    usr = new Utilisateur(matricule, nomUsr, null, null);
                     // Matricule => OK => Vérifier empreinte auprès du serviceEmpreinte : 
                     // /!\ DECOMMENTER CETTE LIGNE NECESSITE DE DECOMMENTER LES CATCH !
                     //lancerVerifierEmpreinte(empCollab, matricule);
@@ -213,7 +221,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             //On "retourne" l'exception pour le client :
             throw new EmpreinteInconnue("Erreur: l'utilisateur est reconnu, mais pas son empreinte.");
         }*/
-        return nomUsr;
+        return usr;
     }
 
     @Override
@@ -302,7 +310,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     @Override
     public void ajouterCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr) throws UtilisateurExistant {
         String queryUsr = "insert into utilisateur values ('"+ matricule +"','"+ nomUsr +"','"+ preUsr +"','"+ phoUsr +"')";
-        String queryCollab = "insert into collaborateurTemp values ('"+ matricule +"')";
+        String queryCollab = "insert into collaborateurTemp values (null,'"+ matricule +"')";
         try {
             connexion("Temp");
             if(lancerManipulation(queryUsr)){
@@ -325,7 +333,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     @Override
     public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd) throws UtilisateurExistant {
         String queryUsr = "insert into utilisateur values ('"+ matricule +"','"+ nomUsr +"','"+ preUsr +"','"+ phoUsr +"')";
-        String queryCollab = "insert into collaborateurPerm values ('"+ matricule +"','"+ pwd +"')";
+        String queryCollab = "insert into collaborateurPerm values (null,'"+ matricule +"','"+ pwd +"')";
         try {
             connexion("Perm");
             if(lancerManipulation(queryUsr)){
@@ -346,7 +354,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     }
     
     @Override
-    public void modifierUtilisateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr) throws UtilisateurInconnu {
+    public void modifierCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr) throws UtilisateurInconnu {
         String query = "update utilisateur set nomUrs='"+ nomUsr +"', prenomUsr='"+ preUsr +"', photoUsr='"+ phoUsr +"' where matricule='"+ matricule +"'";
         try {
             connexion("Temp");
@@ -365,7 +373,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     }
     
     @Override
-    public void modifierUtilisateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr) throws UtilisateurInconnu {
+    public void modifierCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr) throws UtilisateurInconnu {
         String query = "update utilisateur set nomUrs='"+ nomUsr +"', prenomUsr='"+ preUsr +"', photoUsr='"+ phoUsr +"' where matricule='"+ matricule +"'";
         try {
             connexion("Perm");
@@ -391,53 +399,43 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             areaTextEvent.setText(areaTextEvent.getText()+"Démarrage du ServiceAuthentification...\n");
             // Intialisation de l'ORB
             //************************
-            areaTextEvent.setText(areaTextEvent.getText()+"Initialisation de l'ORB...\n");
             orb = org.omg.CORBA.ORB.init(args,null);
-            areaTextEvent.setText(areaTextEvent.getText()+"ORB initialisé!\n");
             // Gestion du POA
             //****************
             // Recuperation du POA
-            areaTextEvent.setText(areaTextEvent.getText()+"Récupération du POA...\n");
             rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
-            areaTextEvent.setText(areaTextEvent.getText()+"POA récupéré!\n");
             // Creation du servant
             //*********************
             ServiceAuthentificationImpl serviceAuth = this;
 
             // Activer le servant au sein du POA et recuperer son ID
-            areaTextEvent.setText(areaTextEvent.getText()+"Activation du servant au sein du POA et récupération de son ID...\n");
             serviceAuthId = rootPOA.activate_object(serviceAuth);
-            areaTextEvent.setText(areaTextEvent.getText()+"Servant activé avec ID : '" + serviceAuthId + "'\n");
             // Activer le POA manager
-            areaTextEvent.setText(areaTextEvent.getText()+"Activation du POA manager...\n");
             rootPOA.the_POAManager().activate();
-            areaTextEvent.setText(areaTextEvent.getText()+"POA manager activé!\n");
 
             // Enregistrement dans le service de nommage
             //*******************************************
             // Recuperation du naming service
-            areaTextEvent.setText(areaTextEvent.getText()+"Récupération du NamingService...\n");
             nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            areaTextEvent.setText(areaTextEvent.getText()+"NamingService récupéré!\n");
             
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
             nameToRegister[0] = new org.omg.CosNaming.NameComponent(nomObj,"");
 
             // Enregistrement de l'objet CORBA dans le service de noms
-            areaTextEvent.setText(areaTextEvent.getText()+"Enregistrement de l'objet CORBA dans le service de nom...\n");
             nameRoot.rebind(nameToRegister,rootPOA.servant_to_reference(serviceAuth));
-            areaTextEvent.setText(areaTextEvent.getText()+nomObj+" est enregistre dans le service de noms\n");
             String IORServant = orb.object_to_string(rootPOA.servant_to_reference(serviceAuth));
-            areaTextEvent.setText(areaTextEvent.getText()+"L'objet possede la reference suivante :\n");
-            areaTextEvent.setText(areaTextEvent.getText()+IORServant+"\n");
-
+            connexion("Perm");
             // Lancement de l'ORB et mise en attente de requete
             //**************************************************
             orb.run();
             
         } catch (InvalidName | ServantAlreadyActive | WrongPolicy | AdapterInactive | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | ServantNotActive ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

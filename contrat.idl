@@ -72,7 +72,7 @@ module modEntreesSortiesZones
 		
 		Utilisateur getUtilisateur(in Matricule matricule) raises (UtilisateurInconnu);
 		//verif d'indentité pour la porte
-		NomUsr verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr) raises (UtilisateurInconnu, EmpreinteInconnue);
+		Utilisateur verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr) raises (UtilisateurInconnu, EmpreinteInconnue);
 		//verif de connexion pour les resp
 		boolean verifierAuthentificationLogicielResp(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
 		//verif de connexion pour les rh
@@ -81,10 +81,10 @@ module modEntreesSortiesZones
 		boolean verifierAuthentificationLogicielAccueil(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
 		//Utilisateurs temporaires :
 		void ajouterCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurExistant);
-                void modifierUtilisateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
+                void modifierCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
 		//Utilisateurs permanents :
 		void ajouterCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr, in PasswordPerm pwd) raises (UtilisateurExistant);
-                void modifierUtilisateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
+                void modifierCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
 		//recuperer utilisateurs pour listes
                 lesUtilisateurs getCollaborateursTemporaires();
                 lesUtilisateurs getCollaborateursPermanents();

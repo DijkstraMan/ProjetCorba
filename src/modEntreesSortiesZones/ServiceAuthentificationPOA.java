@@ -41,10 +41,10 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                     new Operation_getCollaborateursTemporaires());
             operationMap.put("getUtilisateur",
                     new Operation_getUtilisateur());
-            operationMap.put("modifierUtilisateurPerm",
-                    new Operation_modifierUtilisateurPerm());
-            operationMap.put("modifierUtilisateurTemp",
-                    new Operation_modifierUtilisateurTemp());
+            operationMap.put("modifierCollaborateurPerm",
+                    new Operation_modifierCollaborateurPerm());
+            operationMap.put("modifierCollaborateurTemp",
+                    new Operation_modifierCollaborateurTemp());
             operationMap.put("verifierAuthentificationLogicielAccueil",
                     new Operation_verifierAuthentificationLogicielAccueil());
             operationMap.put("verifierAuthentificationLogicielRH",
@@ -101,10 +101,10 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
 
         try
         {
-            String _arg_result = verifierAuthentificationPorte(arg0_in, arg1_in);
+            modEntreesSortiesZones.Utilisateur _arg_result = verifierAuthentificationPorte(arg0_in, arg1_in);
 
             _output = handler.createReply();
-            modEntreesSortiesZones.NomUsrHelper.write(_output,_arg_result);
+            modEntreesSortiesZones.UtilisateurHelper.write(_output,_arg_result);
 
         }
         catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
@@ -213,7 +213,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         return _output;
     }
 
-    private org.omg.CORBA.portable.OutputStream _invoke_modifierUtilisateurTemp(
+    private org.omg.CORBA.portable.OutputStream _invoke_modifierCollaborateurTemp(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
@@ -224,7 +224,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
 
         try
         {
-            modifierUtilisateurTemp(arg0_in, arg1_in, arg2_in, arg3_in);
+            modifierCollaborateurTemp(arg0_in, arg1_in, arg2_in, arg3_in);
 
             _output = handler.createReply();
 
@@ -262,7 +262,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         return _output;
     }
 
-    private org.omg.CORBA.portable.OutputStream _invoke_modifierUtilisateurPerm(
+    private org.omg.CORBA.portable.OutputStream _invoke_modifierCollaborateurPerm(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
@@ -273,7 +273,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
 
         try
         {
-            modifierUtilisateurPerm(arg0_in, arg1_in, arg2_in, arg3_in);
+            modifierCollaborateurPerm(arg0_in, arg1_in, arg2_in, arg3_in);
 
             _output = handler.createReply();
 
@@ -380,13 +380,13 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         }
     }
 
-    private static final class Operation_modifierUtilisateurTemp extends AbstractOperation
+    private static final class Operation_modifierCollaborateurTemp extends AbstractOperation
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
-            return target._invoke_modifierUtilisateurTemp(_is, handler);
+            return target._invoke_modifierCollaborateurTemp(_is, handler);
         }
     }
 
@@ -400,13 +400,13 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         }
     }
 
-    private static final class Operation_modifierUtilisateurPerm extends AbstractOperation
+    private static final class Operation_modifierCollaborateurPerm extends AbstractOperation
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
-            return target._invoke_modifierUtilisateurPerm(_is, handler);
+            return target._invoke_modifierCollaborateurPerm(_is, handler);
         }
     }
 

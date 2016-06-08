@@ -74,7 +74,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue
     {
         return _tie.verifierAuthentificationPorte( empCollab,  phoUsr);
@@ -117,12 +117,12 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
-     * Operation modifierUtilisateurTemp
+     * Operation modifierCollaborateurTemp
      */
-    public void modifierUtilisateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
+    public void modifierCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        _tie.modifierUtilisateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
+        _tie.modifierCollaborateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
     }
 
     /**
@@ -135,12 +135,12 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
-     * Operation modifierUtilisateurPerm
+     * Operation modifierCollaborateurPerm
      */
-    public void modifierUtilisateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
+    public void modifierCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        _tie.modifierUtilisateurPerm( matricule,  nomUsr,  preUsr,  phoUsr);
+        _tie.modifierCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr);
     }
 
     /**

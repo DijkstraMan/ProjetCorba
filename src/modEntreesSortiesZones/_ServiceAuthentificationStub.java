@@ -79,7 +79,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue
     {
         while(true)
@@ -93,7 +93,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                     modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,empCollab);
                     modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
                     _input = this._invoke(_output);
-                    String _arg_ret = modEntreesSortiesZones.NomUsrHelper.read(_input);
+                    modEntreesSortiesZones.Utilisateur _arg_ret = modEntreesSortiesZones.UtilisateurHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -369,9 +369,9 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     }
 
     /**
-     * Operation modifierUtilisateurTemp
+     * Operation modifierCollaborateurTemp
      */
-    public void modifierUtilisateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
+    public void modifierCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -381,7 +381,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 org.omg.CORBA.portable.InputStream _input = null;
                 try
                 {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("modifierUtilisateurTemp",true);
+                    org.omg.CORBA.portable.OutputStream _output = this._request("modifierCollaborateurTemp",true);
                     modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
                     modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
@@ -410,13 +410,13 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("modifierUtilisateurTemp",_opsClass);
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("modifierCollaborateurTemp",_opsClass);
                 if (_so == null)
                    continue;
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    _self.modifierUtilisateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
+                    _self.modifierCollaborateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
                     return;
                 }
                 finally
@@ -488,9 +488,9 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     }
 
     /**
-     * Operation modifierUtilisateurPerm
+     * Operation modifierCollaborateurPerm
      */
-    public void modifierUtilisateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
+    public void modifierCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -500,7 +500,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 org.omg.CORBA.portable.InputStream _input = null;
                 try
                 {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("modifierUtilisateurPerm",true);
+                    org.omg.CORBA.portable.OutputStream _output = this._request("modifierCollaborateurPerm",true);
                     modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     modEntreesSortiesZones.NomUsrHelper.write(_output,nomUsr);
                     modEntreesSortiesZones.PrenomUsrHelper.write(_output,preUsr);
@@ -529,13 +529,13 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("modifierUtilisateurPerm",_opsClass);
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("modifierCollaborateurPerm",_opsClass);
                 if (_so == null)
                    continue;
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    _self.modifierUtilisateurPerm( matricule,  nomUsr,  preUsr,  phoUsr);
+                    _self.modifierCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr);
                     return;
                 }
                 finally

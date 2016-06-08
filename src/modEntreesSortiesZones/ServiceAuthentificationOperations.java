@@ -16,7 +16,7 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue;
 
     /**
@@ -44,9 +44,9 @@ public interface ServiceAuthentificationOperations
         throws modEntreesSortiesZones.UtilisateurExistant;
 
     /**
-     * Operation modifierUtilisateurTemp
+     * Operation modifierCollaborateurTemp
      */
-    public void modifierUtilisateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
+    public void modifierCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
@@ -56,9 +56,9 @@ public interface ServiceAuthentificationOperations
         throws modEntreesSortiesZones.UtilisateurExistant;
 
     /**
-     * Operation modifierUtilisateurPerm
+     * Operation modifierCollaborateurPerm
      */
-    public void modifierUtilisateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
+    public void modifierCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**

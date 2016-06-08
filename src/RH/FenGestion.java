@@ -7,11 +7,14 @@ package RH;
 
 import Util.UserTableModel;
 import java.awt.Point;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.Utilisateur;
 import modEntreesSortiesZones.UtilisateurExistant;
+import modEntreesSortiesZones.UtilisateurInconnu;
 
 /**
  *
@@ -28,14 +31,15 @@ public class FenGestion extends javax.swing.JFrame {
         initComponents();
     }
 
-    public FenGestion(ServiceAuthentification monServAuth) {
+    public FenGestion(ServiceAuthentification servAuth) {
         initComponents();
-        this.monServAuth = monServAuth;
+        monServAuth = servAuth;
         //Récupération des collaborateurs permanents 
         Utilisateur[] lesCollabsPerm = monServAuth.getCollaborateursPermanents();
+        System.out.println("tab 0 : " + lesCollabsPerm[0].matricule);
         //Remplissage et flitrage du tableau
         UserTableModel modelCollabsPerm = new UserTableModel(lesCollabsPerm);
-        jTableCollab = new JTable(modelCollabsPerm);
+        jTableCollab.setModel(modelCollabsPerm);
         TableRowSorter<UserTableModel> sorter = new TableRowSorter<>(modelCollabsPerm);
         jTableCollab.setRowSorter(sorter);
     }
@@ -56,24 +60,24 @@ public class FenGestion extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldMatricule = new javax.swing.JTextField();
-        jTextFieldNom = new javax.swing.JTextField();
-        jTextFieldPrenom = new javax.swing.JTextField();
-        jTextFieldPhoto = new javax.swing.JTextField();
+        jTextFieldMatriculeAjout = new javax.swing.JTextField();
+        jTextFieldNomAjout = new javax.swing.JTextField();
+        jTextFieldPrenomAjout = new javax.swing.JTextField();
+        jTextFieldPhotoAjout = new javax.swing.JTextField();
         jPasswordField = new javax.swing.JPasswordField();
-        jButtonValider = new javax.swing.JButton();
+        jButtonAjouter = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextFieldMatricule1 = new javax.swing.JTextField();
-        jTextFieldNom1 = new javax.swing.JTextField();
-        jTextFieldPrenom1 = new javax.swing.JTextField();
-        jTextFieldPhoto1 = new javax.swing.JTextField();
-        jButtonValider1 = new javax.swing.JButton();
+        jTextFieldNomModif = new javax.swing.JTextField();
+        jTextFieldPrenomModif = new javax.swing.JTextField();
+        jTextFieldPhotoModif = new javax.swing.JTextField();
+        jButtonModifier = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        jLabelMatriculeModif = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCollab = new javax.swing.JTable();
 
@@ -99,11 +103,11 @@ public class FenGestion extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
         jLabel5.setText("Mot de passe : ");
 
-        jButtonValider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButtonValider.setText("Ajouter");
-        jButtonValider.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAjouter.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButtonAjouter.setText("Ajouter");
+        jButtonAjouter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonValiderActionPerformed(evt);
+                jButtonAjouterActionPerformed(evt);
             }
         });
 
@@ -127,11 +131,11 @@ public class FenGestion extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonValider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextFieldMatricule)
-                            .addComponent(jTextFieldNom)
-                            .addComponent(jTextFieldPrenom)
-                            .addComponent(jTextFieldPhoto)
+                            .addComponent(jButtonAjouter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldMatriculeAjout)
+                            .addComponent(jTextFieldNomAjout)
+                            .addComponent(jTextFieldPrenomAjout)
+                            .addComponent(jTextFieldPhotoAjout)
                             .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(66, 66, 66))
         );
@@ -143,25 +147,25 @@ public class FenGestion extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextFieldMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMatriculeAjout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNomAjout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPrenomAjout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextFieldPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPhotoAjout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
         );
 
@@ -179,16 +183,18 @@ public class FenGestion extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
         jLabel9.setText("Photo : ");
 
-        jButtonValider1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButtonValider1.setText("Modifier");
-        jButtonValider1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonModifier.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButtonModifier.setText("Modifier");
+        jButtonModifier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonValider1ActionPerformed(evt);
+                jButtonModifierActionPerformed(evt);
             }
         });
 
         jLabel12.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel12.setText("Modifier un collaborateur permanent");
+
+        jLabelMatriculeModif.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,11 +212,11 @@ public class FenGestion extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(38, 38, 38)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonValider1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                            .addComponent(jTextFieldMatricule1)
-                            .addComponent(jTextFieldNom1)
-                            .addComponent(jTextFieldPrenom1)
-                            .addComponent(jTextFieldPhoto1))))
+                            .addComponent(jButtonModifier, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNomModif)
+                            .addComponent(jTextFieldPrenomModif)
+                            .addComponent(jTextFieldPhotoModif)
+                            .addComponent(jLabelMatriculeModif, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(66, 66, 66))
         );
         jPanel2Layout.setVerticalGroup(
@@ -221,38 +227,29 @@ public class FenGestion extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jTextFieldMatricule1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabelMatriculeModif, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextFieldNom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNomModif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextFieldPrenom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPrenomModif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextFieldPhoto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPhotoModif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButtonValider1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(95, 95, 95))
         );
 
         jTabbedPane1.addTab("Modifier collaborateur permanent", jPanel2);
 
         jTableCollab.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
-        jTableCollab.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         jTableCollab.setToolTipText("");
         jTableCollab.setFillsViewportHeight(true);
         jTableCollab.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -304,18 +301,18 @@ public class FenGestion extends javax.swing.JFrame {
             UserTableModel modelCollabPerm = (UserTableModel) table.getModel();
             Utilisateur usrTemp = modelCollabPerm.getUserAt(row);
             //Remplissage des champs de modification d'un collab :
-            jTextFieldMatricule1.setText(usrTemp.matricule);
-            jTextFieldNom1.setText(usrTemp.nomUsr);
-            jTextFieldPrenom1.setText(usrTemp.preUsr);
-            jTextFieldPhoto1.setText(usrTemp.phoUsr);
+            jLabelMatriculeModif.setText(usrTemp.matricule);
+            jTextFieldNomModif.setText(usrTemp.nomUsr);
+            jTextFieldPrenomModif.setText(usrTemp.preUsr);
+            jTextFieldPhotoModif.setText(usrTemp.phoUsr);
         }
     }//GEN-LAST:event_jTableCollabMouseClicked
 
-    private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        String matricule = jTextFieldMatricule.getText();
-        String nomUsr = jTextFieldNom.getText();
-        String prenomUsr = jTextFieldPrenom.getText();
-        String photoUsr = jTextFieldPhoto.getText();
+    private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
+        String matricule = jTextFieldMatriculeAjout.getText();
+        String nomUsr = jTextFieldNomAjout.getText();
+        String prenomUsr = jTextFieldPrenomAjout.getText();
+        String photoUsr = jTextFieldPhotoAjout.getText();
         String pwdUsr = new String(jPasswordField.getPassword());
         try {
             monServAuth.ajouterCollaborateurPerm(matricule, nomUsr, prenomUsr, photoUsr, pwdUsr);
@@ -323,14 +320,29 @@ public class FenGestion extends javax.swing.JFrame {
             UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
             modelCollabPerm.add(newUsr);
         } catch (UtilisateurExistant ex){
-            
+            Logger.getLogger(FenGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }//GEN-LAST:event_jButtonValiderActionPerformed
+    }//GEN-LAST:event_jButtonAjouterActionPerformed
 
-    private void jButtonValider1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValider1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonValider1ActionPerformed
+    private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
+        String matricule = jLabelMatriculeModif.getText();
+        String nomUsr = jTextFieldNomModif.getText();
+        String prenomUsr = jTextFieldPrenomModif.getText();
+        String photoUsr = jTextFieldPhotoModif.getText();
+        if(matricule != null && !matricule.isEmpty()) {
+            try {
+                monServAuth.modifierCollaborateurPerm(matricule, nomUsr, prenomUsr, photoUsr);
+                Utilisateur newUsr = new Utilisateur(matricule, nomUsr, prenomUsr, photoUsr);
+                UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
+                modelCollabPerm.majAffichage(newUsr);
+                modelCollabPerm.fireTableDataChanged();
+            } catch (UtilisateurInconnu ex) {
+                Logger.getLogger(FenGestion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }//GEN-LAST:event_jButtonModifierActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,8 +378,8 @@ public class FenGestion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonValider;
-    private javax.swing.JButton jButtonValider1;
+    private javax.swing.JButton jButtonAjouter;
+    private javax.swing.JButton jButtonModifier;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -379,19 +391,19 @@ public class FenGestion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelMatriculeModif;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableCollab;
-    private javax.swing.JTextField jTextFieldMatricule;
-    private javax.swing.JTextField jTextFieldMatricule1;
-    private javax.swing.JTextField jTextFieldNom;
-    private javax.swing.JTextField jTextFieldNom1;
-    private javax.swing.JTextField jTextFieldPhoto;
-    private javax.swing.JTextField jTextFieldPhoto1;
-    private javax.swing.JTextField jTextFieldPrenom;
-    private javax.swing.JTextField jTextFieldPrenom1;
+    private javax.swing.JTextField jTextFieldMatriculeAjout;
+    private javax.swing.JTextField jTextFieldNomAjout;
+    private javax.swing.JTextField jTextFieldNomModif;
+    private javax.swing.JTextField jTextFieldPhotoAjout;
+    private javax.swing.JTextField jTextFieldPhotoModif;
+    private javax.swing.JTextField jTextFieldPrenomAjout;
+    private javax.swing.JTextField jTextFieldPrenomModif;
     // End of variables declaration//GEN-END:variables
 }

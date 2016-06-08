@@ -118,9 +118,10 @@ public class FenConnexion extends javax.swing.JFrame {
         } catch (UtilisateurInconnu ex) {
             //Logger.getLogger(FenConnexion.class.getName()).log(Level.SEVERE, null, ex);
         }*/ 
-        FenGestion fg = new FenGestion(monServAuth);
+        FenGestion fenGest = new FenGestion(monServAuth);
         this.setVisible(false);
-        fg.setVisible(true);
+        fenGest.setVisible(true);
+        fenGest.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButtonConnexionActionPerformed
 
     /**

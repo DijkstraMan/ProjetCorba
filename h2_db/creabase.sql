@@ -78,6 +78,21 @@ create table responsableZone
 	CONSTRAINT fk_responsableZone_idCollabPerm_collaborateurPerm FOREIGN KEY (idCollabPerm_collaborateurPerm) REFERENCES collaborateurPerm(idCollabPerm)
 );
 
+/*Créations comptes logiciels*/
+/*Création compte RH*/
+insert into utilisateur values('mRH', 'nomRH', 'prenomRH', 'photoRH.jpg');
+insert into collaborateurPerm values(1, 'mRH', 'mdpRH');
+insert into gestionCollaborateur values(1, 1);
+insert into personnelRH values(1, 1);
+/*Création compte Accueil*/
+insert into utilisateur values('mAC', 'nomAC', 'prenomAC', 'photoAC.jpg');
+insert into collaborateurPerm values(2, 'mAC', 'mdpAC');
+insert into gestionCollaborateur values(2, 2);
+insert into personnelAccueil values(1, 2);
+/*Création compte Responsable Zone*/
+insert into utilisateur values('mRZ', 'nomRZ', 'prenomRZ', 'photoRZ.jpg');
+insert into collaborateurPerm values(3, 'mRZ', 'mdpRZ');
+insert into responsableZone values(1, 3);
 
 /*bdEmpreinte*/
 use bdEmpreinte;
