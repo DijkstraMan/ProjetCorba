@@ -18,7 +18,7 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  *
  * @author Fabien
  */
-public class FenConnexion extends javax.swing.JFrame {
+public class FenConnexionAccueil extends javax.swing.JFrame {
     
     private final ServiceAuthentification monServAuth;
 
@@ -26,7 +26,7 @@ public class FenConnexion extends javax.swing.JFrame {
      * Creates new form FenConnexion
      * @param monServAuth
      */
-    public FenConnexion(ServiceAuthentification monServAuth) {
+    public FenConnexionAccueil(ServiceAuthentification monServAuth) {
         initComponents();
         this.monServAuth = monServAuth;
     }
@@ -111,13 +111,13 @@ public class FenConnexion extends javax.swing.JFrame {
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
         try {
             if(monServAuth.verifierAuthentificationLogicielAccueil(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
-                FenGestion fenGest = new FenGestion(monServAuth);
+                FenGestionAccueil fenGest = new FenGestionAccueil(monServAuth);
                 this.setVisible(false);
                 fenGest.setVisible(true);
                 fenGest.setLocationRelativeTo(null);
             }             
         } catch (UtilisateurInconnu ex) {
-            Logger.getLogger(FenConnexion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButtonConnexionActionPerformed
@@ -139,14 +139,15 @@ public class FenConnexion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -168,12 +169,12 @@ public class FenConnexion extends javax.swing.JFrame {
                 ServiceAuthentification monSAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
                 
                 // Appel de l'interface graphique
-                FenConnexion myFen = new FenConnexion(monSAuth);
+                FenConnexionAccueil myFen = new FenConnexionAccueil(monSAuth);
                 myFen.setVisible(true);
                 myFen.setLocationRelativeTo(null);
             }
             catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
-                Logger.getLogger(FenConnexion.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, e);
             }
         });
     }
