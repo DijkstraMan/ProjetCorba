@@ -53,6 +53,7 @@ public class UserTableModel extends AbstractTableModel {
                 usrTemp.nomUsr = usr.nomUsr;
                 usrTemp.preUsr = usr.preUsr;
                 usrTemp.phoUsr = usr.phoUsr;
+                trouve = true;
             }
         }
     }

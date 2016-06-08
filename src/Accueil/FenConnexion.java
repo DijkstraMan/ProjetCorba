@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package RH;
+package Accueil;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +48,7 @@ public class FenConnexion extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Logiciel RH");
+        setTitle("Logiciel Accueil");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
@@ -66,7 +66,7 @@ public class FenConnexion extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setText("Connectez-vous RH");
+        jLabel3.setText("Connectez-vous Accueil");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,7 +110,7 @@ public class FenConnexion extends javax.swing.JFrame {
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
         try {
-            if(monServAuth.verifierAuthentificationLogicielRH(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
+            if(monServAuth.verifierAuthentificationLogicielAccueil(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
                 FenGestion fenGest = new FenGestion(monServAuth);
                 this.setVisible(false);
                 fenGest.setVisible(true);

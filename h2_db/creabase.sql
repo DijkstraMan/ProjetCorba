@@ -29,6 +29,13 @@ create table collaborateurTemp
 
 /*bdcollabPerm*/
 use bdcollabPerm;
+drop table if exists responsableZone;
+drop table if exists personnelRH;
+drop table if exists personnelAccueil;
+drop table if exists gestionCollaborateur;
+drop table if exists collaborateurPerm;
+drop table if exists utilisateur;
+
 create table utilisateur
 (
 	matricule varchar(50) NOT NULL,

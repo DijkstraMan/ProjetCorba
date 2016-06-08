@@ -55,10 +55,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     
     private void connexion(String typeCollab) throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
-
-            
+        //Connexion sur PC Bureau Fabien :
+        //conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/D:/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
         conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
-        areaTextEvent.setText(areaTextEvent.getText()+"Connecté "+conn.toString()+"\n");
     }
 
     private void closeConnexion() throws SQLException {
@@ -134,8 +133,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des collaborateurs temporaires envoyée\n");
             return lesUtilisateurs;
         } catch (ClassNotFoundException | SQLException ex) {
-            return new Utilisateur[0];
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     @Override
@@ -148,12 +148,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                     + "WHERE u.matricule = c.matricule_utilisateur ";
             ResultSet rs;
             connexion("Perm");
-            areaTextEvent.setText(areaTextEvent.getText()+"Connexion OK\n");
             rs = lancerInterrogation(query);
-            areaTextEvent.setText(areaTextEvent.getText()+"Select ok\n");
             while(rs.next())
             {
-                areaTextEvent.setText(areaTextEvent.getText()+rs.getString("matricule")+"\n");
                 tabUtilisateurs.add(new Utilisateur(rs.getString("matricule"), rs.getString("nomUsr"), rs.getString("prenomUsr"), rs.getString("photoUsr")));           
             }
             closeConnexion();
@@ -163,7 +160,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des collaborateurs permanents envoyée\n");
             return lesUtilisateurs;
         } catch (ClassNotFoundException | SQLException ex) {
-           ex.printStackTrace();
+           Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -398,50 +395,34 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         try {
             areaTextEvent.setText(areaTextEvent.getText()+"Démarrage du ServiceAuthentification...\n");
             // Intialisation de l'ORB
-            //************************
             orb = org.omg.CORBA.ORB.init(args,null);
-            // Gestion du POA
-            //****************
             // Recuperation du POA
             rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             // Creation du servant
-            //*********************
             ServiceAuthentificationImpl serviceAuth = this;
-
             // Activer le servant au sein du POA et recuperer son ID
             serviceAuthId = rootPOA.activate_object(serviceAuth);
             // Activer le POA manager
             rootPOA.the_POAManager().activate();
-
             // Enregistrement dans le service de nommage
             //*******************************************
             // Recuperation du naming service
             nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
             nameToRegister[0] = new org.omg.CosNaming.NameComponent(nomObj,"");
-
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister,rootPOA.servant_to_reference(serviceAuth));
-            String IORServant = orb.object_to_string(rootPOA.servant_to_reference(serviceAuth));
-            connexion("Perm");
             // Lancement de l'ORB et mise en attente de requete
-            //**************************************************
             orb.run();
-            
         } catch (InvalidName | ServantAlreadyActive | WrongPolicy | AdapterInactive | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | ServantNotActive ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public void stopServ()
     {
-        areaTextEvent.setText(areaTextEvent.getText()+"Fin de '" + nomObj + "'\n");
+        areaTextEvent.setText(areaTextEvent.getText()+"Arrêt de '" + nomObj + "'\n");
         orb.shutdown(true);       
     }
 

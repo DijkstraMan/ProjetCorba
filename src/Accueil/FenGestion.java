@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package RH;
+package Accueil;
 
 import Util.UserTableModel;
 import java.awt.Point;
@@ -34,12 +34,12 @@ public class FenGestion extends javax.swing.JFrame {
     public FenGestion(ServiceAuthentification servAuth) {
         initComponents();
         monServAuth = servAuth;
-        //Récupération des collaborateurs permanents 
-        Utilisateur[] lesCollabsPerm = monServAuth.getCollaborateursPermanents();
+        //Récupération des collaborateurs temporaire 
+        Utilisateur[] lesCollabsTemp = monServAuth.getCollaborateursTemporaires();
         //Remplissage et flitrage du tableau
-        UserTableModel modelCollabsPerm = new UserTableModel(lesCollabsPerm);
-        jTableCollab.setModel(modelCollabsPerm);
-        TableRowSorter<UserTableModel> sorter = new TableRowSorter<>(modelCollabsPerm);
+        UserTableModel modelCollabsTemp = new UserTableModel(lesCollabsTemp);
+        jTableCollab.setModel(modelCollabsTemp);
+        TableRowSorter<UserTableModel> sorter = new TableRowSorter<>(modelCollabsTemp);
         jTableCollab.setRowSorter(sorter);
     }
 
@@ -58,12 +58,10 @@ public class FenGestion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jTextFieldMatriculeAjout = new javax.swing.JTextField();
         jTextFieldNomAjout = new javax.swing.JTextField();
         jTextFieldPrenomAjout = new javax.swing.JTextField();
         jTextFieldPhotoAjout = new javax.swing.JTextField();
-        jPasswordField = new javax.swing.JPasswordField();
         jButtonAjouter = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -81,10 +79,10 @@ public class FenGestion extends javax.swing.JFrame {
         jTableCollab = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Logiciel RH");
+        setTitle("Logiciel Accueil");
         setResizable(false);
 
-        jTabbedPane1.setToolTipText("Ajouter collaborateur permanent");
+        jTabbedPane1.setToolTipText("");
         jTabbedPane1.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
@@ -99,9 +97,6 @@ public class FenGestion extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
         jLabel4.setText("Photo : ");
 
-        jLabel5.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
-        jLabel5.setText("Mot de passe : ");
-
         jButtonAjouter.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jButtonAjouter.setText("Ajouter");
         jButtonAjouter.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +106,7 @@ public class FenGestion extends javax.swing.JFrame {
         });
 
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel11.setText("Nouveau collaborateur permanent");
+        jLabel11.setText("Nouveau collaborateur temporaire");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,19 +118,17 @@ public class FenGestion extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
+                        .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonAjouter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonAjouter, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                             .addComponent(jTextFieldMatriculeAjout)
                             .addComponent(jTextFieldNomAjout)
                             .addComponent(jTextFieldPrenomAjout)
-                            .addComponent(jTextFieldPhotoAjout)
-                            .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextFieldPhotoAjout))))
                 .addGap(66, 66, 66))
         );
         jPanel1Layout.setVerticalGroup(
@@ -160,15 +153,11 @@ public class FenGestion extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jTextFieldPhotoAjout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addGap(96, 96, 96))
         );
 
-        jTabbedPane1.addTab("Ajouter collaborateur permanent", jPanel1);
+        jTabbedPane1.addTab("Ajouter collaborateur temporaire", jPanel1);
 
         jLabel6.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
         jLabel6.setText("Matricule : ");
@@ -191,7 +180,7 @@ public class FenGestion extends javax.swing.JFrame {
         });
 
         jLabel12.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel12.setText("Modifier un collaborateur permanent");
+        jLabel12.setText("Modifier un collaborateur temporaire");
 
         jLabelMatriculeModif.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
 
@@ -246,7 +235,7 @@ public class FenGestion extends javax.swing.JFrame {
                 .addGap(95, 95, 95))
         );
 
-        jTabbedPane1.addTab("Modifier collaborateur permanent", jPanel2);
+        jTabbedPane1.addTab("Modifier collaborateur temporaire", jPanel2);
 
         jTableCollab.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
         jTableCollab.setToolTipText("");
@@ -285,8 +274,7 @@ public class FenGestion extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.getAccessibleContext().setAccessibleName("Modifier collaborateur permanent");
-        jTabbedPane1.getAccessibleContext().setAccessibleDescription("Modifier collaborateur permanent");
+        jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -297,8 +285,8 @@ public class FenGestion extends javax.swing.JFrame {
         int row = table.rowAtPoint(p);
         //On vérifie qu'on a bien double-cliqué sur une ligne de contenu
         if (evt.getClickCount() == 2 && row != -1) {
-            UserTableModel modelCollabPerm = (UserTableModel) table.getModel();
-            Utilisateur usrTemp = modelCollabPerm.getUserAt(row);
+            UserTableModel modelCollabTemp = (UserTableModel) table.getModel();
+            Utilisateur usrTemp = modelCollabTemp.getUserAt(row);
             //Remplissage des champs de modification d'un collab :
             jLabelMatriculeModif.setText(usrTemp.matricule);
             jTextFieldNomModif.setText(usrTemp.nomUsr);
@@ -312,12 +300,11 @@ public class FenGestion extends javax.swing.JFrame {
         String nomUsr = jTextFieldNomAjout.getText();
         String prenomUsr = jTextFieldPrenomAjout.getText();
         String photoUsr = jTextFieldPhotoAjout.getText();
-        String pwdUsr = new String(jPasswordField.getPassword());
         try {
-            monServAuth.ajouterCollaborateurPerm(matricule, nomUsr, prenomUsr, photoUsr, pwdUsr);
+            monServAuth.ajouterCollaborateurTemp(matricule, nomUsr, prenomUsr, photoUsr);
             Utilisateur newUsr = new Utilisateur(matricule, nomUsr, prenomUsr, photoUsr);
-            UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
-            modelCollabPerm.add(newUsr);
+            UserTableModel modelCollabTemp = (UserTableModel) jTableCollab.getModel();
+            modelCollabTemp.add(newUsr);
         } catch (UtilisateurExistant ex){
             Logger.getLogger(FenGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -331,11 +318,11 @@ public class FenGestion extends javax.swing.JFrame {
         String photoUsr = jTextFieldPhotoModif.getText();
         if(matricule != null && !matricule.isEmpty()) {
             try {
-                monServAuth.modifierCollaborateurPerm(matricule, nomUsr, prenomUsr, photoUsr);
+                monServAuth.modifierCollaborateurTemp(matricule, nomUsr, prenomUsr, photoUsr);
                 Utilisateur newUsr = new Utilisateur(matricule, nomUsr, prenomUsr, photoUsr);
-                UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
-                modelCollabPerm.majAffichage(newUsr);
-                modelCollabPerm.fireTableDataChanged();
+                UserTableModel modelCollabTemp = (UserTableModel) jTableCollab.getModel();
+                modelCollabTemp.majAffichage(newUsr);
+                modelCollabTemp.fireTableDataChanged();
             } catch (UtilisateurInconnu ex) {
                 Logger.getLogger(FenGestion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -385,7 +372,6 @@ public class FenGestion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -393,7 +379,6 @@ public class FenGestion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelMatriculeModif;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableCollab;
