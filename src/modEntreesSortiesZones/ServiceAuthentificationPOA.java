@@ -102,10 +102,11 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.EmpreinteCollabHelper.read(_is);
         String arg1_in = modEntreesSortiesZones.PhotoUsrHelper.read(_is);
+        int arg2_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
         try
         {
-            modEntreesSortiesZones.Utilisateur _arg_result = verifierAuthentificationPorte(arg0_in, arg1_in);
+            modEntreesSortiesZones.Utilisateur _arg_result = verifierAuthentificationPorte(arg0_in, arg1_in, arg2_in);
 
             _output = handler.createReply();
             modEntreesSortiesZones.UtilisateurHelper.write(_output,_arg_result);

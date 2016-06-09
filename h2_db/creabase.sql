@@ -146,15 +146,17 @@ create table autorisationTemp
 	jourFin datetime,
 	PRIMARY KEY(matricule_utilisateur,idZone_zone)
 );
-/*
+
+/*bdlogAcces*/
+use bdlogAcces;
+drop table if exists logAcces;
 create table logAcces
 (
 	matricule_utilisateur varchar(50) NOT NULL,
 	idZone_zone integer(5) NOT NULL,
 	dateAcces datetime,
 	acces varchar(100),
-	PRIMARY KEY(matricule_utilisateur,idZone_zone),
-	CONSTRAINT fk_logAcces_matricule_utilisateur FOREIGN KEY (matricule_utilisateur) REFERENCES utilisateur(matricule),
-	CONSTRAINT fk_logAcces_idZone_zone FOREIGN KEY (idZone_zone) REFERENCES zone(idZone)
+	PRIMARY KEY(matricule_utilisateur,idZone_zone, dateAcces),
+	/*CONSTRAINT fk_logAcces_matricule_utilisateur FOREIGN KEY (matricule_utilisateur) REFERENCES utilisateur(matricule),
+	CONSTRAINT fk_logAcces_idZone_zone FOREIGN KEY (idZone_zone) REFERENCES zone(idZone)*/
 );
-*/

@@ -16,7 +16,7 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation verifierAuthentificationPorte
      */
-    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue;
 
     /**

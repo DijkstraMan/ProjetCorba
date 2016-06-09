@@ -74,10 +74,10 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation verifierAuthentificationPorte
      */
-    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue
     {
-        return _tie.verifierAuthentificationPorte( empCollab,  phoUsr);
+        return _tie.verifierAuthentificationPorte( empCollab,  phoUsr,  zone);
     }
 
     /**

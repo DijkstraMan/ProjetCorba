@@ -322,7 +322,6 @@ public class FenGestionAccueil extends javax.swing.JFrame {
                 Utilisateur newUsr = new Utilisateur(matricule, nomUsr, prenomUsr, photoUsr);
                 UserTableModel modelCollabTemp = (UserTableModel) jTableCollab.getModel();
                 modelCollabTemp.majAffichage(newUsr);
-                modelCollabTemp.fireTableDataChanged();
             } catch (UtilisateurInconnu ex) {
                 Logger.getLogger(FenGestionAccueil.class.getName()).log(Level.SEVERE, null, ex);
             }

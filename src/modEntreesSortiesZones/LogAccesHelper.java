@@ -82,8 +82,8 @@ public class LogAccesHelper
                 _members[1].name = "idZone";
                 _members[1].type = modEntreesSortiesZones.idZoneHelper.type();
                 _members[2] = new org.omg.CORBA.StructMember();
-                _members[2].name = "t";
-                _members[2].type = modEntreesSortiesZones.TimeStampHelper.type();
+                _members[2].name = "dateAcces";
+                _members[2].type = modEntreesSortiesZones.dateLogHelper.type();
                 _members[3] = new org.omg.CORBA.StructMember();
                 _members[3].name = "typeAcces";
                 _members[3].type = modEntreesSortiesZones.TypeAccesHelper.type();
@@ -116,7 +116,7 @@ public class LogAccesHelper
 
         new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
         new_one.idZone = modEntreesSortiesZones.idZoneHelper.read(istream);
-        new_one.t = modEntreesSortiesZones.TimeStampHelper.read(istream);
+        new_one.dateAcces = modEntreesSortiesZones.dateLogHelper.read(istream);
         new_one.typeAcces = modEntreesSortiesZones.TypeAccesHelper.read(istream);
 
         return new_one;
@@ -131,7 +131,7 @@ public class LogAccesHelper
     {
         modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
         modEntreesSortiesZones.idZoneHelper.write(ostream,value.idZone);
-        modEntreesSortiesZones.TimeStampHelper.write(ostream,value.t);
+        modEntreesSortiesZones.dateLogHelper.write(ostream,value.dateAcces);
         modEntreesSortiesZones.TypeAccesHelper.write(ostream,value.typeAcces);
     }
 

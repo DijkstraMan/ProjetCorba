@@ -15,7 +15,6 @@ module modEntreesSortiesZones
 	typedef long HeureDebut;
 	typedef long HeureFin;
 	typedef string dateLog;
-	typedef long TimeStamp;
 	enum TypeAcces {autorise, nonAutorise, nonAuthentifie}; 
 	
 	exception EmpreinteInconnue {string raison;};
@@ -52,7 +51,7 @@ module modEntreesSortiesZones
 	{
 		Matricule matricule;
 		idZone idZone;
-		TimeStamp t;
+		dateLog dateAcces;
 		TypeAcces typeAcces;
 	};
 	
@@ -72,7 +71,7 @@ module modEntreesSortiesZones
 		
 		Utilisateur getUtilisateur(in Matricule matricule) raises (UtilisateurInconnu);
 		//verif d'indentité pour la porte
-		Utilisateur verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr) raises (UtilisateurInconnu, EmpreinteInconnue);
+		Utilisateur verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr, in idZone zone) raises (UtilisateurInconnu, EmpreinteInconnue);
 		//verif de connexion pour les resp
 		boolean verifierAuthentificationLogicielResp(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
 		//verif de connexion pour les rh
@@ -121,7 +120,7 @@ module modEntreesSortiesZones
 	
 	interface ServiceJournalisation
 	{
-		void ajouterEntree(in Matricule matricule, in idZone idZone, in dateLog t, in TypeAcces typeAcces);
+		void ajouterEntree(in Matricule matricule, in idZone idZone, in dateLog dateAcces, in TypeAcces typeAcces);
 		logsAcces consulterAcces();
 		logsAcces consulterRefus();
 	};
