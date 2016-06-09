@@ -335,7 +335,6 @@ public class FenGestionRH extends javax.swing.JFrame {
                 Utilisateur newUsr = new Utilisateur(matricule, nomUsr, prenomUsr, photoUsr);
                 UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
                 modelCollabPerm.majAffichage(newUsr);
-                modelCollabPerm.fireTableDataChanged();
             } catch (UtilisateurInconnu ex) {
                 Logger.getLogger(FenGestionRH.class.getName()).log(Level.SEVERE, null, ex);
             }

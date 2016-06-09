@@ -79,7 +79,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation verifierAuthentificationPorte
      */
-    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue
     {
         while(true)
@@ -92,6 +92,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationPorte",true);
                     modEntreesSortiesZones.EmpreinteCollabHelper.write(_output,empCollab);
                     modEntreesSortiesZones.PhotoUsrHelper.write(_output,phoUsr);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,zone);
                     _input = this._invoke(_output);
                     modEntreesSortiesZones.Utilisateur _arg_ret = modEntreesSortiesZones.UtilisateurHelper.read(_input);
                     return _arg_ret;
@@ -128,7 +129,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAuthentificationPorte( empCollab,  phoUsr);
+                    return _self.verifierAuthentificationPorte( empCollab,  phoUsr,  zone);
                 }
                 finally
                 {

@@ -19,8 +19,16 @@ import javax.swing.JTextArea;
 import modEntreesSortiesZones.LogAcces;
 import modEntreesSortiesZones.ServiceJournalisationPOA;
 import modEntreesSortiesZones.TypeAcces;
+import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
+import org.omg.PortableServer.POAHelper;
+import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
+import org.omg.PortableServer.POAPackage.ServantAlreadyActive;
+import org.omg.PortableServer.POAPackage.ServantNotActive;
+import org.omg.PortableServer.POAPackage.WrongPolicy;
 
 /**
  *
@@ -125,12 +133,72 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
 
     @Override
     public LogAcces[] consulterRefus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des refus\n"); 
+        List<LogAcces> tabLogAcces= new ArrayList();
+        try {
+            String query = "SELECT matricule_utilisateur, idZone_zone, dateAcces, acces "
+                    + "from logAcces "
+                    + "WHERE acces != 'autorise' "
+                    + "order by dateAcces DESC";
+            ResultSet rs;
+            connexion();
+            rs = lancerInterrogation(query);
+            while(rs.next())
+            {
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), rs.getDate("dateAcces").toString(), TypeAccesFromString.parse(rs.getString("acces"))));           
+            }
+            closeConnexion();
+            LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
+            lesLogAcces = tabLogAcces.toArray(lesLogAcces);
+                    
+            areaTextEvent.setText(areaTextEvent.getText()+"Listes des refus envoyée\n");
+            return lesLogAcces;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] args = null;
+        
+        try {
+            areaTextEvent.setText(areaTextEvent.getText()+"Démarrage du ServiceJournalisation...\n");
+            // Intialisation de l'ORB
+            orb = org.omg.CORBA.ORB.init(args,null);
+            // Recuperation du POA
+            rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+            // Creation du servant
+            ServiceJournalisationImpl serviceJour = this;
+            // Activer le servant au sein du POA et recuperer son ID
+            serviceAuthId = rootPOA.activate_object(serviceJour);
+            // Activer le POA manager
+            rootPOA.the_POAManager().activate();
+            // Enregistrement dans le service de nommage
+            //*******************************************
+            // Recuperation du naming service
+            nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            // Construction du nom a enregistrer
+            org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent(nomObj,"");
+            // Enregistrement de l'objet CORBA dans le service de noms
+            nameRoot.rebind(nameToRegister,rootPOA.servant_to_reference(serviceJour));
+            // Lancement de l'ORB et mise en attente de requete
+            areaTextEvent.setText(areaTextEvent.getText()+"Lancement de l'ORB : en attente de requêtes !\n");
+            orb.run();
+        } catch (InvalidName | ServantAlreadyActive | WrongPolicy | AdapterInactive | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | ServantNotActive ex) {
+            Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
+    public void stopServ()
+    {
+        areaTextEvent.setText(areaTextEvent.getText()+"Arrêt de '" + nomObj + "'\n");
+        orb.shutdown(true);       
+    }
+
+    public byte[] getServiceAuthId() {
+        return serviceAuthId;
+    } 
 }

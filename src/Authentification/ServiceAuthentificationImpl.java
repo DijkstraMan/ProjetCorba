@@ -11,7 +11,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +21,8 @@ import javax.swing.JTextArea;
 import modEntreesSortiesZones.EmpreinteInconnue;
 import modEntreesSortiesZones.ServiceAuthentificationPOA;
 import modEntreesSortiesZones.ServiceEmpreinte;
+import modEntreesSortiesZones.ServiceJournalisation;
+import modEntreesSortiesZones.TypeAcces;
 import modEntreesSortiesZones.Utilisateur;
 import modEntreesSortiesZones.UtilisateurExistant;
 import modEntreesSortiesZones.UtilisateurInconnu;
@@ -47,6 +51,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     private final JTextArea areaTextEvent;
     private static Connection conn = null;
     private static ServiceEmpreinte monServEmp;
+    private static ServiceJournalisation monServJour;
     
     public ServiceAuthentificationImpl(JTextArea a) {
         nomObj="SAUTH";
@@ -103,6 +108,20 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         monServEmp = modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(distantSEmp);   
         //Finalement, on vérifie l'empreinte
         return monServEmp.verifierEmpreinte(empCollab, matricule);
+    }
+    
+    //Méthode utilisée pour récupérer l'objet ServiceJournalisation distant et appeler sa méthode ajouterEntree
+    private void lancerAjouterEntree(String matricule, int zone, String dateAcces, TypeAcces typeAcces) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, EmpreinteInconnue {
+        String idObj = "SJOUR";
+        // Construction du nom à rechercher
+        org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
+        nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
+        // Recherche auprès du naming service
+        org.omg.CORBA.Object distantSJour = nameRoot.resolve(nameToFind);
+        areaTextEvent.setText(areaTextEvent.getText()+"ServiceJournalisation '" + idObj + "' trouvé auprès du service de noms. IOR de l'objet : \n"
+                                +orb.object_to_string(distantSJour)+"\n");
+        // Casting de l'objet CORBA au type ServiceJournalisation
+        monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
     }
     
     @Override
@@ -166,7 +185,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     }
 
     @Override
-    public Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr) throws UtilisateurInconnu, EmpreinteInconnue {
+    public Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone) throws UtilisateurInconnu, EmpreinteInconnue {
         String matricule, nomUsr;
         Utilisateur usr = null;
         String query = "SELECT matricule, nomUrs FROM utilisateur "
@@ -202,7 +221,10 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                     //lancerVerifierEmpreinte(empCollab, matricule);
                 }
                 else {
-                    //TODO : connexion service Journalisation => typeAcces = "nonAthentifie"
+                    SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date now = new Date();
+                    String dateAccesStr = formatSQL.format(now);
+                    lancerAjouterEntree(matricule, zone, dateAccesStr, TypeAcces.nonAuthentifie );
                     //Exception à catcher côté client scanneur d'empreinte :
                     throw new UtilisateurInconnu("Erreur: l'utilisateur n'existe pas dans nos bases de données.");
                 }    
@@ -210,9 +232,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } /*catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+        } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (EmpreinteInconnue ex) {
+        } /*catch (EmpreinteInconnue ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
             //On "retourne" l'exception pour le client :
             throw new EmpreinteInconnue("Erreur: l'utilisateur est reconnu, mais pas son empreinte.");

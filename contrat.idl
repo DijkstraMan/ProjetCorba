@@ -71,7 +71,7 @@ module modEntreesSortiesZones
 		
 		Utilisateur getUtilisateur(in Matricule matricule) raises (UtilisateurInconnu);
 		//verif d'indentité pour la porte
-		Utilisateur verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr) raises (UtilisateurInconnu, EmpreinteInconnue);
+		Utilisateur verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr, in idZone zone) raises (UtilisateurInconnu, EmpreinteInconnue);
 		//verif de connexion pour les resp
 		boolean verifierAuthentificationLogicielResp(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
 		//verif de connexion pour les rh
