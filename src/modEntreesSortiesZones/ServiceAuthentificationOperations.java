@@ -8,32 +8,33 @@ package modEntreesSortiesZones;
 public interface ServiceAuthentificationOperations
 {
     /**
-     * Operation modifierUtilisateur
-     */
-    public void modifierUtilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
-
-    /**
      * Operation getUtilisateur
      */
     public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
-     * Operation getUtilisateurs
-     */
-    public modEntreesSortiesZones.Utilisateur[] getUtilisateurs();
-
-    /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue;
+
+    /**
+     * Operation verifierAuthentificationLogicielResp
+     */
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
-     * Operation verifierAuthentificationLogiciel
+     * Operation verifierAuthentificationLogicielRH
      */
-    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
+     * Operation verifierAuthentificationLogicielAccueil
+     */
+    public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
@@ -43,9 +44,43 @@ public interface ServiceAuthentificationOperations
         throws modEntreesSortiesZones.UtilisateurExistant;
 
     /**
+     * Operation modifierCollaborateurTemp
+     */
+    public void modifierCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
+     * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
+     */
+    public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
      * Operation ajouterCollaborateurPerm
      */
     public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant;
+
+    /**
+     * Operation modifierCollaborateurPerm
+     */
+    public void modifierCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
+     * Operation verifierAuthentificationMachineEmpreinteCollaborateurPerm
+     */
+    public boolean verifierAuthentificationMachineEmpreinteCollaborateurPerm(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
+     * Operation getCollaborateursTemporaires
+     */
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursTemporaires();
+
+    /**
+     * Operation getCollaborateursPermanents
+     */
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursPermanents();
 
 }

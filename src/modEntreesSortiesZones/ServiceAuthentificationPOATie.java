@@ -63,15 +63,6 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
-     * Operation modifierUtilisateur
-     */
-    public void modifierUtilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
-        throws modEntreesSortiesZones.UtilisateurInconnu
-    {
-        _tie.modifierUtilisateur( matricule,  nomUsr,  preUsr,  phoUsr);
-    }
-
-    /**
      * Operation getUtilisateur
      */
     public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
@@ -81,29 +72,39 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
-     * Operation getUtilisateurs
-     */
-    public modEntreesSortiesZones.Utilisateur[] getUtilisateurs()
-    {
-        return _tie.getUtilisateurs();
-    }
-
-    /**
      * Operation verifierAuthentificationPorte
      */
-    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
-        throws modEntreesSortiesZones.UtilisateurInconnu
+    public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue
     {
         return _tie.verifierAuthentificationPorte( empCollab,  phoUsr);
     }
 
     /**
-     * Operation verifierAuthentificationLogiciel
+     * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogiciel(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        return _tie.verifierAuthentificationLogiciel( matricule,  pwd);
+        return _tie.verifierAuthentificationLogicielResp( matricule,  pwd);
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielRH
+     */
+    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationLogicielRH( matricule,  pwd);
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielAccueil
+     */
+    public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationLogicielAccueil( matricule,  pwd);
     }
 
     /**
@@ -116,12 +117,64 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
+     * Operation modifierCollaborateurTemp
+     */
+    public void modifierCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        _tie.modifierCollaborateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
+    }
+
+    /**
+     * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
+     */
+    public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationMachineEmpreinteCollaborateurTemp( matricule);
+    }
+
+    /**
      * Operation ajouterCollaborateurPerm
      */
     public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         _tie.ajouterCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr,  pwd);
+    }
+
+    /**
+     * Operation modifierCollaborateurPerm
+     */
+    public void modifierCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        _tie.modifierCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr);
+    }
+
+    /**
+     * Operation verifierAuthentificationMachineEmpreinteCollaborateurPerm
+     */
+    public boolean verifierAuthentificationMachineEmpreinteCollaborateurPerm(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationMachineEmpreinteCollaborateurPerm( matricule,  pwd);
+    }
+
+    /**
+     * Operation getCollaborateursTemporaires
+     */
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursTemporaires()
+    {
+        return _tie.getCollaborateursTemporaires();
+    }
+
+    /**
+     * Operation getCollaborateursPermanents
+     */
+    public modEntreesSortiesZones.Utilisateur[] getCollaborateursPermanents()
+    {
+        return _tie.getCollaborateursPermanents();
     }
 
 }

@@ -69,7 +69,7 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         modEntreesSortiesZones.LogAcces[] _arg_result = consulterAcces();
 
         _output = handler.createReply();
-        modEntreesSortiesZones.LogsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
 
         return _output;
     }
@@ -82,7 +82,7 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         modEntreesSortiesZones.LogAcces[] _arg_result = consulterRefus();
 
         _output = handler.createReply();
-        modEntreesSortiesZones.LogsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
 
         return _output;
     }

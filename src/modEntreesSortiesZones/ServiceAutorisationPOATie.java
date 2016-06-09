@@ -116,4 +116,13 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
         _tie.supprimerAutorisation( matricule,  idZone);
     }
 
+    /**
+     * Operation getZone
+     */
+    public modEntreesSortiesZones.Zone[] getZone()
+        throws modEntreesSortiesZones.SQLERROR
+    {
+        return _tie.getZone();
+    }
+
 }

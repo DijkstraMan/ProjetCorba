@@ -35,6 +35,8 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
 
         if (opName.equals("ajouterEmpreinte")) {
                 return _invoke_ajouterEmpreinte(_is, handler);
+        } else if (opName.equals("getEmpreintes")) {
+                return _invoke_getEmpreintes(_is, handler);
         } else if (opName.equals("modifierEmpreinte")) {
                 return _invoke_modifierEmpreinte(_is, handler);
         } else if (opName.equals("verifierEmpreinte")) {
@@ -109,6 +111,19 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
             _output = handler.createExceptionReply();
             modEntreesSortiesZones.EmpreinteInconnueHelper.write(_output,_exception);
         }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_getEmpreintes(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        modEntreesSortiesZones.Empreinte[] _arg_result = getEmpreintes();
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.lesEmpreintesHelper.write(_output,_arg_result);
+
         return _output;
     }
 

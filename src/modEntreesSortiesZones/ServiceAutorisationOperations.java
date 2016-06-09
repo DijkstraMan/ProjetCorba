@@ -43,4 +43,10 @@ public interface ServiceAutorisationOperations
     public void supprimerAutorisation(String matricule, int idZone)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
+    /**
+     * Operation getZone
+     */
+    public modEntreesSortiesZones.Zone[] getZone()
+        throws modEntreesSortiesZones.SQLERROR;
+
 }
