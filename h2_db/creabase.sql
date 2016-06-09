@@ -153,7 +153,7 @@ create table logAcces
 	idZone_zone integer(5) NOT NULL,
 	dateAcces datetime,
 	acces varchar(100),
-	PRIMARY KEY(matricule_utilisateur,idZone_zone),
+	PRIMARY KEY(matricule_utilisateur,idZone_zone, dateAcces),
 	CONSTRAINT fk_logAcces_matricule_utilisateur FOREIGN KEY (matricule_utilisateur) REFERENCES utilisateur(matricule),
 	CONSTRAINT fk_logAcces_idZone_zone FOREIGN KEY (idZone_zone) REFERENCES zone(idZone)
 );

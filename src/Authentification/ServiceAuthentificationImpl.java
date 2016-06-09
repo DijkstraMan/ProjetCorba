@@ -167,8 +167,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
 
     @Override
     public Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr) throws UtilisateurInconnu, EmpreinteInconnue {
-        String nomUsr = null;
-        String matricule = null;
+        String matricule, nomUsr;
         Utilisateur usr = null;
         String query = "SELECT matricule, nomUrs FROM utilisateur "
                     + "WHERE photoUsr='"+ phoUsr +"'";
@@ -461,6 +460,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister,rootPOA.servant_to_reference(serviceAuth));
             // Lancement de l'ORB et mise en attente de requete
+            areaTextEvent.setText(areaTextEvent.getText()+"Lancement de l'ORB : en attente de requêtes !\n");
             orb.run();
         } catch (InvalidName | ServantAlreadyActive | WrongPolicy | AdapterInactive | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | ServantNotActive ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
