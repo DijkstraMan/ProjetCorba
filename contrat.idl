@@ -54,6 +54,7 @@ module modEntreesSortiesZones
 		idZone idZone;
 		TimeStamp t;
 		TypeAcces typeAcces;
+<<<<<<< HEAD
 	};
 	
 	struct Zone
@@ -65,6 +66,19 @@ module modEntreesSortiesZones
 	typedef sequence<Zone> lesZones;
 	
 	typedef sequence<Utilisateur> lesUtilisateurs;
+=======
+	};
+	
+	struct Zone
+	{
+		idZone idZne;
+		nomZone nomZne;
+	};
+	
+	typedef sequence<Zone> lesZones;
+	typedef sequence<Utilisateur> lesUtilisateurs;
+	typedef sequence<Empreinte> lesEmpreintes;
+>>>>>>> be4bc5db174d39dbc7bc2e2e516c0e9f3733f3f4
     typedef sequence<LogAcces> logsAcces;
 	
 	interface ServiceAuthentification
@@ -96,9 +110,18 @@ module modEntreesSortiesZones
 
 	interface ServiceEmpreinte
 	{
+<<<<<<< HEAD
 		boolean verifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
 		void ajouterEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteExistante);
 		void modifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
+=======
+		//CRUD Empreinte
+		boolean verifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
+		void ajouterEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteExistante);
+		void modifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
+		//Récupérer les empreintes pour listes
+		lesEmpreintes getEmpreintes();
+>>>>>>> be4bc5db174d39dbc7bc2e2e516c0e9f3733f3f4
 	};
 
 	interface ServiceAutorisation
