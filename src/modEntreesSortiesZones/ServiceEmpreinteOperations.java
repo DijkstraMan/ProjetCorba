@@ -25,10 +25,13 @@ public interface ServiceEmpreinteOperations
     public void modifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
+<<<<<<< HEAD
     /**
      * Operation supprimerEmpreinteTemp
      */
     public void supprimerEmpreinteTemp(String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
+=======
+>>>>>>> BrancheFabienV2
 }

@@ -191,6 +191,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
         }
     }
 
+<<<<<<< HEAD
     /**
      * Operation supprimerEmpreinteTemp
      */
@@ -247,4 +248,6 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
         }
     }
 
+=======
+>>>>>>> BrancheFabienV2
 }

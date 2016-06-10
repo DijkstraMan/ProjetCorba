@@ -114,6 +114,7 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
         return _output;
     }
 
+<<<<<<< HEAD
     private org.omg.CORBA.portable.OutputStream _invoke_supprimerEmpreinteTemp(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -135,4 +136,6 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
         return _output;
     }
 
+=======
+>>>>>>> BrancheFabienV2
 }

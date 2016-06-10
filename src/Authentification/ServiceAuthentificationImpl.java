@@ -243,9 +243,10 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     }
 
     @Override
-    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd) throws UtilisateurInconnu {
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd, int zone) throws UtilisateurInconnu {
         String query = "SELECT COUNT(*) AS rowcount FROM responsableZone "
-                        + "WHERE idCollabPerm_collaborateurPerm = "
+                        + "WHERE idZone = "+ zone +" "
+                        + "AND idCollabPerm_collaborateurPerm = "
                         + "(SELECT idCollabPerm FROM collaborateurPerm "
                         + " WHERE matricule_utilisateur='"+ matricule +"' "
                         + " AND passwordPerm='"+ pwd +"' )";
