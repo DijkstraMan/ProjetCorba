@@ -62,7 +62,7 @@ module modEntreesSortiesZones
 	
 	typedef sequence<Zone> lesZones;
 	typedef sequence<Utilisateur> lesUtilisateurs;
-    typedef sequence<LogAcces> logsAcces;
+        typedef sequence<LogAcces> logsAcces;
 	
 	interface ServiceAuthentification
 	{
@@ -104,6 +104,7 @@ module modEntreesSortiesZones
 		boolean verifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
 		void ajouterEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteExistante);
 		void modifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
+                void supprimerEmpreinteTemp(in Matricule matricule) raises (EmpreinteInconnue);
 	};
 
 	interface ServiceAutorisation

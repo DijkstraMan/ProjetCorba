@@ -26,8 +26,9 @@ public interface ServiceEmpreinteOperations
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
     /**
-     * Operation getEmpreintes
+     * Operation supprimerEmpreinteTemp
      */
-    public modEntreesSortiesZones.Empreinte[] getEmpreintes();
+    public void supprimerEmpreinteTemp(String matricule)
+        throws modEntreesSortiesZones.EmpreinteInconnue;
 
 }

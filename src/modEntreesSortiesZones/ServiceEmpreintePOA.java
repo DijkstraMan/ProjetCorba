@@ -35,10 +35,10 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
 
         if (opName.equals("ajouterEmpreinte")) {
                 return _invoke_ajouterEmpreinte(_is, handler);
-        } else if (opName.equals("getEmpreintes")) {
-                return _invoke_getEmpreintes(_is, handler);
         } else if (opName.equals("modifierEmpreinte")) {
                 return _invoke_modifierEmpreinte(_is, handler);
+        } else if (opName.equals("supprimerEmpreinteTemp")) {
+                return _invoke_supprimerEmpreinteTemp(_is, handler);
         } else if (opName.equals("verifierEmpreinte")) {
                 return _invoke_verifierEmpreinte(_is, handler);
         } else {
@@ -114,16 +114,24 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
         return _output;
     }
 
-    private org.omg.CORBA.portable.OutputStream _invoke_getEmpreintes(
+    private org.omg.CORBA.portable.OutputStream _invoke_supprimerEmpreinteTemp(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
 
-        modEntreesSortiesZones.Empreinte[] _arg_result = getEmpreintes();
+        try
+        {
+            supprimerEmpreinteTemp(arg0_in);
 
-        _output = handler.createReply();
-        modEntreesSortiesZones.lesEmpreintesHelper.write(_output,_arg_result);
+            _output = handler.createReply();
 
+        }
+        catch (modEntreesSortiesZones.EmpreinteInconnue _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.EmpreinteInconnueHelper.write(_output,_exception);
+        }
         return _output;
     }
 

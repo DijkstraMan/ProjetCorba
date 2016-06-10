@@ -131,10 +131,11 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
         String arg1_in = modEntreesSortiesZones.PasswordPermHelper.read(_is);
+        int arg2_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
         try
         {
-            boolean _arg_result = verifierAuthentificationLogicielResp(arg0_in, arg1_in);
+            boolean _arg_result = verifierAuthentificationLogicielResp(arg0_in, arg1_in, arg2_in);
 
             _output = handler.createReply();
             _output.write_boolean(_arg_result);

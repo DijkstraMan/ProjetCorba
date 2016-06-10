@@ -83,10 +83,10 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
-        return _tie.verifierAuthentificationLogicielResp( matricule,  pwd);
+        return _tie.verifierAuthentificationLogicielResp( matricule,  pwd,  zone);
     }
 
     /**

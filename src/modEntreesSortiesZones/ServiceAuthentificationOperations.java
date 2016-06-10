@@ -22,7 +22,7 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
