@@ -37,6 +37,7 @@ public final class LogAcces implements org.omg.CORBA.portable.IDLEntity
      * Constructor with fields initialization
      * @param matricule matricule struct member
      * @param idZone idZone struct member
+<<<<<<< HEAD
      * @param dateAcces dateAcces struct member
      * @param typeAcces typeAcces struct member
      */
@@ -45,6 +46,16 @@ public final class LogAcces implements org.omg.CORBA.portable.IDLEntity
         this.matricule = matricule;
         this.idZone = idZone;
         this.dateAcces = dateAcces;
+=======
+     * @param t t struct member
+     * @param typeAcces typeAcces struct member
+     */
+    public LogAcces(String matricule, int idZone, int t, modEntreesSortiesZones.TypeAcces typeAcces)
+    {
+        this.matricule = matricule;
+        this.idZone = idZone;
+        this.t = t;
+>>>>>>> ServiceAuthorisationNico
         this.typeAcces = typeAcces;
     }
 

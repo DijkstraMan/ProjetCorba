@@ -81,6 +81,7 @@ create table responsableZone
 (
 	idRespZone integer(5) NOT NULL AUTO_INCREMENT,
 	idCollabPerm_collaborateurPerm varchar(50),
+	idZone integer(5) NOT NULL,
 	PRIMARY KEY(idRespZone),
 	CONSTRAINT fk_responsableZone_idCollabPerm_collaborateurPerm FOREIGN KEY (idCollabPerm_collaborateurPerm) REFERENCES collaborateurPerm(idCollabPerm)
 );
@@ -147,9 +148,17 @@ create table autorisationTemp
 	PRIMARY KEY(matricule_utilisateur,idZone_zone)
 );
 
+<<<<<<< HEAD
 /*bdlogAcces*/
 use bdlogAcces;
 drop table if exists logAcces;
+=======
+insert into gZone values ('1','Zone1');
+insert into gZone values ('2','Zone2');
+insert into gZone values ('3','Zone3');
+
+/*
+>>>>>>> ServiceAuthorisationNico
 create table logAcces
 (
 	matricule_utilisateur varchar(50) NOT NULL,

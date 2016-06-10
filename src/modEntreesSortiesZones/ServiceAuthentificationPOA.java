@@ -35,6 +35,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                     new Operation_ajouterCollaborateurPerm());
             operationMap.put("ajouterCollaborateurTemp",
                     new Operation_ajouterCollaborateurTemp());
+<<<<<<< HEAD
             operationMap.put("getCollaborateursPermanents",
                     new Operation_getCollaborateursPermanents());
             operationMap.put("getCollaborateursTemporaires",
@@ -45,16 +46,27 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                     new Operation_modifierCollaborateurPerm());
             operationMap.put("modifierCollaborateurTemp",
                     new Operation_modifierCollaborateurTemp());
+=======
+            operationMap.put("getUtilisateur",
+                    new Operation_getUtilisateur());
+            operationMap.put("getUtilisateurs",
+                    new Operation_getUtilisateurs());
+            operationMap.put("modifierUtilisateur",
+                    new Operation_modifierUtilisateur());
+>>>>>>> ServiceAuthorisationNico
             operationMap.put("verifierAuthentificationLogicielAccueil",
                     new Operation_verifierAuthentificationLogicielAccueil());
             operationMap.put("verifierAuthentificationLogicielRH",
                     new Operation_verifierAuthentificationLogicielRH());
             operationMap.put("verifierAuthentificationLogicielResp",
                     new Operation_verifierAuthentificationLogicielResp());
+<<<<<<< HEAD
             operationMap.put("verifierAuthentificationMachineEmpreinteCollaborateurPerm",
                     new Operation_verifierAuthentificationMachineEmpreinteCollaborateurPerm());
             operationMap.put("verifierAuthentificationMachineEmpreinteCollaborateurTemp",
                     new Operation_verifierAuthentificationMachineEmpreinteCollaborateurTemp());
+=======
+>>>>>>> ServiceAuthorisationNico
             operationMap.put("verifierAuthentificationPorte",
                     new Operation_verifierAuthentificationPorte());
     }
@@ -136,6 +148,59 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         {
             boolean _arg_result = verifierAuthentificationLogicielResp(arg0_in, arg1_in);
 
+<<<<<<< HEAD
+            _output = handler.createReply();
+            _output.write_boolean(_arg_result);
+=======
+        _output = handler.createReply();
+        modEntreesSortiesZones.lesUtilisateursHelper.write(_output,_arg_result);
+>>>>>>> ServiceAuthorisationNico
+
+        }
+        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_verifierAuthentificationLogicielRH(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg1_in = modEntreesSortiesZones.PasswordPermHelper.read(_is);
+
+        try
+        {
+            boolean _arg_result = verifierAuthentificationLogicielRH(arg0_in, arg1_in);
+
+            _output = handler.createReply();
+            _output.write_boolean(_arg_result);
+
+        }
+        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
+<<<<<<< HEAD
+=======
+    private org.omg.CORBA.portable.OutputStream _invoke_verifierAuthentificationLogicielResp(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        String arg1_in = modEntreesSortiesZones.PasswordPermHelper.read(_is);
+
+        try
+        {
+            boolean _arg_result = verifierAuthentificationLogicielResp(arg0_in, arg1_in);
+
             _output = handler.createReply();
             _output.write_boolean(_arg_result);
 
@@ -171,6 +236,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         return _output;
     }
 
+>>>>>>> ServiceAuthorisationNico
     private org.omg.CORBA.portable.OutputStream _invoke_verifierAuthentificationLogicielAccueil(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -289,6 +355,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         return _output;
     }
 
+<<<<<<< HEAD
     private org.omg.CORBA.portable.OutputStream _invoke_modifierCollaborateurPerm(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -362,6 +429,8 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         return _output;
     }
 
+=======
+>>>>>>> ServiceAuthorisationNico
     // operation classes
     private abstract static class AbstractOperation {
         protected abstract org.omg.CORBA.portable.OutputStream invoke(
@@ -370,83 +439,147 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                 org.omg.CORBA.portable.ResponseHandler handler);
     }
 
+<<<<<<< HEAD
     private static final class Operation_getUtilisateur extends AbstractOperation
+=======
+    private static final class Operation_modifierUtilisateur extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_getUtilisateur(_is, handler);
         }
     }
 
     private static final class Operation_verifierAuthentificationPorte extends AbstractOperation
+=======
+            return target._invoke_modifierUtilisateur(_is, handler);
+        }
+    }
+
+    private static final class Operation_getUtilisateur extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_verifierAuthentificationPorte(_is, handler);
         }
     }
 
     private static final class Operation_verifierAuthentificationLogicielResp extends AbstractOperation
+=======
+            return target._invoke_getUtilisateur(_is, handler);
+        }
+    }
+
+    private static final class Operation_getUtilisateurs extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_verifierAuthentificationLogicielResp(_is, handler);
         }
     }
 
     private static final class Operation_verifierAuthentificationLogicielRH extends AbstractOperation
+=======
+            return target._invoke_getUtilisateurs(_is, handler);
+        }
+    }
+
+    private static final class Operation_verifierAuthentificationPorte extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_verifierAuthentificationLogicielRH(_is, handler);
         }
     }
 
     private static final class Operation_verifierAuthentificationLogicielAccueil extends AbstractOperation
+=======
+            return target._invoke_verifierAuthentificationPorte(_is, handler);
+        }
+    }
+
+    private static final class Operation_verifierAuthentificationLogicielResp extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_verifierAuthentificationLogicielAccueil(_is, handler);
         }
     }
 
     private static final class Operation_ajouterCollaborateurTemp extends AbstractOperation
+=======
+            return target._invoke_verifierAuthentificationLogicielResp(_is, handler);
+        }
+    }
+
+    private static final class Operation_verifierAuthentificationLogicielRH extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_ajouterCollaborateurTemp(_is, handler);
         }
     }
 
     private static final class Operation_modifierCollaborateurTemp extends AbstractOperation
+=======
+            return target._invoke_verifierAuthentificationLogicielRH(_is, handler);
+        }
+    }
+
+    private static final class Operation_verifierAuthentificationLogicielAccueil extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_modifierCollaborateurTemp(_is, handler);
         }
     }
 
     private static final class Operation_verifierAuthentificationMachineEmpreinteCollaborateurTemp extends AbstractOperation
+=======
+            return target._invoke_verifierAuthentificationLogicielAccueil(_is, handler);
+        }
+    }
+
+    private static final class Operation_ajouterCollaborateurTemp extends AbstractOperation
+>>>>>>> ServiceAuthorisationNico
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAuthentificationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
+<<<<<<< HEAD
             return target._invoke_verifierAuthentificationMachineEmpreinteCollaborateurTemp(_is, handler);
+=======
+            return target._invoke_ajouterCollaborateurTemp(_is, handler);
+>>>>>>> ServiceAuthorisationNico
         }
     }
 
@@ -460,6 +593,7 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         }
     }
 
+<<<<<<< HEAD
     private static final class Operation_modifierCollaborateurPerm extends AbstractOperation
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
@@ -500,4 +634,6 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         }
     }
 
+=======
+>>>>>>> ServiceAuthorisationNico
 }

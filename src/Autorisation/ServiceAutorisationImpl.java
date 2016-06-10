@@ -53,7 +53,11 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     private final String nomDB;
     
     public ServiceAutorisationImpl(JTextArea a) {
+<<<<<<< HEAD
         nomObj="SAUTH";
+=======
+        nomObj="SAUTO";
+>>>>>>> ServiceAuthorisationNico
         areaTextEvent=a;
         nomDB="bdZone";
     }

@@ -23,7 +23,11 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
     /**
      * Operation ajouterEntree
      */
+<<<<<<< HEAD
     public void ajouterEntree(String matricule, int idZone, String dateAcces, modEntreesSortiesZones.TypeAcces typeAcces)
+=======
+    public void ajouterEntree(String matricule, int idZone, String t, modEntreesSortiesZones.TypeAcces typeAcces)
+>>>>>>> ServiceAuthorisationNico
     {
         while(true)
         {
@@ -35,7 +39,11 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                     org.omg.CORBA.portable.OutputStream _output = this._request("ajouterEntree",true);
                     modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
+<<<<<<< HEAD
                     modEntreesSortiesZones.dateLogHelper.write(_output,dateAcces);
+=======
+                    modEntreesSortiesZones.dateLogHelper.write(_output,t);
+>>>>>>> ServiceAuthorisationNico
                     modEntreesSortiesZones.TypeAccesHelper.write(_output,typeAcces);
                     _input = this._invoke(_output);
                     return;
@@ -62,7 +70,11 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                 modEntreesSortiesZones.ServiceJournalisationOperations _self = (modEntreesSortiesZones.ServiceJournalisationOperations) _so.servant;
                 try
                 {
+<<<<<<< HEAD
                     _self.ajouterEntree( matricule,  idZone,  dateAcces,  typeAcces);
+=======
+                    _self.ajouterEntree( matricule,  idZone,  t,  typeAcces);
+>>>>>>> ServiceAuthorisationNico
                     return;
                 }
                 finally

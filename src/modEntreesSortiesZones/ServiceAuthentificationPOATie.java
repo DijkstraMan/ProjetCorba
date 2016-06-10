@@ -65,19 +65,65 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     /**
      * Operation getUtilisateur
      */
+<<<<<<< HEAD
     public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         return _tie.getUtilisateur( matricule);
+=======
+    public void modifierUtilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        _tie.modifierUtilisateur( matricule,  nomUsr,  preUsr,  phoUsr);
+>>>>>>> ServiceAuthorisationNico
     }
 
     /**
      * Operation verifierAuthentificationPorte
      */
+<<<<<<< HEAD
     public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue
     {
         return _tie.verifierAuthentificationPorte( empCollab,  phoUsr,  zone);
+=======
+    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.getUtilisateur( matricule);
+>>>>>>> ServiceAuthorisationNico
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielResp
+     */
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationLogicielResp( matricule,  pwd);
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielRH
+     */
+<<<<<<< HEAD
+    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationLogicielRH( matricule,  pwd);
+    }
+
+    /**
+     * Operation verifierAuthentificationLogicielAccueil
+     */
+    public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+=======
+    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierAuthentificationPorte( empCollab,  phoUsr);
     }
 
     /**
@@ -104,6 +150,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
+>>>>>>> ServiceAuthorisationNico
         return _tie.verifierAuthentificationLogicielAccueil( matricule,  pwd);
     }
 
@@ -114,6 +161,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         _tie.ajouterCollaborateurTemp( matricule,  nomUsr,  preUsr,  phoUsr);
+<<<<<<< HEAD
     }
 
     /**
@@ -132,6 +180,8 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         return _tie.verifierAuthentificationMachineEmpreinteCollaborateurTemp( matricule);
+=======
+>>>>>>> ServiceAuthorisationNico
     }
 
     /**
@@ -141,6 +191,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
         throws modEntreesSortiesZones.UtilisateurExistant
     {
         _tie.ajouterCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr,  pwd);
+<<<<<<< HEAD
     }
 
     /**
@@ -175,6 +226,8 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     public modEntreesSortiesZones.Utilisateur[] getCollaborateursPermanents()
     {
         return _tie.getCollaborateursPermanents();
+=======
+>>>>>>> ServiceAuthorisationNico
     }
 
 }
