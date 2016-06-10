@@ -9,12 +9,18 @@ import Util.UserTableModel;
 import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
+import modEntreesSortiesZones.EmpreinteInconnue;
 import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.ServiceEmpreinte;
 import modEntreesSortiesZones.Utilisateur;
 import modEntreesSortiesZones.UtilisateurExistant;
 import modEntreesSortiesZones.UtilisateurInconnu;
+import org.omg.CosNaming.NamingContext;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *
@@ -23,7 +29,7 @@ import modEntreesSortiesZones.UtilisateurInconnu;
 public class FenGestionAccueil extends javax.swing.JFrame {
     
     private ServiceAuthentification monServAuth;
-
+    private ServiceEmpreinte monServEmp;
     /**
      * Creates new form FenGestion
      */
@@ -31,9 +37,10 @@ public class FenGestionAccueil extends javax.swing.JFrame {
         initComponents();
     }
 
-    public FenGestionAccueil(ServiceAuthentification servAuth) {
+    public FenGestionAccueil(ServiceAuthentification servAuth, ServiceEmpreinte servEmp) {
         initComponents();
         monServAuth = servAuth;
+        monServEmp = servEmp;
         //Récupération des collaborateurs temporaire 
         Utilisateur[] lesCollabsTemp = monServAuth.getCollaborateursTemporaires();
         //Remplissage et flitrage du tableau
@@ -75,6 +82,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
         jButtonModifier = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabelMatriculeModif = new javax.swing.JLabel();
+        jButtonSuppEmp = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCollab = new javax.swing.JTable();
 
@@ -173,6 +181,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
 
         jButtonModifier.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jButtonModifier.setText("Modifier");
+        jButtonModifier.setEnabled(false);
         jButtonModifier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonModifierActionPerformed(evt);
@@ -183,6 +192,16 @@ public class FenGestionAccueil extends javax.swing.JFrame {
         jLabel12.setText("Modifier un collaborateur temporaire");
 
         jLabelMatriculeModif.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
+
+        jButtonSuppEmp.setBackground(new java.awt.Color(204, 0, 0));
+        jButtonSuppEmp.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButtonSuppEmp.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSuppEmp.setText("Supprimer empreinte");
+        jButtonSuppEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSuppEmpActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -200,11 +219,13 @@ public class FenGestionAccueil extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(38, 38, 38)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonModifier, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                            .addComponent(jTextFieldNomModif)
-                            .addComponent(jTextFieldPrenomModif)
-                            .addComponent(jTextFieldPhotoModif)
-                            .addComponent(jLabelMatriculeModif, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jButtonSuppEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButtonModifier, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                                .addComponent(jTextFieldNomModif)
+                                .addComponent(jTextFieldPrenomModif)
+                                .addComponent(jTextFieldPhotoModif)
+                                .addComponent(jLabelMatriculeModif, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(66, 66, 66))
         );
         jPanel2Layout.setVerticalGroup(
@@ -232,7 +253,9 @@ public class FenGestionAccueil extends javax.swing.JFrame {
                     .addComponent(jTextFieldPhotoModif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(95, 95, 95))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSuppEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
 
         jTabbedPane1.addTab("Modifier collaborateur temporaire", jPanel2);
@@ -284,7 +307,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
         Point p = evt.getPoint();
         int row = table.rowAtPoint(p);
         //On vérifie qu'on a bien double-cliqué sur une ligne de contenu
-        if (evt.getClickCount() == 2 && row != -1) {
+        if (/*evt.getClickCount() == 2 &&*/ row != -1) {
             UserTableModel modelCollabTemp = (UserTableModel) table.getModel();
             Utilisateur usrTemp = modelCollabTemp.getUserAt(row);
             //Remplissage des champs de modification d'un collab :
@@ -292,6 +315,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
             jTextFieldNomModif.setText(usrTemp.nomUsr);
             jTextFieldPrenomModif.setText(usrTemp.preUsr);
             jTextFieldPhotoModif.setText(usrTemp.phoUsr);
+            jButtonModifier.setEnabled(true);
         }
     }//GEN-LAST:event_jTableCollabMouseClicked
 
@@ -306,7 +330,10 @@ public class FenGestionAccueil extends javax.swing.JFrame {
             UserTableModel modelCollabTemp = (UserTableModel) jTableCollab.getModel();
             modelCollabTemp.add(newUsr);
         } catch (UtilisateurExistant ex){
-            Logger.getLogger(FenGestionAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+            "Erreur, ce collaborateur temporaire existe déjà.",
+            "Erreur lors de l'ajout",
+            JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_jButtonAjouterActionPerformed
@@ -323,11 +350,28 @@ public class FenGestionAccueil extends javax.swing.JFrame {
                 UserTableModel modelCollabTemp = (UserTableModel) jTableCollab.getModel();
                 modelCollabTemp.majAffichage(newUsr);
             } catch (UtilisateurInconnu ex) {
-                Logger.getLogger(FenGestionAccueil.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this,
+                "Erreur, ce collaborateur temporaire n'existe pas.",
+                "Erreur lors de la modification",
+                JOptionPane.ERROR_MESSAGE);
             }
         }
         
     }//GEN-LAST:event_jButtonModifierActionPerformed
+ 
+    private void jButtonSuppEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuppEmpActionPerformed
+        String matricule = jLabelMatriculeModif.getText();
+        if(matricule != null && !matricule.isEmpty()) {
+            try {
+                monServEmp.supprimerEmpreinteTemp(matricule);
+            } catch (EmpreinteInconnue ex) {
+                JOptionPane.showMessageDialog(this,
+                "Erreur, ce collaborateur temporaire n'a pas d'empreinte enregistrée.",
+                "Erreur lors de la suppression de l'empreinte",
+                JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButtonSuppEmpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,6 +410,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonModifier;
+    private javax.swing.JButton jButtonSuppEmp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
