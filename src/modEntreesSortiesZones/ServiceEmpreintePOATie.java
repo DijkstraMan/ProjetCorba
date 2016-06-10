@@ -89,12 +89,4 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
         _tie.modifierEmpreinte( empCollab,  matricule);
     }
 
-    /**
-     * Operation getEmpreintes
-     */
-    public modEntreesSortiesZones.Empreinte[] getEmpreintes()
-    {
-        return _tie.getEmpreintes();
-    }
-
 }

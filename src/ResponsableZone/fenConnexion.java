@@ -6,6 +6,8 @@
 package ResponsableZone;
 
 import javax.swing.JComboBox;
+import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.ServiceAuthentificationHelper;
 import modEntreesSortiesZones.ServiceAutorisation;
 import modEntreesSortiesZones.ServiceAutorisationHelper;
 import modEntreesSortiesZones.Zone;
@@ -137,25 +139,19 @@ public class fenConnexion extends javax.swing.JFrame {
     
     public void connexionServAuto(String matricule, String mdp, int idZone)
     {
-        /*
-        org.omg.CORBA.Object distantServAuth=connexionCorba(String nomCorbaServAuthentification);
+        /*org.omg.CORBA.Object distantServAuth=connexionCorba(nomCorbaServAuthentification);
         ServiceAuthentification servAuth= ServiceAuthentificationHelper.narrow(distantServAuth);
         if(verifierAuthentificationLogicielResp(matricule,mdp,idZone))
         {
-
-        }
-        else
-        {
-
-        }
-        */
+            
+        }*/
         if(true)
         {
-
+            
         }
         else
         {
-
+            
         }
     }
     

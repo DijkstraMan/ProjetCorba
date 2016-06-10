@@ -140,7 +140,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public Empreinte[] getEmpreintes() {
         mAreaTextEvent.setText(mAreaTextEvent.getText()+"Demande de la liste des empreintes\n"); 
@@ -167,7 +167,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
         }
         return null;
     }
-    
+
     @Override
     public void run() {
        String[] args = null;
