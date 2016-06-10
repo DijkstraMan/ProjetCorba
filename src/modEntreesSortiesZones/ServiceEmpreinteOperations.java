@@ -25,9 +25,4 @@ public interface ServiceEmpreinteOperations
     public void modifierEmpreinte(String empCollab, String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
-    /**
-     * Operation getEmpreintes
-     */
-    public modEntreesSortiesZones.Empreinte[] getEmpreintes();
-
 }

@@ -142,7 +142,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     /**
      * Operation verifierAuthentificationLogicielResp
      */
-    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -155,6 +155,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationLogicielResp",true);
                     modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     modEntreesSortiesZones.PasswordPermHelper.write(_output,pwd);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,zone);
                     _input = this._invoke(_output);
                     boolean _arg_ret = _input.read_boolean();
                     return _arg_ret;
@@ -186,7 +187,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                 modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAuthentificationLogicielResp( matricule,  pwd);
+                    return _self.verifierAuthentificationLogicielResp( matricule,  pwd,  zone);
                 }
                 finally
                 {
