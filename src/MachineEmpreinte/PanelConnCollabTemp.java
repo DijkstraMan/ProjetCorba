@@ -5,19 +5,26 @@
  */
 package MachineEmpreinte;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.UtilisateurInconnu;
 
 /**
  *
  * @author Romain
  */
 public class PanelConnCollabTemp extends JPanel {
-
+    
+    private final ServiceAuthentification mServAuth;
     /**
      * Creates new form PanelTest
+     * @param pServAuth
      */
-    public PanelConnCollabTemp() {
+    public PanelConnCollabTemp(ServiceAuthentification pServAuth) {
         initComponents();
+        this.mServAuth = pServAuth;
     }
 
     /**
@@ -30,23 +37,35 @@ public class PanelConnCollabTemp extends JPanel {
     private void initComponents() {
 
         mConCollabPerm = new javax.swing.JLabel();
+        FlowPanelConnInfos = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         mMatUsrLbl = new javax.swing.JLabel();
         mMatUsrInputField = new javax.swing.JTextField();
+        FlowPanelConnBtn = new javax.swing.JPanel();
         mConnexionBtn = new javax.swing.JButton();
+
+        setLayout(new java.awt.BorderLayout());
 
         mConCollabPerm.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mConCollabPerm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mConCollabPerm.setText("Connexion collaborateur permanent");
+        mConCollabPerm.setText("Connexion collaborateur temporaire");
         mConCollabPerm.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(mConCollabPerm, java.awt.BorderLayout.NORTH);
 
+        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+
+        mMatUsrLbl.setLabelFor(mMatUsrInputField);
         mMatUsrLbl.setText("Matricule utilisateur :");
+        mMatUsrLbl.setPreferredSize(new java.awt.Dimension(80, 14));
+        jPanel1.add(mMatUsrLbl);
 
         mMatUsrInputField.setText("Saisir votre matricule");
-        mMatUsrInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mMatUsrInputFieldActionPerformed(evt);
-            }
-        });
+        mMatUsrInputField.setPreferredSize(new java.awt.Dimension(150, 20));
+        jPanel1.add(mMatUsrInputField);
+
+        FlowPanelConnInfos.add(jPanel1);
+
+        add(FlowPanelConnInfos, java.awt.BorderLayout.CENTER);
 
         mConnexionBtn.setText("Connexion");
         mConnexionBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -54,48 +73,27 @@ public class PanelConnCollabTemp extends JPanel {
                 mConnexionBtnActionPerformed(evt);
             }
         });
+        FlowPanelConnBtn.add(mConnexionBtn);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mConCollabPerm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mMatUsrLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMatUsrInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mConnexionBtn)
-                .addGap(89, 89, 89))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mConCollabPerm, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mMatUsrLbl)
-                    .addComponent(mMatUsrInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(mConnexionBtn)
-                .addContainerGap(129, Short.MAX_VALUE))
-        );
+        add(FlowPanelConnBtn, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mConnexionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mConnexionBtnActionPerformed
-        // TODO add your handling code here:
+        String mMatriculeCollabTemp = mMatUsrInputField.getText();
+        try {
+            if(mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurTemp(mMatriculeCollabTemp)) {
+                this.setVisible(false);
+            }             
+        } catch (UtilisateurInconnu ex) {
+            Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mConnexionBtnActionPerformed
-
-    private void mMatUsrInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mMatUsrInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mMatUsrInputFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel FlowPanelConnBtn;
+    private javax.swing.JPanel FlowPanelConnInfos;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mConCollabPerm;
     private javax.swing.JButton mConnexionBtn;
     private javax.swing.JTextField mMatUsrInputField;

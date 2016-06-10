@@ -5,19 +5,26 @@
  */
 package MachineEmpreinte;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.UtilisateurInconnu;
 
 /**
  *
  * @author Romain
  */
 public class PanelConnCollabPerm extends JPanel {
-
+    
+    private final ServiceAuthentification mServAuth;
     /**
      * Creates new form PanelTest
+     * @param pServAuth
      */
-    public PanelConnCollabPerm() {
+    public PanelConnCollabPerm(ServiceAuthentification pServAuth) {
         initComponents();
+        this.mServAuth = pServAuth;
     }
 
     /**
@@ -30,12 +37,14 @@ public class PanelConnCollabPerm extends JPanel {
     private void initComponents() {
 
         mConCollabPerm = new javax.swing.JLabel();
-        mConnexionBtn = new javax.swing.JButton();
+        FlowPanelConnInfos = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         mMatUsrLbl = new javax.swing.JLabel();
         mMatUsrInputField = new javax.swing.JTextField();
         mPwdLbl = new javax.swing.JLabel();
         mPwdField = new javax.swing.JPasswordField();
+        FlowPanelConnBtn = new javax.swing.JPanel();
+        mConnexionBtn = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -45,14 +54,6 @@ public class PanelConnCollabPerm extends JPanel {
         mConCollabPerm.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(mConCollabPerm, java.awt.BorderLayout.NORTH);
 
-        mConnexionBtn.setText("Connexion");
-        mConnexionBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mConnexionBtnActionPerformed(evt);
-            }
-        });
-        add(mConnexionBtn, java.awt.BorderLayout.SOUTH);
-
         jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
         mMatUsrLbl.setLabelFor(mMatUsrInputField);
@@ -60,11 +61,7 @@ public class PanelConnCollabPerm extends JPanel {
         jPanel1.add(mMatUsrLbl);
 
         mMatUsrInputField.setText("Saisir votre matricule");
-        mMatUsrInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mMatUsrInputFieldActionPerformed(evt);
-            }
-        });
+        mMatUsrInputField.setPreferredSize(new java.awt.Dimension(150, 20));
         jPanel1.add(mMatUsrInputField);
 
         mPwdLbl.setLabelFor(mPwdField);
@@ -72,30 +69,40 @@ public class PanelConnCollabPerm extends JPanel {
         jPanel1.add(mPwdLbl);
 
         mPwdField.setText("jPasswordField1");
-        mPwdField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mPwdFieldActionPerformed(evt);
-            }
-        });
         jPanel1.add(mPwdField);
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        FlowPanelConnInfos.add(jPanel1);
+
+        add(FlowPanelConnInfos, java.awt.BorderLayout.CENTER);
+
+        mConnexionBtn.setText("Connexion");
+        mConnexionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mConnexionBtnActionPerformed(evt);
+            }
+        });
+        FlowPanelConnBtn.add(mConnexionBtn);
+
+        add(FlowPanelConnBtn, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mPwdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mPwdFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mPwdFieldActionPerformed
-
     private void mConnexionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mConnexionBtnActionPerformed
-        // TODO add your handling code here:
+        String lMatCollabPerm = mMatUsrInputField.getText();
+        String lPwdCollabPerm = String.valueOf(mPwdField.getPassword());
+        
+        try {
+            if(mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurPerm(lMatCollabPerm, lPwdCollabPerm)) {
+                this.setVisible(false);
+            }             
+        } catch (UtilisateurInconnu ex) {
+            Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mConnexionBtnActionPerformed
-
-    private void mMatUsrInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mMatUsrInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mMatUsrInputFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel FlowPanelConnBtn;
+    private javax.swing.JPanel FlowPanelConnInfos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mConCollabPerm;
     private javax.swing.JButton mConnexionBtn;
