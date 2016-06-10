@@ -119,6 +119,7 @@ create table gZone
 (
 	idZone integer(5) NOT NULL AUTO_INCREMENT,
 	nomZone varchar(100),
+	
 	PRIMARY KEY(idZone)
 );
 
@@ -148,7 +149,6 @@ create table autorisationTemp
 	PRIMARY KEY(matricule_utilisateur,idZone_zone)
 );
 
-<<<<<<< HEAD
 /*bdlogAcces*/
 use bdlogAcces;
 drop table if exists logAcces;
@@ -157,8 +157,8 @@ insert into gZone values ('1','Zone1');
 insert into gZone values ('2','Zone2');
 insert into gZone values ('3','Zone3');
 
-/*
->>>>>>> ServiceAuthorisationNico
+
+
 create table logAcces
 (
 	matricule_utilisateur varchar(50) NOT NULL,
@@ -166,6 +166,4 @@ create table logAcces
 	dateAcces datetime,
 	acces varchar(100),
 	PRIMARY KEY(matricule_utilisateur,idZone_zone, dateAcces),
-	/*CONSTRAINT fk_logAcces_matricule_utilisateur FOREIGN KEY (matricule_utilisateur) REFERENCES utilisateur(matricule),
-	CONSTRAINT fk_logAcces_idZone_zone FOREIGN KEY (idZone_zone) REFERENCES zone(idZone)*/
 );

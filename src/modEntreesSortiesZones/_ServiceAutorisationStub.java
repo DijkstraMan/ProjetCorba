@@ -374,7 +374,6 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation getZone
      */
     public modEntreesSortiesZones.Zone[] getZone()
-        throws modEntreesSortiesZones.SQLERROR
     {
         while(true)
         {
@@ -395,11 +394,6 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(modEntreesSortiesZones.SQLERRORHelper.id()))
-                    {
-                        throw modEntreesSortiesZones.SQLERRORHelper.read(_exception.getInputStream());
-                    }
-
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
                 }
                 finally

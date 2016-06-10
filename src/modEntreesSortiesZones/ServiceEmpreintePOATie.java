@@ -87,7 +87,6 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
         throws modEntreesSortiesZones.EmpreinteInconnue
     {
         _tie.modifierEmpreinte( empCollab,  matricule);
-<<<<<<< HEAD
     }
 
     /**
@@ -96,8 +95,6 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
     public modEntreesSortiesZones.Empreinte[] getEmpreintes()
     {
         return _tie.getEmpreintes();
-=======
->>>>>>> ServiceAuthorisationNico
     }
 
 }

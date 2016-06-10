@@ -10,43 +10,14 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation getUtilisateur
      */
-<<<<<<< HEAD
     public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
-=======
-    public void modifierUtilisateur(String matricule, String nomUsr, String preUsr, String phoUsr)
->>>>>>> ServiceAuthorisationNico
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation verifierAuthentificationPorte
      */
-<<<<<<< HEAD
     public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone)
         throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteInconnue;
-=======
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
->>>>>>> ServiceAuthorisationNico
-
-    /**
-     * Operation verifierAuthentificationLogicielResp
-     */
-    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
-
-    /**
-     * Operation verifierAuthentificationLogicielRH
-     */
-<<<<<<< HEAD
-    public boolean verifierAuthentificationLogicielRH(String matricule, String pwd)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
-
-    /**
-     * Operation verifierAuthentificationLogicielAccueil
-     */
-=======
-    public String verifierAuthentificationPorte(String empCollab, String phoUsr)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation verifierAuthentificationLogicielResp
@@ -63,7 +34,6 @@ public interface ServiceAuthentificationOperations
     /**
      * Operation verifierAuthentificationLogicielAccueil
      */
->>>>>>> ServiceAuthorisationNico
     public boolean verifierAuthentificationLogicielAccueil(String matricule, String pwd)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 

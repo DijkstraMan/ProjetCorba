@@ -120,7 +120,6 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
      * Operation getZone
      */
     public modEntreesSortiesZones.Zone[] getZone()
-        throws modEntreesSortiesZones.SQLERROR
     {
         return _tie.getZone();
     }

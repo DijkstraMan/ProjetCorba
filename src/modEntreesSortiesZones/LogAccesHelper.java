@@ -116,11 +116,7 @@ public class LogAccesHelper
 
         new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
         new_one.idZone = modEntreesSortiesZones.idZoneHelper.read(istream);
-<<<<<<< HEAD
         new_one.dateAcces = modEntreesSortiesZones.dateLogHelper.read(istream);
-=======
-        new_one.t = modEntreesSortiesZones.TimeStampHelper.read(istream);
->>>>>>> ServiceAuthorisationNico
         new_one.typeAcces = modEntreesSortiesZones.TypeAccesHelper.read(istream);
 
         return new_one;
@@ -135,11 +131,7 @@ public class LogAccesHelper
     {
         modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
         modEntreesSortiesZones.idZoneHelper.write(ostream,value.idZone);
-<<<<<<< HEAD
         modEntreesSortiesZones.dateLogHelper.write(ostream,value.dateAcces);
-=======
-        modEntreesSortiesZones.TimeStampHelper.write(ostream,value.t);
->>>>>>> ServiceAuthorisationNico
         modEntreesSortiesZones.TypeAccesHelper.write(ostream,value.typeAcces);
     }
 

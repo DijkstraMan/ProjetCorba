@@ -199,19 +199,11 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
 
-        try
-        {
-            modEntreesSortiesZones.Zone[] _arg_result = getZone();
+        modEntreesSortiesZones.Zone[] _arg_result = getZone();
 
-            _output = handler.createReply();
-            modEntreesSortiesZones.lesZonesHelper.write(_output,_arg_result);
+        _output = handler.createReply();
+        modEntreesSortiesZones.lesZonesHelper.write(_output,_arg_result);
 
-        }
-        catch (modEntreesSortiesZones.SQLERROR _exception)
-        {
-            _output = handler.createExceptionReply();
-            modEntreesSortiesZones.SQLERRORHelper.write(_output,_exception);
-        }
         return _output;
     }
 

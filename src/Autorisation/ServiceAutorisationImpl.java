@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import modEntreesSortiesZones.AutorisationExistante;
 import modEntreesSortiesZones.AutorisationInconnue;
-import modEntreesSortiesZones.SQLERROR;
 import modEntreesSortiesZones.ServiceAutorisationPOA;
 import modEntreesSortiesZones.Zone;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -53,11 +52,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     private final String nomDB;
     
     public ServiceAutorisationImpl(JTextArea a) {
-<<<<<<< HEAD
-        nomObj="SAUTH";
-=======
         nomObj="SAUTO";
->>>>>>> ServiceAuthorisationNico
         areaTextEvent=a;
         nomDB="bdZone";
     }
@@ -74,7 +69,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     /*Méthode générique pour les requêtes de manipulation 
     INSERT, UPDATE, DELETE ne nécessitant pas de récupérer
     un quelconque résultat */
-    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
+    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException {
         boolean res = true;
         //connexion a la bdd
         // on cree un objet Statement qui va permettre l'execution des requetes
@@ -177,18 +172,14 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             else
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
             closeConnexion();
-        } catch (ParseException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (ParseException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
     @Override
-    public Zone[] getZone() throws SQLERROR{
+    public Zone[] getZone(){
         areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des zones\n"); 
         List<Zone> tabZone= new ArrayList();
         try {
@@ -207,8 +198,9 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des zones envoyé\n");
             return lesZones;
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new SQLERROR (ex.getMessage ());
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     @Override
@@ -229,9 +221,10 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+        
     }
 
     @Override

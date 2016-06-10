@@ -5,10 +5,7 @@
  */
 package ResponsableZone;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import modEntreesSortiesZones.SQLERROR;
 import modEntreesSortiesZones.ServiceAutorisation;
 import modEntreesSortiesZones.ServiceAutorisationHelper;
 import modEntreesSortiesZones.Zone;
@@ -45,9 +42,6 @@ public class fenConnexion extends javax.swing.JFrame {
                 jSelectZone.addItem(new ComboItem(lesZones[i].idZne,lesZones[i].nomZne));
             }
             return null;
-        } catch (SQLERROR ex) {
-            System.out.println("lsdhfj");
-            Logger.getLogger(fenConnexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (Exception e){
             System.out.println("JE COMPRENDS PASDJVSDGUFIV");
@@ -146,7 +140,7 @@ public class fenConnexion extends javax.swing.JFrame {
         /*
         org.omg.CORBA.Object distantServAuth=connexionCorba(String nomCorbaServAuthentification);
         ServiceAuthentification servAuth= ServiceAuthentificationHelper.narrow(distantServAuth);
-        if(verifierAuthentificationLogicielResp(matricule,mdp))
+        if(verifierAuthentificationLogicielResp(matricule,mdp,idZone))
         {
 
         }

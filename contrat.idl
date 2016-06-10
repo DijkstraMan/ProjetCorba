@@ -23,7 +23,6 @@ module modEntreesSortiesZones
 	exception UtilisateurExistant {string raison;};
 	exception AutorisationExistante {string raison;};
 	exception AutorisationInconnue {string raison;};
-	exception SQLERROR {string raison;};
 	
 	struct Empreinte 
 	{
@@ -70,27 +69,34 @@ module modEntreesSortiesZones
 	{
 		
 		Utilisateur getUtilisateur(in Matricule matricule) raises (UtilisateurInconnu);
+		
 		//verif d'indentité pour la porte
 		Utilisateur verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr, in idZone zone) raises (UtilisateurInconnu, EmpreinteInconnue);
+		
 		//verif de connexion pour les resp
-		boolean verifierAuthentificationLogicielResp(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		boolean verifierAuthentificationLogicielResp(in Matricule matricule, in PasswordPerm pwd, in idZone zone) raises (UtilisateurInconnu);
+		
 		//verif de connexion pour les rh
 		boolean verifierAuthentificationLogicielRH(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		
 		//verif de connexion pour l'accueil
 		boolean verifierAuthentificationLogicielAccueil(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		
 		//Utilisateurs temporaires :
 		void ajouterCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurExistant);
-                void modifierCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
-                //verif de connexion pour la machine empreinte :
-                boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(in Matricule matricule) raises (UtilisateurInconnu);
+		void modifierCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
+		//verif de connexion pour la machine empreinte :
+		boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(in Matricule matricule) raises (UtilisateurInconnu);
+		
 		//Utilisateurs permanents :
 		void ajouterCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr, in PasswordPerm pwd) raises (UtilisateurExistant);
-                void modifierCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
-                //verif de connexion pour la machine empreinte :
-                boolean verifierAuthentificationMachineEmpreinteCollaborateurPerm(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		void modifierCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
+		//verif de connexion pour la machine empreinte :
+		boolean verifierAuthentificationMachineEmpreinteCollaborateurPerm(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
+		
 		//recuperer utilisateurs pour listes
-                lesUtilisateurs getCollaborateursTemporaires();
-                lesUtilisateurs getCollaborateursPermanents();
+		lesUtilisateurs getCollaborateursTemporaires();
+		lesUtilisateurs getCollaborateursPermanents();
 	};
 
 	interface ServiceEmpreinte
@@ -115,7 +121,7 @@ module modEntreesSortiesZones
 		void modifierAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationInconnue); 
 		void supprimerAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
 		//retourne les zones existantes
-		lesZones getZone() raises (SQLERROR);
+		lesZones getZone();
 	};
 	
 	interface ServiceJournalisation
