@@ -8,7 +8,9 @@ package MachineEmpreinte;
 import Accueil.FenConnexionAccueil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modEntreesSortiesZones.EmpreinteExistante;
 import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -42,16 +44,102 @@ public class FenConnexionCollab extends javax.swing.JFrame {
 
         ConnMachineEmpLbl = new javax.swing.JLabel();
         TabbedPaneMachineEmp = new javax.swing.JTabbedPane();
-        panelConnCollabPerm = new MachineEmpreinte.PanelConnCollabPerm(mServAuth);
-        panelConnCollabTemp = new MachineEmpreinte.PanelConnCollabTemp(mServAuth);
+        PanelConnPerm = new javax.swing.JPanel();
+        mConCollabPerm = new javax.swing.JLabel();
+        FlowPanelConnInfos = new javax.swing.JPanel();
+        PanelConnPermInfos = new javax.swing.JPanel();
+        MatriculePermLbl = new javax.swing.JLabel();
+        MatriculePermField = new javax.swing.JTextField();
+        PwdPermLbl = new javax.swing.JLabel();
+        PwdPermField = new javax.swing.JPasswordField();
+        FlowPanelConnBtn = new javax.swing.JPanel();
+        BtnConnPerm = new javax.swing.JButton();
+        PanelConnTemp = new javax.swing.JPanel();
+        mConCollabPerm1 = new javax.swing.JLabel();
+        FlowPanelConnInfos1 = new javax.swing.JPanel();
+        FlowPanelConnTempInfos = new javax.swing.JPanel();
+        MatTempLbl = new javax.swing.JLabel();
+        MatTempField = new javax.swing.JTextField();
+        FlowPanelConnTemp = new javax.swing.JPanel();
+        BtnConnTemp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ConnMachineEmpLbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ConnMachineEmpLbl.setText("Connexion Machine Empreinte");
 
-        TabbedPaneMachineEmp.addTab("Collaborateur Permanent", panelConnCollabPerm);
-        TabbedPaneMachineEmp.addTab("Collaborateur Temporaire", panelConnCollabTemp);
+        PanelConnPerm.setLayout(new java.awt.BorderLayout());
+
+        mConCollabPerm.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mConCollabPerm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mConCollabPerm.setText("Connexion collaborateur permanent");
+        mConCollabPerm.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        PanelConnPerm.add(mConCollabPerm, java.awt.BorderLayout.NORTH);
+
+        PanelConnPermInfos.setLayout(new java.awt.GridLayout(2, 2));
+
+        MatriculePermLbl.setText("Matricule utilisateur :");
+        PanelConnPermInfos.add(MatriculePermLbl);
+
+        MatriculePermField.setText("Saisir votre matricule");
+        MatriculePermField.setPreferredSize(new java.awt.Dimension(150, 20));
+        PanelConnPermInfos.add(MatriculePermField);
+
+        PwdPermLbl.setText("Mot de passe :");
+        PanelConnPermInfos.add(PwdPermLbl);
+
+        PwdPermField.setText("jPasswordField1");
+        PanelConnPermInfos.add(PwdPermField);
+
+        FlowPanelConnInfos.add(PanelConnPermInfos);
+
+        PanelConnPerm.add(FlowPanelConnInfos, java.awt.BorderLayout.CENTER);
+
+        BtnConnPerm.setText("Connexion");
+        BtnConnPerm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConnPermActionPerformed(evt);
+            }
+        });
+        FlowPanelConnBtn.add(BtnConnPerm);
+
+        PanelConnPerm.add(FlowPanelConnBtn, java.awt.BorderLayout.SOUTH);
+
+        TabbedPaneMachineEmp.addTab("Collaborateur Permanent", PanelConnPerm);
+
+        PanelConnTemp.setLayout(new java.awt.BorderLayout());
+
+        mConCollabPerm1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mConCollabPerm1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mConCollabPerm1.setText("Connexion collaborateur temporaire");
+        mConCollabPerm1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        PanelConnTemp.add(mConCollabPerm1, java.awt.BorderLayout.NORTH);
+
+        FlowPanelConnTempInfos.setLayout(new java.awt.GridLayout(1, 2));
+
+        MatTempLbl.setText("Matricule utilisateur :");
+        MatTempLbl.setPreferredSize(new java.awt.Dimension(80, 14));
+        FlowPanelConnTempInfos.add(MatTempLbl);
+
+        MatTempField.setText("Saisir votre matricule");
+        MatTempField.setPreferredSize(new java.awt.Dimension(150, 20));
+        FlowPanelConnTempInfos.add(MatTempField);
+
+        FlowPanelConnInfos1.add(FlowPanelConnTempInfos);
+
+        PanelConnTemp.add(FlowPanelConnInfos1, java.awt.BorderLayout.CENTER);
+
+        BtnConnTemp.setText("Connexion");
+        BtnConnTemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConnTempActionPerformed(evt);
+            }
+        });
+        FlowPanelConnTemp.add(BtnConnTemp);
+
+        PanelConnTemp.add(FlowPanelConnTemp, java.awt.BorderLayout.SOUTH);
+
+        TabbedPaneMachineEmp.addTab("Collaborateur Temporaire", PanelConnTemp);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,10 +148,10 @@ public class FenConnexionCollab extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TabbedPaneMachineEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ConnMachineEmpLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(TabbedPaneMachineEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -78,6 +166,30 @@ public class FenConnexionCollab extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtnConnPermActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnPermActionPerformed
+        String lMatCollabPerm = MatriculePermField.getText();
+        String lPwdCollabPerm = String.valueOf(PwdPermField.getPassword());
+
+        try {
+            if(mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurPerm(lMatCollabPerm, lPwdCollabPerm)) {
+                this.setVisible(false);
+            }
+        } catch (UtilisateurInconnu ex) {
+            Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnConnPermActionPerformed
+
+    private void BtnConnTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnTempActionPerformed
+        String mMatriculeCollabTemp = MatriculePermField.getText();
+        try {
+            if(mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurTemp(mMatriculeCollabTemp)) {
+                this.setVisible(false);
+            }
+        } catch (UtilisateurInconnu | EmpreinteExistante ex) {
+            Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnConnTempActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,9 +248,25 @@ public class FenConnexionCollab extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnConnPerm;
+    private javax.swing.JButton BtnConnTemp;
     private javax.swing.JLabel ConnMachineEmpLbl;
+    private javax.swing.JPanel FlowPanelConnBtn;
+    private javax.swing.JPanel FlowPanelConnInfos;
+    private javax.swing.JPanel FlowPanelConnInfos1;
+    private javax.swing.JPanel FlowPanelConnTemp;
+    private javax.swing.JPanel FlowPanelConnTempInfos;
+    private javax.swing.JTextField MatTempField;
+    private javax.swing.JLabel MatTempLbl;
+    private javax.swing.JTextField MatriculePermField;
+    private javax.swing.JLabel MatriculePermLbl;
+    private javax.swing.JPanel PanelConnPerm;
+    private javax.swing.JPanel PanelConnPermInfos;
+    private javax.swing.JPanel PanelConnTemp;
+    private javax.swing.JPasswordField PwdPermField;
+    private javax.swing.JLabel PwdPermLbl;
     private javax.swing.JTabbedPane TabbedPaneMachineEmp;
-    private MachineEmpreinte.PanelConnCollabPerm panelConnCollabPerm;
-    private MachineEmpreinte.PanelConnCollabTemp panelConnCollabTemp;
+    private javax.swing.JLabel mConCollabPerm;
+    private javax.swing.JLabel mConCollabPerm1;
     // End of variables declaration//GEN-END:variables
 }

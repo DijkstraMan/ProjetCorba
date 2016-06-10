@@ -262,6 +262,11 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
             _output = handler.createExceptionReply();
             modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
         }
+        catch (modEntreesSortiesZones.EmpreinteExistante _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.EmpreinteExistanteHelper.write(_output,_exception);
+        }
         return _output;
     }
 

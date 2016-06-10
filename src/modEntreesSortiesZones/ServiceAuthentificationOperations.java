@@ -53,7 +53,7 @@ public interface ServiceAuthentificationOperations
      * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
      */
     public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
+        throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteExistante;
 
     /**
      * Operation ajouterCollaborateurPerm

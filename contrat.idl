@@ -85,7 +85,7 @@ module modEntreesSortiesZones
 		void ajouterCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurExistant);
 		void modifierCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
 		//verif de connexion pour la machine empreinte :
-		boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(in Matricule matricule) raises (UtilisateurInconnu);
+		boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(in Matricule matricule) raises (UtilisateurInconnu, EmpreinteExistante);
 		
 		//Utilisateurs permanents :
 		void ajouterCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr, in PasswordPerm pwd) raises (UtilisateurExistant);

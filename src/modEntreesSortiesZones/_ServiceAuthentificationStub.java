@@ -433,7 +433,7 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
      * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
      */
     public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu
+        throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteExistante
     {
         while(true)
         {
@@ -458,6 +458,11 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
                     if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
                     {
                         throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    if (_exception_id.equals(modEntreesSortiesZones.EmpreinteExistanteHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.EmpreinteExistanteHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
