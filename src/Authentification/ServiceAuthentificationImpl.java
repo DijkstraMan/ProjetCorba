@@ -61,8 +61,8 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     private void connexion(String typeCollab) throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
         //Connexion sur PC Bureau Fabien :
-        //conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/D:/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
-        conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
+        conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/D:/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
+        //conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
     }
 
     private void closeConnexion() throws SQLException {
@@ -122,6 +122,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                                 +orb.object_to_string(distantSJour)+"\n");
         // Casting de l'objet CORBA au type ServiceJournalisation
         monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
+        monServJour.ajouterEntree(matricule, zone, dateAcces, typeAcces);
     }
     
     @Override
@@ -131,7 +132,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
 
     @Override
     public Utilisateur[] getCollaborateursTemporaires() {
-        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des collaborateurs temporaires\n"); 
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des collaborateurs temporaires...\n"); 
         List<Utilisateur> tabUtilisateurs= new ArrayList();
         try {
             String query = "SELECT u.matricule AS matricule, u.nomUrs AS nomUsr, u.prenomUsr AS prenomUsr, u.photoUsr AS photoUsr "
@@ -149,7 +150,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             Utilisateur[] lesUtilisateurs = new Utilisateur[tabUtilisateurs.size()];
             lesUtilisateurs = tabUtilisateurs.toArray(lesUtilisateurs);
                     
-            areaTextEvent.setText(areaTextEvent.getText()+"Listes des collaborateurs temporaires envoyée\n");
+            areaTextEvent.setText(areaTextEvent.getText()+"Listes des collaborateurs temporaires envoyée !\n");
             return lesUtilisateurs;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,7 +160,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
 
     @Override
     public Utilisateur[] getCollaborateursPermanents() {
-        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des collaborateurs permanents\n"); 
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des collaborateurs permanents...\n"); 
         List<Utilisateur> tabUtilisateurs= new ArrayList();
         try {
             String query = "SELECT u.matricule AS matricule, u.nomUrs AS nomUsr, u.prenomUsr AS prenomUsr, u.photoUsr AS photoUsr "
@@ -176,7 +177,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             Utilisateur[] lesUtilisateurs = new Utilisateur[tabUtilisateurs.size()];
             lesUtilisateurs = tabUtilisateurs.toArray(lesUtilisateurs);
                     
-            areaTextEvent.setText(areaTextEvent.getText()+"Listes des collaborateurs permanents envoyée\n");
+            areaTextEvent.setText(areaTextEvent.getText()+"Listes des collaborateurs permanents envoyée !\n");
             return lesUtilisateurs;
         } catch (ClassNotFoundException | SQLException ex) {
            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -243,9 +244,10 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     }
 
     @Override
-    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd) throws UtilisateurInconnu {
+    public boolean verifierAuthentificationLogicielResp(String matricule, String pwd, int zone) throws UtilisateurInconnu {
         String query = "SELECT COUNT(*) AS rowcount FROM responsableZone "
-                        + "WHERE idCollabPerm_collaborateurPerm = "
+                        + "WHERE idZone = "+ zone +" "
+                        + "AND idCollabPerm_collaborateurPerm = "
                         + "(SELECT idCollabPerm FROM collaborateurPerm "
                         + " WHERE matricule_utilisateur='"+ matricule +"' "
                         + " AND passwordPerm='"+ pwd +"' )";

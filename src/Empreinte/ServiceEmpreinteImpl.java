@@ -142,7 +142,11 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     }
     
     @Override
-    public Empreinte[] getEmpreintes() {
+    public void supprimerEmpreinteTemp(String matricule) throws EmpreinteInconnue {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /*public Empreinte[] getEmpreintes() {
         mAreaTextEvent.setText(mAreaTextEvent.getText()+"Demande de la liste des empreintes\n"); 
         List<Empreinte> lTabEmpreintes = new ArrayList();
         try {
@@ -166,7 +170,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
     
     @Override
     public void run() {
@@ -231,5 +235,5 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
 
     public byte[] getServiceEmpId() {
         return mServiceEmpId;
-    }   
+    } 
 }

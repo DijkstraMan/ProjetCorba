@@ -9,6 +9,7 @@ import Util.UserTableModel;
 import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import modEntreesSortiesZones.ServiceAuthentification;
@@ -184,6 +185,7 @@ public class FenGestionRH extends javax.swing.JFrame {
 
         jButtonModifier.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jButtonModifier.setText("Modifier");
+        jButtonModifier.setEnabled(false);
         jButtonModifier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonModifierActionPerformed(evt);
@@ -296,7 +298,7 @@ public class FenGestionRH extends javax.swing.JFrame {
         Point p = evt.getPoint();
         int row = table.rowAtPoint(p);
         //On vérifie qu'on a bien double-cliqué sur une ligne de contenu
-        if (evt.getClickCount() == 2 && row != -1) {
+        if (/*evt.getClickCount() == 2 &&*/ row != -1) {
             UserTableModel modelCollabPerm = (UserTableModel) table.getModel();
             Utilisateur usrTemp = modelCollabPerm.getUserAt(row);
             //Remplissage des champs de modification d'un collab :
@@ -304,6 +306,7 @@ public class FenGestionRH extends javax.swing.JFrame {
             jTextFieldNomModif.setText(usrTemp.nomUsr);
             jTextFieldPrenomModif.setText(usrTemp.preUsr);
             jTextFieldPhotoModif.setText(usrTemp.phoUsr);
+            jButtonModifier.setEnabled(true);
         }
     }//GEN-LAST:event_jTableCollabMouseClicked
 
@@ -319,7 +322,10 @@ public class FenGestionRH extends javax.swing.JFrame {
             UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
             modelCollabPerm.add(newUsr);
         } catch (UtilisateurExistant ex){
-            Logger.getLogger(FenGestionRH.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+            "Erreur, ce collaborateur permanent existe déjà.",
+            "Erreur lors de l'ajout",
+            JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_jButtonAjouterActionPerformed
@@ -336,7 +342,10 @@ public class FenGestionRH extends javax.swing.JFrame {
                 UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
                 modelCollabPerm.majAffichage(newUsr);
             } catch (UtilisateurInconnu ex) {
-                Logger.getLogger(FenGestionRH.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this,
+                "Erreur, ce collaborateur permanent n'existe pas.",
+                "Erreur lors de la modification",
+                JOptionPane.ERROR_MESSAGE);
             }
         }
         

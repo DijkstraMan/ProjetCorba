@@ -7,7 +7,9 @@ package Accueil;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.ServiceEmpreinte;
 import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
@@ -21,14 +23,15 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 public class FenConnexionAccueil extends javax.swing.JFrame {
     
     private final ServiceAuthentification monServAuth;
-
+    private final ServiceEmpreinte monServEmp;
     /**
      * Creates new form FenConnexion
      * @param monServAuth
      */
-    public FenConnexionAccueil(ServiceAuthentification monServAuth) {
+    public FenConnexionAccueil(ServiceAuthentification monServAuth, ServiceEmpreinte monServEmp) {
         initComponents();
         this.monServAuth = monServAuth;
+        this.monServEmp = monServEmp;
     }
 
     /**
@@ -111,13 +114,16 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
         try {
             if(monServAuth.verifierAuthentificationLogicielAccueil(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
-                FenGestionAccueil fenGest = new FenGestionAccueil(monServAuth);
+                FenGestionAccueil fenGest = new FenGestionAccueil(monServAuth, monServEmp);
                 this.setVisible(false);
                 fenGest.setVisible(true);
                 fenGest.setLocationRelativeTo(null);
             }             
         } catch (UtilisateurInconnu ex) {
-            Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+            "Erreur, ce compte Accueil n'existe pas.",
+            "Erreur lors de la connexion",
+            JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_jButtonConnexionActionPerformed
@@ -155,11 +161,13 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
             try {
                 // Intialisation de l'orb
                 org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args,null);
-                // Nom de l'objet
-                String idObj = "SAUTH";
                 // Recuperation du naming service
                 NamingContext nameRoot =
                         org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+                // SERVICE AUTHENTIFICATION
+                // ************************
+                // Nom de l'objet
+                String idObj = "SAUTH";
                 // Construction du nom a rechercher
                 org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
                 nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
@@ -168,8 +176,20 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
                 // Casting de l'objet CORBA au type ServiceAuthentification
                 ServiceAuthentification monSAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
                 
+                // SERVICE EMPREINTE
+                // ************************
+                // Nom de l'objet
+                idObj = "SEMP";
+                // Construction du nom a rechercher
+                nameToFind = new org.omg.CosNaming.NameComponent[1];
+                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
+                // Recherche aupres du naming service
+                org.omg.CORBA.Object distantSEmp = nameRoot.resolve(nameToFind);
+                // Casting de l'objet CORBA au type ServiceAuthentification
+                ServiceEmpreinte monSEmp= modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(distantSEmp);
+                
                 // Appel de l'interface graphique
-                FenConnexionAccueil myFen = new FenConnexionAccueil(monSAuth);
+                FenConnexionAccueil myFen = new FenConnexionAccueil(monSAuth, monSEmp);
                 myFen.setVisible(true);
                 myFen.setLocationRelativeTo(null);
             }

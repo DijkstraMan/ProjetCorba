@@ -192,9 +192,10 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     /**
-     * Operation getEmpreintes
+     * Operation supprimerEmpreinteTemp
      */
-    public modEntreesSortiesZones.Empreinte[] getEmpreintes()
+    public void supprimerEmpreinteTemp(String matricule)
+        throws modEntreesSortiesZones.EmpreinteInconnue
     {
         while(true)
         {
@@ -203,10 +204,10 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 org.omg.CORBA.portable.InputStream _input = null;
                 try
                 {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("getEmpreintes",true);
+                    org.omg.CORBA.portable.OutputStream _output = this._request("supprimerEmpreinteTemp",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.Empreinte[] _arg_ret = modEntreesSortiesZones.lesEmpreintesHelper.read(_input);
-                    return _arg_ret;
+                    return;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
                 {
@@ -215,6 +216,11 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.EmpreinteInconnueHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.EmpreinteInconnueHelper.read(_exception.getInputStream());
+                    }
+
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
                 }
                 finally
@@ -224,13 +230,14 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getEmpreintes",_opsClass);
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("supprimerEmpreinteTemp",_opsClass);
                 if (_so == null)
                    continue;
                 modEntreesSortiesZones.ServiceEmpreinteOperations _self = (modEntreesSortiesZones.ServiceEmpreinteOperations) _so.servant;
                 try
                 {
-                    return _self.getEmpreintes();
+                    _self.supprimerEmpreinteTemp( matricule);
+                    return;
                 }
                 finally
                 {

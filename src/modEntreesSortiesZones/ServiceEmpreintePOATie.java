@@ -90,11 +90,12 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
     }
 
     /**
-     * Operation getEmpreintes
+     * Operation supprimerEmpreinteTemp
      */
-    public modEntreesSortiesZones.Empreinte[] getEmpreintes()
+    public void supprimerEmpreinteTemp(String matricule)
+        throws modEntreesSortiesZones.EmpreinteInconnue
     {
-        return _tie.getEmpreintes();
+        _tie.supprimerEmpreinteTemp( matricule);
     }
 
 }

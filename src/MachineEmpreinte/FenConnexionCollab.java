@@ -5,17 +5,30 @@
  */
 package MachineEmpreinte;
 
+import Accueil.FenConnexionAccueil;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modEntreesSortiesZones.ServiceAuthentification;
+import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NamingContext;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+
 /**
  *
  * @author Romain
  */
 public class FenConnexionCollab extends javax.swing.JFrame {
-
+    
+    private final ServiceAuthentification mServAuth;
+    
     /**
      * Creates new form FenConnexionCollab
+     * @param pServAuth
      */
-    public FenConnexionCollab() {
+    public FenConnexionCollab(ServiceAuthentification pServAuth) {
         initComponents();
+        this.mServAuth = pServAuth;
     }
 
     /**
@@ -27,12 +40,18 @@ public class FenConnexionCollab extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        ConnMachineEmpLbl = new javax.swing.JLabel();
+        TabbedPaneMachineEmp = new javax.swing.JTabbedPane();
+        panelConnCollabPerm = new MachineEmpreinte.PanelConnCollabPerm(mServAuth);
+        panelConnCollabTemp = new MachineEmpreinte.PanelConnCollabTemp(mServAuth);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Connexion Machine Empreinte");
+        ConnMachineEmpLbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ConnMachineEmpLbl.setText("Connexion Machine Empreinte");
+
+        TabbedPaneMachineEmp.addTab("Collaborateur Permanent", panelConnCollabPerm);
+        TabbedPaneMachineEmp.addTab("Collaborateur Temporaire", panelConnCollabTemp);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -40,15 +59,21 @@ public class FenConnexionCollab extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ConnMachineEmpLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(TabbedPaneMachineEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addComponent(ConnMachineEmpLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TabbedPaneMachineEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -82,14 +107,38 @@ public class FenConnexionCollab extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FenConnexionCollab().setVisible(true);
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                // Intialisation de l'orb
+                org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args,null);
+                // Nom de l'objet
+                String idObj = "SAUTH";
+                // Recuperation du naming service
+                NamingContext nameRoot =
+                        org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+                // Construction du nom a rechercher
+                org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
+                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
+                // Recherche aupres du naming service
+                org.omg.CORBA.Object distantSAuth = nameRoot.resolve(nameToFind);
+                // Casting de l'objet CORBA au type ServiceAuthentification
+                ServiceAuthentification mServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
+                
+                // Appel de l'interface graphique
+                FenConnexionCollab mFenConnexionCollab = new FenConnexionCollab(mServAuth);
+                mFenConnexionCollab.setVisible(true);
+                mFenConnexionCollab.setLocationRelativeTo(null);
+            }
+            catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
+                Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, e);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel ConnMachineEmpLbl;
+    private javax.swing.JTabbedPane TabbedPaneMachineEmp;
+    private MachineEmpreinte.PanelConnCollabPerm panelConnCollabPerm;
+    private MachineEmpreinte.PanelConnCollabTemp panelConnCollabTemp;
     // End of variables declaration//GEN-END:variables
 }

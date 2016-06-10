@@ -7,6 +7,7 @@ package RH;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -117,7 +118,10 @@ public class FenConnexionRH extends javax.swing.JFrame {
                 fenGest.setLocationRelativeTo(null);
             }             
         } catch (UtilisateurInconnu ex) {
-            Logger.getLogger(FenConnexionRH.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+            "Erreur, ce compte RH n'existe pas.",
+            "Erreur lors de la connexion",
+            JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_jButtonConnexionActionPerformed
