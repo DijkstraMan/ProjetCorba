@@ -89,7 +89,6 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
         _tie.modifierEmpreinte( empCollab,  matricule);
     }
 
-<<<<<<< HEAD
     /**
      * Operation supprimerEmpreinteTemp
      */
@@ -99,6 +98,4 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
         _tie.supprimerEmpreinteTemp( matricule);
     }
 
-=======
->>>>>>> BrancheFabienV2
 }
