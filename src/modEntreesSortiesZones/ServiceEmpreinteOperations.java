@@ -31,7 +31,6 @@ public interface ServiceEmpreinteOperations
     public void supprimerEmpreinteTemp(String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
-<<<<<<< HEAD
     /**
      * Operation verifierEmpreinteTempExistante
      */
@@ -44,6 +43,4 @@ public interface ServiceEmpreinteOperations
     public boolean verifierEmpreintePermExistante(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
-=======
->>>>>>> ReponsableZoneNicov2
 }

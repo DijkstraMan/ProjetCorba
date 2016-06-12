@@ -100,7 +100,7 @@ insert into personnelAccueil values(1, 2);
 /*Création compte Responsable Zone*/
 insert into utilisateur values('mRZ', 'nomRZ', 'prenomRZ', 'photoRZ.jpg');
 insert into collaborateurPerm values(3, 'mRZ', 'mdpRZ');
-insert into responsableZone values(1, 3);
+insert into responsableZone values(1, 3, 1);
 
 /*bdEmpreinte*/
 use bdEmpreinte;
@@ -119,7 +119,6 @@ create table gZone
 (
 	idZone integer(5) NOT NULL AUTO_INCREMENT,
 	nomZone varchar(100),
-	
 	PRIMARY KEY(idZone)
 );
 
@@ -127,10 +126,12 @@ create table porte
 (
 	idPorte integer(5) NOT NULL AUTO_INCREMENT,
 	nomPorte varchar(100),
-	PRIMARY KEY(idPorte)
+	idZone_zone integer(5) NOT NULL,
+	PRIMARY KEY(idPorte),
+	CONSTRAINT fk_porte_idZone_zone FOREIGN KEY (idZone_zone) REFERENCES gzone(idZone)
 );
 
-create table autorisation
+create table autorisationPerm
 (
 	matricule_utilisateur varchar(50) NOT NULL,
 	idZone_zone integer(5) NOT NULL,

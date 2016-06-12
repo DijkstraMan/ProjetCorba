@@ -206,7 +206,6 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
         }
         return lRes;
     }
-<<<<<<< HEAD
     
     private boolean collaborateurTemporaireExistant(String pMatriculeTemp) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, UtilisateurInconnu {
         String idObj = "SAUTH";
@@ -248,9 +247,6 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
         return false;
     }
        
-=======
-
->>>>>>> ReponsableZoneNicov2
     @Override
     public void run() {
        String[] args = null;

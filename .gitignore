@@ -7,7 +7,3 @@
 nbactions.xml
 .nb-gradle/
 .*class
-=======
-/dist/
-*.class
->>>>>>> ReponsableZoneNicov2

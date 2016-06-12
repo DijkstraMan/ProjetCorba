@@ -7,8 +7,6 @@ package RH;
 
 import Util.UserTableModel;
 import java.awt.Point;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
@@ -327,7 +325,6 @@ public class FenGestionRH extends javax.swing.JFrame {
             "Erreur lors de l'ajout",
             JOptionPane.ERROR_MESSAGE);
         }
-        
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
@@ -348,7 +345,6 @@ public class FenGestionRH extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
             }
         }
-        
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
     /**

@@ -6,11 +6,14 @@
 package ResponsableZone;
 
 import Util.ComboItem;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.ServiceAuthentificationHelper;
 import modEntreesSortiesZones.ServiceAutorisation;
 import modEntreesSortiesZones.ServiceAutorisationHelper;
+import modEntreesSortiesZones.UtilisateurInconnu;
 import modEntreesSortiesZones.Zone;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -28,7 +31,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
     private ServiceAutorisation servAuto;
     public FenConnexionRespZone() {
         initComponents();
-        nomCorbaServAuthentification="CQUOISONNOM?";
+        nomCorbaServAuthentification="SAUTH";
         nomCorbaServAutorisation="SAUTO";
         jSelectZone.removeAllItems();
         getZoneA();
@@ -67,6 +70,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTMatricule.setText("mRZ");
         jTMatricule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTMatriculeActionPerformed(evt);
@@ -83,6 +87,8 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
         jLabel1.setText("Matricule");
 
         jLabel2.setText("Mot de passe");
+
+        jMdp.setText("mdpRZ");
 
         jLabel3.setText("Nom de la zone");
 
@@ -130,20 +136,21 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
     }//GEN-LAST:event_jTMatriculeActionPerformed
 
     private void btnValidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidActionPerformed
-       //connexion(jTMatricule.getText(),new String(jMdp.getPassword()),idZone);
+
+        try {
+            connexionServAuto(jTMatricule.getText(),new String(jMdp.getPassword()),((ComboItem)jSelectZone.getSelectedItem()).getValue());
+        } catch (UtilisateurInconnu ex) {
+            Logger.getLogger(FenConnexionRespZone.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnValidActionPerformed
     
-    public void connexionServAuto(String matricule, String mdp, int idZone)
+    public void connexionServAuto(String matricule, String mdp, int idZone) throws UtilisateurInconnu
     {
-        /*org.omg.CORBA.Object distantServAuth=connexionCorba(nomCorbaServAuthentification);
+        org.omg.CORBA.Object distantServAuth=connexionCorba(nomCorbaServAuthentification);
         ServiceAuthentification servAuth= ServiceAuthentificationHelper.narrow(distantServAuth);
-        if(verifierAuthentificationLogicielResp(matricule,mdp,idZone))
+        if(servAuth.verifierAuthentificationLogicielResp(matricule,mdp,idZone))
         {
-            
-        }*/
-        if(true)
-        {
-            FenGestionRespZone fenGest = new FenGestionRespZone(servAuto);
+            FenGestionRespZone fenGest = new FenGestionRespZone(servAuto,idZone);
             this.setVisible(false);
             fenGest.setVisible(true);
             fenGest.setLocationRelativeTo(null);

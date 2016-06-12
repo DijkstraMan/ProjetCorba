@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import modEntreesSortiesZones.AutorisationExistante;
 import modEntreesSortiesZones.AutorisationInconnue;
+import modEntreesSortiesZones.AutorisationPerm;
+import modEntreesSortiesZones.AutorisationTemp;
 import modEntreesSortiesZones.ServiceAutorisationPOA;
 import modEntreesSortiesZones.Zone;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -100,14 +102,16 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             String query = "SELECT COUNT(*) AS rowcount FROM autorisation "
                     + "WHERE matricule_utilisateur='"+ matricule +"' "
                     + "and idZone ='"+ idZone +"' "
-                    + "and heureDebut>='"+ hr +"'"
-                    + "and heureFin<='"+ hr +"'";
+                    + "and heureDebut>='"+ hr +"' "
+                    + "and heureFin<='"+ hr +"' ";
             ResultSet rs;
+            connexion();
             rs = lancerInterrogation(query);
             rs.next();
             if (rs.getInt("rowcount") > 0) {
                 res = true;
             }
+            closeConnexion();
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,15 +129,16 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             String query = "SELECT COUNT(*) AS rowcount FROM autorisationTemp "
                     + "WHERE matricule_utilisateur='"+ matricule +"' "
                     + "and idZone ='"+ idZone +"' "
-                    + "and jourDebut>='"+ dateFormat +"'"
-                    + "and jourFin<='"+ dateFormat +"'";
+                    + "and jourDebut>='"+ dateFormat +"' "
+                    + "and jourFin<='"+ dateFormat +"' ";
             ResultSet rs;
+            connexion();
             rs = lancerInterrogation(query);
             rs.next();
             if (rs.getInt("rowcount") > 0) {
                 res = true;
             }
-            
+            closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -172,10 +177,95 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             else
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
             closeConnexion();
+                
+        } catch (ParseException | SQLException | ClassNotFoundException ex) {
+            throw new AutorisationExistante("Autorisation deja attribué pour cet utilisateur");
+        } 
+    }
+
+    @Override
+    public void modifierAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin) throws AutorisationInconnue {
+        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            String dateDebut= formatSQL.format(formatFR.parse(jrDebut));
+            String dateFin= formatSQL.format(formatFR.parse(jrFin));
+            String query = "update autorisationTemp set jourDebut='"+ dateDebut +"', jourFin='"+ dateFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+            connexion();
+            if(lancerManipulation(query))
+                areaTextEvent.setText(areaTextEvent.getText()+"Modification temporaire effectué matricule "+matricule+" zone "+idZone+"\n");
+            else
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
         } catch (ParseException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         
+    }
+
+    @Override
+    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationExistante {
+        String query = "insert into autorisationPerm values ('"+ matricule +"','"+ idZone +"','"+ hrDebut +"','"+ hrFin +"')";
+        try {
+            connexion();
+            if(lancerManipulation(query))
+                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation permanente ajouté matricule "+matricule+" zone "+idZone+"\n");
+            else
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationInconnue {
+        String query = "update autorisationPerm set heureDebut='"+ hrDebut +"', heureFin='"+ hrFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+        try {
+            connexion();
+            if(lancerManipulation(query))
+                areaTextEvent.setText(areaTextEvent.getText()+"Modification permanente ajouté effectué matricule "+matricule+" zone "+idZone+"\n");
+            else
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void supprimerAutorisation(String matricule, int idZone) throws AutorisationInconnue {
+        String query = "delete from autorisationPerm where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+        String query2 = "delete from autorisationTemp where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+        try {
+            connexion();
+            if(lancerManipulation(query) && lancerManipulation(query2))
+                areaTextEvent.setText(areaTextEvent.getText()+"Suppression de l'autorisation effectué matricule "+matricule+" zone "+idZone+"\n");
+            else
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+            closeConnexion();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Override
+    public int getIdZoneFromPorte(int idPorte) {
+        int idZone = -1;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String query = "SELECT idZone_zone from porte "
+                    + "WHERE idPorte='"+ idPorte +"' ";
+            ResultSet rs;
+            connexion();
+            rs = lancerInterrogation(query);
+            rs.next();
+            idZone= rs.getInt("idZone_zone");
+            closeConnexion();       
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idZone;
     }
     
     @Override
@@ -204,69 +294,63 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void modifierAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin) throws AutorisationInconnue {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-        DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     public AutorisationPerm[] getAutorisationPerm() {
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des Autorisation permanentes\n"); 
+        List<AutorisationPerm> tabAutorisation= new ArrayList();
         try {
-            String dateDebut= formatSQL.format(formatFR.parse(jrDebut));
-            String dateFin= formatSQL.format(formatFR.parse(jrFin));
-            String query = "update autorisationTemp set jourDebut='"+ dateDebut +"', jourFin='"+ dateFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+            String query = "SELECT  matricule_utilisateur, nomZone, heureDebut, heureFin from autorisationPerm, gZone where idZone_zone=idZone";
+            ResultSet rs;
             connexion();
-            if(lancerManipulation(query))
-                areaTextEvent.setText(areaTextEvent.getText()+"Modification temporaire effectué matricule "+matricule+" zone "+idZone+"\n");
-            else
-                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
+            rs = lancerInterrogation(query);
+            while(rs.next())
+            {
+                //formattage des heures
+                String hrsDebut=Integer.toString(rs.getInt("heureDebut"));
+                String heureDebutFormat=hrsDebut.substring(0, 2) + ":" + hrsDebut.substring(2, hrsDebut.length());
+                String hrsFint=Integer.toString(rs.getInt("heureFin"));
+                String heureFinFormat=hrsFint.substring(0, 2) + ":" + hrsFint.substring(2, hrsFint.length());
+                tabAutorisation.add(new AutorisationPerm(rs.getString("matricule_utilisateur"), rs.getString("nomZone"), heureDebutFormat, heureFinFormat));           
+            }
             closeConnexion();
-        } catch (ParseException | SQLException | ClassNotFoundException ex) {
+            AutorisationPerm[] lesAutorisations = new AutorisationPerm[tabAutorisation.size()];
+            lesAutorisations = tabAutorisation.toArray(lesAutorisations);
+                    
+            areaTextEvent.setText(areaTextEvent.getText()+"Liste des autorisation permanentes envoyée !\n");
+            return lesAutorisations;
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
+        }
+        return null;
     }
 
     @Override
-    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationExistante {
-        String query = "insert into autorisation values ('"+ matricule +"','"+ idZone +"','"+ hrDebut +"','"+ hrFin +"')";
+    public AutorisationTemp[] getAutorisationTemp() {
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des Autorisation permanentes\n"); 
+        List<AutorisationTemp> tabAutorisation= new ArrayList();
         try {
+            String query = "SELECT  matricule_utilisateur, nomZone, jourDebut, jourFin from autorisationTemp, gZone where idZone_zone=idZone";
+            ResultSet rs;
             connexion();
-            if(lancerManipulation(query))
-                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation permanente ajouté matricule "+matricule+" zone "+idZone+"\n");
-            else
-                areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+            rs = lancerInterrogation(query);
+            while(rs.next())
+            {
+                //formattage des dates format FR
+                DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateDebut= formatFR.format(formatSQL.parse(rs.getString("jourDebut")));
+                String dateFin= formatFR.format(formatSQL.parse(rs.getString("jourFin")));
+                tabAutorisation.add(new AutorisationTemp(rs.getString("matricule_utilisateur"), rs.getString("nomZone"), dateDebut, dateFin));           
+            }
             closeConnexion();
-        } catch (SQLException | ClassNotFoundException ex) {
+            AutorisationTemp[] lesAutorisations = new AutorisationTemp[tabAutorisation.size()];
+            lesAutorisations = tabAutorisation.toArray(lesAutorisations);
+                    
+            areaTextEvent.setText(areaTextEvent.getText()+"Liste des autorisation permanentes envoyée !\n");
+            return lesAutorisations;
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationInconnue {
-        String query = "update autorisationTemp set heureDebut='"+ hrDebut +"', heureFin='"+ hrFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
-        try {
-            connexion();
-            if(lancerManipulation(query))
-                areaTextEvent.setText(areaTextEvent.getText()+"Modification permanente ajouté effectué matricule "+matricule+" zone "+idZone+"\n");
-            else
-                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
-            closeConnexion();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public void supprimerAutorisation(String matricule, int idZone) throws AutorisationInconnue {
-        String query = "delete from autorisation where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
-        String query2 = "delete from autorisationTemp where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
-        try {
-            connexion();
-            if(lancerManipulation(query) && lancerManipulation(query2))
-                areaTextEvent.setText(areaTextEvent.getText()+"Suppression de l'autorisation effectué matricule "+matricule+" zone "+idZone+"\n");
-            else
-                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
-            closeConnexion();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return null;
     }
 
     @Override
