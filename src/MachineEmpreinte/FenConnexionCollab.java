@@ -218,7 +218,7 @@ public class FenConnexionCollab extends javax.swing.JFrame {
             try {
                 if (mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurTemp(lMatCollabTemp)) {
                     if (mServEmp.verifierEmpreinteTempExistante(lMatCollabTemp)) {
-                        //On ne peut pas 
+                        //Le collaborateur ne peut rien faire s'il a déjà ajouté son empreinte
                         JOptionPane.showMessageDialog(this,
                                 "Erreur : Vous avez déjà ajouté votre empreinte !",
                                 "Erreur ajout empreinte",
