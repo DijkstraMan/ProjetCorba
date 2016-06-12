@@ -84,7 +84,7 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
      * Operation modifierEmpreinte
      */
     public void modifierEmpreinte(String empCollab, String matricule)
-        throws modEntreesSortiesZones.EmpreinteInconnue
+        throws modEntreesSortiesZones.UtilisateurInconnu
     {
         _tie.modifierEmpreinte( empCollab,  matricule);
     }
@@ -96,6 +96,24 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
         throws modEntreesSortiesZones.EmpreinteInconnue
     {
         _tie.supprimerEmpreinteTemp( matricule);
+    }
+
+    /**
+     * Operation verifierEmpreinteTempExistante
+     */
+    public boolean verifierEmpreinteTempExistante(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierEmpreinteTempExistante( matricule);
+    }
+
+    /**
+     * Operation verifierEmpreintePermExistante
+     */
+    public boolean verifierEmpreintePermExistante(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierEmpreintePermExistante( matricule);
     }
 
 }

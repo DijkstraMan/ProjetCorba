@@ -138,7 +138,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation modifierEmpreinte
      */
     public void modifierEmpreinte(String empCollab, String matricule)
-        throws modEntreesSortiesZones.EmpreinteInconnue
+        throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
         {
@@ -160,9 +160,9 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(modEntreesSortiesZones.EmpreinteInconnueHelper.id()))
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
                     {
-                        throw modEntreesSortiesZones.EmpreinteInconnueHelper.read(_exception.getInputStream());
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
@@ -238,6 +238,118 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     _self.supprimerEmpreinteTemp( matricule);
                     return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation verifierEmpreinteTempExistante
+     */
+    public boolean verifierEmpreinteTempExistante(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierEmpreinteTempExistante",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    _input = this._invoke(_output);
+                    boolean _arg_ret = _input.read_boolean();
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierEmpreinteTempExistante",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceEmpreinteOperations _self = (modEntreesSortiesZones.ServiceEmpreinteOperations) _so.servant;
+                try
+                {
+                    return _self.verifierEmpreinteTempExistante( matricule);
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation verifierEmpreintePermExistante
+     */
+    public boolean verifierEmpreintePermExistante(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierEmpreintePermExistante",true);
+                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
+                    _input = this._invoke(_output);
+                    boolean _arg_ret = _input.read_boolean();
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    {
+                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierEmpreintePermExistante",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceEmpreinteOperations _self = (modEntreesSortiesZones.ServiceEmpreinteOperations) _so.servant;
+                try
+                {
+                    return _self.verifierEmpreintePermExistante( matricule);
                 }
                 finally
                 {
