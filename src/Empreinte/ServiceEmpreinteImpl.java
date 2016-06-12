@@ -19,8 +19,6 @@ import org.omg.PortableServer.POA;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modEntreesSortiesZones.ServiceAuthentification;
-import modEntreesSortiesZones.Utilisateur;
-import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
