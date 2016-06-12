@@ -61,8 +61,8 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     private void connexion(String typeCollab) throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
         //Connexion sur PC Bureau Fabien :
-        conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/D:/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
-        //conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
+        //conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/D:/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
+        conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/Documents/ProjetCorba/h2_db/bdcollab"+typeCollab+";IGNORECASE=TRUE", "sa", "");
     }
 
     private void closeConnexion() throws SQLException {
