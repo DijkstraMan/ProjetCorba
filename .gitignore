@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /nbproject/private/
 /build/
 /nbbuild/
@@ -6,3 +7,7 @@
 nbactions.xml
 .nb-gradle/
 .*class
+=======
+/dist/
+*.class
+>>>>>>> ReponsableZoneNicov2

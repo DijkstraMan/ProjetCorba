@@ -148,7 +148,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public void supprimerEmpreinteTemp(String matricule) throws EmpreinteInconnue {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -206,6 +206,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
         }
         return lRes;
     }
+<<<<<<< HEAD
     
     private boolean collaborateurTemporaireExistant(String pMatriculeTemp) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, UtilisateurInconnu {
         String idObj = "SAUTH";
@@ -247,6 +248,9 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
         return false;
     }
        
+=======
+
+>>>>>>> ReponsableZoneNicov2
     @Override
     public void run() {
        String[] args = null;

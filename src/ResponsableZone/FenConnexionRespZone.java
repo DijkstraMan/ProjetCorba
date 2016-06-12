@@ -5,7 +5,10 @@
  */
 package ResponsableZone;
 
+import Util.ComboItem;
 import javax.swing.JComboBox;
+import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.ServiceAuthentificationHelper;
 import modEntreesSortiesZones.ServiceAutorisation;
 import modEntreesSortiesZones.ServiceAutorisationHelper;
 import modEntreesSortiesZones.Zone;
@@ -18,11 +21,12 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  *
  * @author Nico
  */
-public class fenConnexion extends javax.swing.JFrame {
+public class FenConnexionRespZone extends javax.swing.JFrame {
 
     private final String nomCorbaServAuthentification;
     private final String nomCorbaServAutorisation;
-    public fenConnexion() {
+    private ServiceAutorisation servAuto;
+    public FenConnexionRespZone() {
         initComponents();
         nomCorbaServAuthentification="CQUOISONNOM?";
         nomCorbaServAutorisation="SAUTO";
@@ -32,20 +36,14 @@ public class fenConnexion extends javax.swing.JFrame {
     
     public final JComboBox<ComboItem> getZoneA()
     {
-        try {
-            org.omg.CORBA.Object distantServAuto = connexionCorba(nomCorbaServAutorisation);
-            ServiceAutorisation servAuto= ServiceAutorisationHelper.narrow(distantServAuto);
-            Zone[] lesZones=servAuto.getZone();
-            
-            int nbZone=lesZones.length;;
-            for (int i = 0; i < nbZone; i++) {
-                jSelectZone.addItem(new ComboItem(lesZones[i].idZne,lesZones[i].nomZne));
-            }
-            return null;
-        }
-        catch (Exception e){
-            System.out.println("JE COMPRENDS PASDJVSDGUFIV");
-            e.printStackTrace();
+      
+        org.omg.CORBA.Object distantServAuto = connexionCorba(nomCorbaServAutorisation);
+        servAuto= ServiceAutorisationHelper.narrow(distantServAuto);
+        Zone[] lesZones=servAuto.getZone();
+
+        int nbZone=lesZones.length;
+        for (int i = 0; i < nbZone; i++) {
+            jSelectZone.addItem(new ComboItem(lesZones[i].idZne,lesZones[i].nomZne));
         }
         return null;
     }
@@ -137,25 +135,23 @@ public class fenConnexion extends javax.swing.JFrame {
     
     public void connexionServAuto(String matricule, String mdp, int idZone)
     {
-        /*
-        org.omg.CORBA.Object distantServAuth=connexionCorba(String nomCorbaServAuthentification);
+        /*org.omg.CORBA.Object distantServAuth=connexionCorba(nomCorbaServAuthentification);
         ServiceAuthentification servAuth= ServiceAuthentificationHelper.narrow(distantServAuth);
         if(verifierAuthentificationLogicielResp(matricule,mdp,idZone))
         {
-
-        }
-        else
-        {
-
-        }
-        */
+            
+        }*/
         if(true)
         {
-
+            FenGestionRespZone fenGest = new FenGestionRespZone(servAuto);
+            this.setVisible(false);
+            fenGest.setVisible(true);
+            fenGest.setLocationRelativeTo(null);
+            this.setVisible(false);
         }
         else
         {
-
+            //indiquer que non autorisé
         }
     }
     
@@ -204,21 +200,22 @@ public class fenConnexion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionRespZone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionRespZone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionRespZone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fenConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FenConnexionRespZone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new fenConnexion().setVisible(true);
+                new FenConnexionRespZone().setVisible(true);
             }
         });
     }

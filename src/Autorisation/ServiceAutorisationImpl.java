@@ -217,11 +217,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             else
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
             closeConnexion();
-        } catch (ParseException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (ParseException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
@@ -237,9 +233,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             else
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -254,9 +248,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             else
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -272,9 +264,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             else
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

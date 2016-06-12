@@ -113,13 +113,16 @@ module modEntreesSortiesZones
 	{
 		//responsable de zone
 		boolean verifierAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue); 
+		
 		//Autorisations temporaires :
 		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante);
 		void modifierAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationInconnue);
+		
 		//Autorisations permanentes :
 		void ajouterAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationExistante); 
 		void modifierAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationInconnue); 
 		void supprimerAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
+		
 		//retourne les zones existantes
 		lesZones getZone();
 	};
