@@ -129,7 +129,7 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
      * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
      */
     public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu, modEntreesSortiesZones.EmpreinteExistante
+        throws modEntreesSortiesZones.UtilisateurInconnu
     {
         return _tie.verifierAuthentificationMachineEmpreinteCollaborateurTemp( matricule);
     }

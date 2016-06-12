@@ -6,10 +6,13 @@
 package MachineEmpreinte;
 
 import Accueil.FenConnexionAccueil;
+import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modEntreesSortiesZones.EmpreinteExistante;
+import javax.swing.JOptionPane;
+import modEntreesSortiesZones.Empreinte;
 import modEntreesSortiesZones.ServiceAuthentification;
+import modEntreesSortiesZones.ServiceEmpreinte;
 import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
@@ -21,16 +24,20 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  * @author Romain
  */
 public class FenConnexionCollab extends javax.swing.JFrame {
-    
+
     private final ServiceAuthentification mServAuth;
-    
+    private final ServiceEmpreinte mServEmp;
+
     /**
      * Creates new form FenConnexionCollab
+     *
      * @param pServAuth
+     * @param pServEmp
      */
-    public FenConnexionCollab(ServiceAuthentification pServAuth) {
+    public FenConnexionCollab(ServiceAuthentification pServAuth, ServiceEmpreinte pServEmp) {
         initComponents();
         this.mServAuth = pServAuth;
+        this.mServEmp = pServEmp;
     }
 
     /**
@@ -49,9 +56,9 @@ public class FenConnexionCollab extends javax.swing.JFrame {
         FlowPanelConnInfos = new javax.swing.JPanel();
         PanelConnPermInfos = new javax.swing.JPanel();
         MatriculePermLbl = new javax.swing.JLabel();
-        MatriculePermField = new javax.swing.JTextField();
+        matriculePermField = new javax.swing.JTextField();
         PwdPermLbl = new javax.swing.JLabel();
-        PwdPermField = new javax.swing.JPasswordField();
+        pwdPermField = new javax.swing.JPasswordField();
         FlowPanelConnBtn = new javax.swing.JPanel();
         BtnConnPerm = new javax.swing.JButton();
         PanelConnTemp = new javax.swing.JPanel();
@@ -59,7 +66,7 @@ public class FenConnexionCollab extends javax.swing.JFrame {
         FlowPanelConnInfos1 = new javax.swing.JPanel();
         FlowPanelConnTempInfos = new javax.swing.JPanel();
         MatTempLbl = new javax.swing.JLabel();
-        MatTempField = new javax.swing.JTextField();
+        matriculeTempField = new javax.swing.JTextField();
         FlowPanelConnTemp = new javax.swing.JPanel();
         BtnConnTemp = new javax.swing.JButton();
 
@@ -81,15 +88,12 @@ public class FenConnexionCollab extends javax.swing.JFrame {
         MatriculePermLbl.setText("Matricule utilisateur :");
         PanelConnPermInfos.add(MatriculePermLbl);
 
-        MatriculePermField.setText("Saisir votre matricule");
-        MatriculePermField.setPreferredSize(new java.awt.Dimension(150, 20));
-        PanelConnPermInfos.add(MatriculePermField);
+        matriculePermField.setPreferredSize(new java.awt.Dimension(150, 20));
+        PanelConnPermInfos.add(matriculePermField);
 
         PwdPermLbl.setText("Mot de passe :");
         PanelConnPermInfos.add(PwdPermLbl);
-
-        PwdPermField.setText("jPasswordField1");
-        PanelConnPermInfos.add(PwdPermField);
+        PanelConnPermInfos.add(pwdPermField);
 
         FlowPanelConnInfos.add(PanelConnPermInfos);
 
@@ -121,9 +125,8 @@ public class FenConnexionCollab extends javax.swing.JFrame {
         MatTempLbl.setPreferredSize(new java.awt.Dimension(80, 14));
         FlowPanelConnTempInfos.add(MatTempLbl);
 
-        MatTempField.setText("Saisir votre matricule");
-        MatTempField.setPreferredSize(new java.awt.Dimension(150, 20));
-        FlowPanelConnTempInfos.add(MatTempField);
+        matriculeTempField.setPreferredSize(new java.awt.Dimension(150, 25));
+        FlowPanelConnTempInfos.add(matriculeTempField);
 
         FlowPanelConnInfos1.add(FlowPanelConnTempInfos);
 
@@ -168,26 +171,76 @@ public class FenConnexionCollab extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnConnPermActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnPermActionPerformed
-        String lMatCollabPerm = MatriculePermField.getText();
-        String lPwdCollabPerm = String.valueOf(PwdPermField.getPassword());
+        String lMatCollabPerm = matriculePermField.getText();
+        String lPwdCollabPerm = String.valueOf(pwdPermField.getPassword());
 
         try {
-            if(mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurPerm(lMatCollabPerm, lPwdCollabPerm)) {
-                this.setVisible(false);
+            if (lMatCollabPerm != null && lMatCollabPerm.length() > 0) {
+                if (lPwdCollabPerm != null && lPwdCollabPerm.length() > 0) {
+                    if (mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurPerm(lMatCollabPerm, lPwdCollabPerm)) {
+                        if (mServEmp.verifierEmpreintePermExistante(lMatCollabPerm)) {
+                            FenModifEmpreinte fenModif = new FenModifEmpreinte(mServEmp, lMatCollabPerm);
+                            this.setVisible(false);
+                            fenModif.setVisible(true);
+                            fenModif.setLocationRelativeTo(null);
+                        } else {
+                            FenAjoutEmpreinte fenAjout = new FenAjoutEmpreinte(mServEmp, lMatCollabPerm);
+                            this.setVisible(false);
+                            fenAjout.setVisible(true);
+                            fenAjout.setLocationRelativeTo(null);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "Veuillez saisir votre mot de passe",
+                        "Erreur saisie mot de passe",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Veuillez saisir votre matricule",
+                        "Erreur saisie matricule",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (UtilisateurInconnu ex) {
-            Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+                        "Le matricule et le mot de passe saisis ne correspondent pas.",
+                        "Erreur combinaison matricule/mot de passe",
+                        JOptionPane.ERROR_MESSAGE);
+            resetCollabPermFields();
         }
     }//GEN-LAST:event_BtnConnPermActionPerformed
 
     private void BtnConnTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnTempActionPerformed
-        String mMatriculeCollabTemp = MatriculePermField.getText();
+        String lMatCollabTemp = matriculeTempField.getText();
         try {
-            if(mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurTemp(mMatriculeCollabTemp)) {
-                this.setVisible(false);
-            }
-        } catch (UtilisateurInconnu | EmpreinteExistante ex) {
-            Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, ex);
+            if (lMatCollabTemp != null && lMatCollabTemp.length() > 0) {
+                if (mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurTemp(lMatCollabTemp)) {
+                    if (mServEmp.verifierEmpreinteTempExistante(lMatCollabTemp)) {
+                        JOptionPane.showMessageDialog(this,
+                                "Erreur : Vous avez déjà ajouté votre empreinte !",
+                                "Erreur ajout empreinte",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        FenAjoutEmpreinte fenAjout = new FenAjoutEmpreinte(mServEmp, lMatCollabTemp);
+                        this.setVisible(false);
+                        fenAjout.setVisible(true);
+                        fenAjout.setLocationRelativeTo(null);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Veuillez saisir votre matricule",
+                        "Erreur saisie matricule",
+                        JOptionPane.ERROR_MESSAGE);
+            }          
+        } catch (UtilisateurInconnu ex) {
+            //Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+                        "Le matricule que vous avez saisi n'existe pas !",
+                         "Erreur saisie matricule",
+                        JOptionPane.ERROR_MESSAGE);
+            resetCollabTempFields();
         }
     }//GEN-LAST:event_BtnConnTempActionPerformed
 
@@ -222,29 +275,55 @@ public class FenConnexionCollab extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             try {
                 // Intialisation de l'orb
-                org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args,null);
+                org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args, null);
+                // Recuperation du naming service
+                NamingContext nameRoot
+                        = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+                // SERVICE AUTHENTIFICATION
+                // ************************
                 // Nom de l'objet
                 String idObj = "SAUTH";
-                // Recuperation du naming service
-                NamingContext nameRoot =
-                        org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
                 // Construction du nom a rechercher
                 org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
                 nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
                 // Recherche aupres du naming service
-                org.omg.CORBA.Object distantSAuth = nameRoot.resolve(nameToFind);
+                org.omg.CORBA.Object lDistantSAuth = nameRoot.resolve(nameToFind);
                 // Casting de l'objet CORBA au type ServiceAuthentification
-                ServiceAuthentification mServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
+                ServiceAuthentification lServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(lDistantSAuth);
+                
+                // SERVICE EMPREINTE
+                // ************************
+                // Nom de l'objet
+                idObj = "SEMP";
+                // Construction du nom a rechercher
+                nameToFind = new org.omg.CosNaming.NameComponent[1];
+                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
+                // Recherche aupres du naming service
+                org.omg.CORBA.Object lDistantSEmp = nameRoot.resolve(nameToFind);
+                // Casting de l'objet CORBA au type ServiceAuthentification
+                ServiceEmpreinte lServEmp = modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(lDistantSEmp);
                 
                 // Appel de l'interface graphique
-                FenConnexionCollab mFenConnexionCollab = new FenConnexionCollab(mServAuth);
+                FenConnexionCollab mFenConnexionCollab = new FenConnexionCollab(lServAuth, lServEmp);
                 mFenConnexionCollab.setVisible(true);
                 mFenConnexionCollab.setLocationRelativeTo(null);
-            }
-            catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
+            } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
                 Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, e);
             }
         });
+    }
+    
+    private void resetCollabTempFields(){
+        matriculeTempField.setText("");
+        this.repaint();
+        this.revalidate();
+    }
+    
+    private void resetCollabPermFields(){
+        matriculePermField.setText("");
+        pwdPermField.setText("");
+        this.repaint();
+        this.revalidate();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -256,17 +335,17 @@ public class FenConnexionCollab extends javax.swing.JFrame {
     private javax.swing.JPanel FlowPanelConnInfos1;
     private javax.swing.JPanel FlowPanelConnTemp;
     private javax.swing.JPanel FlowPanelConnTempInfos;
-    private javax.swing.JTextField MatTempField;
     private javax.swing.JLabel MatTempLbl;
-    private javax.swing.JTextField MatriculePermField;
     private javax.swing.JLabel MatriculePermLbl;
     private javax.swing.JPanel PanelConnPerm;
     private javax.swing.JPanel PanelConnPermInfos;
     private javax.swing.JPanel PanelConnTemp;
-    private javax.swing.JPasswordField PwdPermField;
     private javax.swing.JLabel PwdPermLbl;
     private javax.swing.JTabbedPane TabbedPaneMachineEmp;
     private javax.swing.JLabel mConCollabPerm;
     private javax.swing.JLabel mConCollabPerm1;
+    private javax.swing.JTextField matriculePermField;
+    private javax.swing.JTextField matriculeTempField;
+    private javax.swing.JPasswordField pwdPermField;
     // End of variables declaration//GEN-END:variables
 }
