@@ -103,10 +103,14 @@ module modEntreesSortiesZones
 		//CRUD Empreinte
 		boolean verifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
 		void ajouterEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteExistante);
-		void modifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (UtilisateurInconnu);
+		void modifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
+                
+                //Supprimer une empreinte de collaborateur temporaire
                 void supprimerEmpreinteTemp(in Matricule matricule) raises (EmpreinteInconnue);
-                boolean verifierEmpreinteTempExistante(in Matricule matricule) raises (UtilisateurInconnu);
-                boolean verifierEmpreintePermExistante(in Matricule matricule) raises (UtilisateurInconnu);
+
+                //vérifier si le collaborateur a déjà enregistré une empreinte
+                boolean verifierEmpreinteTempExistante(in Matricule matricule);
+                boolean verifierEmpreintePermExistante(in Matricule matricule);
 	};
 
 	interface ServiceAutorisation

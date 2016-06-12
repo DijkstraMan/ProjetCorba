@@ -6,11 +6,9 @@
 package MachineEmpreinte;
 
 import java.awt.CardLayout;
-import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import modEntreesSortiesZones.EmpreinteInconnue;
 import modEntreesSortiesZones.ServiceEmpreinte;
-import modEntreesSortiesZones.UtilisateurInconnu;
 
 /**
  *
@@ -198,12 +196,12 @@ public class FenModifEmpreinte extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,  "Votre nouvelle empreinte a été enregistrée avec succès.\n");
                     CardLayout lCardLayout = (CardLayout)(cardsPanel.getLayout());
                     lCardLayout.show(cardsPanel, "mainCard");
-                } catch (UtilisateurInconnu ex) {
-                    JOptionPane.showMessageDialog(this,  "Erreur, impossible d'enregistrer votre empreinte :\n"
-                            + "Collaborateur inconnu, veuillez vous reconnectez.",
-                            "Erreur collaborateur inconnu", 
+                } catch (EmpreinteInconnue ex) {
+                    JOptionPane.showMessageDialog(this, "Erreur, impossible d'enregistrer votre empreinte :\n"
+                            + "Vous n'avez pas enregistré d'empreinte",
+                            "Erreur collaborateur inconnu",
                             JOptionPane.ERROR_MESSAGE);
-                            closeFenModif();
+                    closeFenModif();
                 }
             }
         }

@@ -110,10 +110,10 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
             _output = handler.createReply();
 
         }
-        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
+        catch (modEntreesSortiesZones.EmpreinteInconnue _exception)
         {
             _output = handler.createExceptionReply();
-            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
+            modEntreesSortiesZones.EmpreinteInconnueHelper.write(_output,_exception);
         }
         return _output;
     }
@@ -145,19 +145,11 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
 
-        try
-        {
-            boolean _arg_result = verifierEmpreinteTempExistante(arg0_in);
+        boolean _arg_result = verifierEmpreinteTempExistante(arg0_in);
 
-            _output = handler.createReply();
-            _output.write_boolean(_arg_result);
+        _output = handler.createReply();
+        _output.write_boolean(_arg_result);
 
-        }
-        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
-        {
-            _output = handler.createExceptionReply();
-            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
-        }
         return _output;
     }
 
@@ -167,19 +159,11 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
 
-        try
-        {
-            boolean _arg_result = verifierEmpreintePermExistante(arg0_in);
+        boolean _arg_result = verifierEmpreintePermExistante(arg0_in);
 
-            _output = handler.createReply();
-            _output.write_boolean(_arg_result);
+        _output = handler.createReply();
+        _output.write_boolean(_arg_result);
 
-        }
-        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
-        {
-            _output = handler.createExceptionReply();
-            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
-        }
         return _output;
     }
 
