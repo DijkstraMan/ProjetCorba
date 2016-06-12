@@ -23,7 +23,7 @@ public interface ServiceEmpreinteOperations
      * Operation modifierEmpreinte
      */
     public void modifierEmpreinte(String empCollab, String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
+        throws modEntreesSortiesZones.EmpreinteInconnue;
 
     /**
      * Operation supprimerEmpreinteTemp
@@ -34,13 +34,11 @@ public interface ServiceEmpreinteOperations
     /**
      * Operation verifierEmpreinteTempExistante
      */
-    public boolean verifierEmpreinteTempExistante(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
+    public boolean verifierEmpreinteTempExistante(String matricule);
 
     /**
      * Operation verifierEmpreintePermExistante
      */
-    public boolean verifierEmpreintePermExistante(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
+    public boolean verifierEmpreintePermExistante(String matricule);
 
 }
