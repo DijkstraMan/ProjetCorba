@@ -221,6 +221,7 @@ public class FenConnexionCollab extends javax.swing.JFrame {
                                 "Erreur : Vous avez déjà ajouté votre empreinte !",
                                 "Erreur ajout empreinte",
                                 JOptionPane.ERROR_MESSAGE);
+                        resetCollabTempFields();
                     } else {
                         FenAjoutEmpreinte fenAjout = new FenAjoutEmpreinte(mServEmp, lMatCollabTemp);
                         this.setVisible(false);
