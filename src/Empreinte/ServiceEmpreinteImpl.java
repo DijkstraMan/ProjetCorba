@@ -62,7 +62,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     /*Méthode générique pour les requêtes de manipulation 
      INSERT, UPDATE, DELETE ne nécessitant pas de récupérer
      un quelconque résultat */
-    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
+    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException {
         boolean res = true;
         //connexion a la bdd
         // on cree un objet Statement qui va permettre l'execution des requetes
@@ -159,9 +159,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
             }
             closeConnexion();
-        } catch (SQLException ex) {
-            throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
         }
     }
