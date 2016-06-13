@@ -10,8 +10,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JTextArea;
 import modEntreesSortiesZones.EmpreinteExistante;
 import modEntreesSortiesZones.EmpreinteInconnue;
@@ -20,7 +18,7 @@ import org.omg.CosNaming.NamingContext;
 import org.omg.PortableServer.POA;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modEntreesSortiesZones.Empreinte;
+import modEntreesSortiesZones.ServiceAuthentification;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -44,6 +42,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     private final JTextArea mAreaTextEvent;
     private static Connection mConn = null;
     private final String mNomDB;
+    private static ServiceAuthentification mServAuth;
 
     public ServiceEmpreinteImpl(JTextArea a) {
         mNomObj = "SEMP";
@@ -90,16 +89,19 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     public boolean verifierEmpreinte(String empCollab, String matricule) throws EmpreinteInconnue {
         boolean lRes = false;
         try {
+            connexion();
+            ResultSet lRs;
             String lQuery = "SELECT COUNT(*) AS rowcount FROM empreinte "
                     + "WHERE matricule_utilisateur='" + matricule + "' "
                     + "and empreintecollab ='" + empCollab + "'; ";
-            ResultSet lRs;
             lRs = lancerInterrogation(lQuery);
             lRs.next();
             if (lRs.getInt("rowcount") > 0) {
                 lRes = true;
+            } else {
+                throw new EmpreinteInconnue("Erreur vérification empreinte : l'utilisateur n'a pas enregistré d'empreinte");
             }
-
+            closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,13 +111,15 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
 
     @Override
     public void ajouterEmpreinte(String empCollab, String matricule) throws EmpreinteExistante {
-        String lQuery = "insert into empreinte values ('"+ empCollab +"','"+ matricule +"')";
+        String lQuery = "insert into empreinte values (null, '"+ empCollab +"','"+ matricule +"')";
         try {
             connexion();
-            if(lancerManipulation(lQuery))
+            if(lancerManipulation(lQuery)) {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Empreinte ajoutée matricule "+matricule+"\n");
-            else
+            } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible d'ajouter l'empreinte matricule "+matricule+"\n");
+                throw new EmpreinteExistante("Erreur ajout empreinte : l'utilisateur a déjà ajouté une empreinte.");
+            }
             closeConnexion();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,14 +129,35 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     }
 
     @Override
-    public void modifierEmpreinte(String empCollab, String matricule) throws EmpreinteInconnue {
+    public void modifierEmpreinte(String empCollab, String matricule) throws EmpreinteInconnue{
         String lQuery = "update empreinte set empreintecollab='"+ empCollab +"' where matricule_utilisateur='"+ matricule +"';";
         try {
             connexion();
-            if(lancerManipulation(lQuery))
+            if(lancerManipulation(lQuery)) {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Modification empreinte effectuée matricule "+matricule+"\n");
-            else
+            } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de modifier l'empreinte matricule "+matricule+"\n");
+                throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
+            }
+            closeConnexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void supprimerEmpreinteTemp(String matricule) throws EmpreinteInconnue {
+        String lQuery = "delete from empreinte where matricule_utilisateur='"+ matricule +"';";
+        try {
+            connexion();
+            if(lancerManipulation(lQuery)) {
+                mAreaTextEvent.setText(mAreaTextEvent.getText()+"Suppression de l'empreinte du collaborateur temporaire matricule "+matricule+" effectuée\n");
+            } else {
+                mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de supprimer l'empreinte du collaborateur temporaire matricule "+matricule+"\n");
+                throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
+            }
             closeConnexion();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -142,36 +167,49 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     }
     
     @Override
-    public void supprimerEmpreinteTemp(String matricule) throws EmpreinteInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    /*public Empreinte[] getEmpreintes() {
-        mAreaTextEvent.setText(mAreaTextEvent.getText()+"Demande de la liste des empreintes\n"); 
-        List<Empreinte> lTabEmpreintes = new ArrayList();
+    public boolean verifierEmpreinteTempExistante(String matricule) {
+        boolean lRes = false;
+        ResultSet lRs;
         try {
-            String lQuery = "SELECT matricule_utilisateur, empreintecollab "
-                    + "from empreinte"
-                    + "order by matricule_utilisateur;";
-            ResultSet lRs;
             connexion();
+            String lQuery = "SELECT COUNT(*) AS rowcount FROM empreinte "
+                    + "WHERE matricule_utilisateur='" + matricule + "'; ";
             lRs = lancerInterrogation(lQuery);
-            while(lRs.next())
-            {
-                lTabEmpreintes.add(new Empreinte(lRs.getString("empreintecollab"), lRs.getString("matricule_utilisateur")));           
+            lRs.next();
+            if (lRs.getInt("rowcount") > 0) {
+                lRes = true;
+            } else {
+                lRes = false;
             }
             closeConnexion();
-            Empreinte[] lLesEmpreintes = new Empreinte[lTabEmpreintes.size()];
-            lLesEmpreintes = lTabEmpreintes.toArray(lLesEmpreintes);
-                    
-            mAreaTextEvent.setText(mAreaTextEvent.getText()+"Liste des empreintes envoyée\n");
-            return lLesEmpreintes;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
-    }*/
-    
+        return lRes;
+    }
+
+    @Override
+    public boolean verifierEmpreintePermExistante(String matricule) {
+        boolean lRes = false;
+           ResultSet lRs;
+        try {
+            connexion();
+                String lQuery = "SELECT COUNT(*) AS rowcount FROM empreinte "
+                        + "WHERE matricule_utilisateur='" + matricule + "'; ";
+                lRs = lancerInterrogation(lQuery);
+                lRs.next();
+                if (lRs.getInt("rowcount") > 0) {
+                    lRes = true;
+                } else {
+                    lRes = false;
+                }
+            closeConnexion();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lRes;
+    }
+       
     @Override
     public void run() {
        String[] args = null;
@@ -184,7 +222,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
         // Recuperation du POA
         
         try {
-            mAreaTextEvent.setText(mAreaTextEvent.getText()+"Démarrage du serveur\n");
+            mAreaTextEvent.setText(mAreaTextEvent.getText()+"Démarrage du service empreinte\n");
             mRootPOA = POAHelper.narrow(mOrb.resolve_initial_references("RootPOA"));
             // Creation du servant
             //*********************
@@ -222,7 +260,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             // Lancement de l'ORB et mise en attente de requete
             //**************************************************
             mOrb.run();
-            mAreaTextEvent.setText(mAreaTextEvent.getText()+"Fin du serv\n");
+            mAreaTextEvent.setText(mAreaTextEvent.getText()+"Fin du service empreinte\n");
         } catch (InvalidName | ServantAlreadyActive | WrongPolicy | AdapterInactive | NotFound | CannotProceed | org.omg.CORBA.ORBPackage.InvalidName | ServantNotActive ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -235,5 +273,5 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
 
     public byte[] getServiceEmpId() {
         return mServiceEmpId;
-    } 
+    }
 }

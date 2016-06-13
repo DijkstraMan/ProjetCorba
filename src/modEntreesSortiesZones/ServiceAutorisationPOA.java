@@ -28,28 +28,43 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         return _ids_list;
     }
 
+    private static final java.util.Map operationMap = new java.util.HashMap();
+
+    static {
+            operationMap.put("ajouterAutorisationPerm",
+                    new Operation_ajouterAutorisationPerm());
+            operationMap.put("ajouterAutorisationTemp",
+                    new Operation_ajouterAutorisationTemp());
+            operationMap.put("getAutorisationPerm",
+                    new Operation_getAutorisationPerm());
+            operationMap.put("getAutorisationTemp",
+                    new Operation_getAutorisationTemp());
+            operationMap.put("getIdZoneFromPorte",
+                    new Operation_getIdZoneFromPorte());
+            operationMap.put("getZone",
+                    new Operation_getZone());
+            operationMap.put("modifierAutorisationPerm",
+                    new Operation_modifierAutorisationPerm());
+            operationMap.put("modifierAutorisationTemp",
+                    new Operation_modifierAutorisationTemp());
+            operationMap.put("supprimerAutorisation",
+                    new Operation_supprimerAutorisation());
+            operationMap.put("verifierAutorisation",
+                    new Operation_verifierAutorisation());
+    }
+
     public final org.omg.CORBA.portable.OutputStream _invoke(final String opName,
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler)
     {
 
-        if (opName.equals("ajouterAutorisationPerm")) {
-                return _invoke_ajouterAutorisationPerm(_is, handler);
-        } else if (opName.equals("ajouterAutorisationTemp")) {
-                return _invoke_ajouterAutorisationTemp(_is, handler);
-        } else if (opName.equals("getZone")) {
-                return _invoke_getZone(_is, handler);
-        } else if (opName.equals("modifierAutorisationPerm")) {
-                return _invoke_modifierAutorisationPerm(_is, handler);
-        } else if (opName.equals("modifierAutorisationTemp")) {
-                return _invoke_modifierAutorisationTemp(_is, handler);
-        } else if (opName.equals("supprimerAutorisation")) {
-                return _invoke_supprimerAutorisation(_is, handler);
-        } else if (opName.equals("verifierAutorisation")) {
-                return _invoke_verifierAutorisation(_is, handler);
-        } else {
+        final AbstractOperation operation = (AbstractOperation)operationMap.get(opName);
+
+        if (null == operation) {
             throw new org.omg.CORBA.BAD_OPERATION(opName);
         }
+
+        return operation.invoke(this, _is, handler);
     }
 
     // helper methods
@@ -194,6 +209,20 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         return _output;
     }
 
+    private org.omg.CORBA.portable.OutputStream _invoke_getIdZoneFromPorte(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        int arg0_in = modEntreesSortiesZones.IdPorteHelper.read(_is);
+
+        int _arg_result = getIdZoneFromPorte(arg0_in);
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.idZoneHelper.write(_output,_arg_result);
+
+        return _output;
+    }
+
     private org.omg.CORBA.portable.OutputStream _invoke_getZone(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -205,6 +234,140 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         modEntreesSortiesZones.lesZonesHelper.write(_output,_arg_result);
 
         return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_getAutorisationPerm(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        modEntreesSortiesZones.AutorisationPerm[] _arg_result = getAutorisationPerm();
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.lesAutorisationsPermHelper.write(_output,_arg_result);
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_getAutorisationTemp(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        modEntreesSortiesZones.AutorisationTemp[] _arg_result = getAutorisationTemp();
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.lesAutorisationsTempHelper.write(_output,_arg_result);
+
+        return _output;
+    }
+
+    // operation classes
+    private abstract static class AbstractOperation {
+        protected abstract org.omg.CORBA.portable.OutputStream invoke(
+                ServiceAutorisationPOA target,
+                org.omg.CORBA.portable.InputStream _is,
+                org.omg.CORBA.portable.ResponseHandler handler);
+    }
+
+    private static final class Operation_verifierAutorisation extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_verifierAutorisation(_is, handler);
+        }
+    }
+
+    private static final class Operation_ajouterAutorisationTemp extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_ajouterAutorisationTemp(_is, handler);
+        }
+    }
+
+    private static final class Operation_modifierAutorisationTemp extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_modifierAutorisationTemp(_is, handler);
+        }
+    }
+
+    private static final class Operation_ajouterAutorisationPerm extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_ajouterAutorisationPerm(_is, handler);
+        }
+    }
+
+    private static final class Operation_modifierAutorisationPerm extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_modifierAutorisationPerm(_is, handler);
+        }
+    }
+
+    private static final class Operation_supprimerAutorisation extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_supprimerAutorisation(_is, handler);
+        }
+    }
+
+    private static final class Operation_getIdZoneFromPorte extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_getIdZoneFromPorte(_is, handler);
+        }
+    }
+
+    private static final class Operation_getZone extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_getZone(_is, handler);
+        }
+    }
+
+    private static final class Operation_getAutorisationPerm extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_getAutorisationPerm(_is, handler);
+        }
+    }
+
+    private static final class Operation_getAutorisationTemp extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_getAutorisationTemp(_is, handler);
+        }
     }
 
 }

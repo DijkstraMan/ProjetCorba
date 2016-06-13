@@ -13,8 +13,11 @@ module modEntreesSortiesZones
 	typedef string JourDebut;
 	typedef string JourFin;
 	typedef long HeureDebut;
+	typedef string HeureDebutString;
 	typedef long HeureFin;
+	typedef string HeureFinString;
 	typedef string dateLog;
+	typedef long IdPorte;
 	enum TypeAcces {autorise, nonAutorise, nonAuthentifie}; 
 	
 	exception EmpreinteInconnue {string raison;};
@@ -38,12 +41,20 @@ module modEntreesSortiesZones
 		PhotoUsr phoUsr;
 	};
 
-	struct Autorisation
+	struct AutorisationPerm
 	{
 		Matricule matricule;
-		idZone idZone;
-		HeureDebut hrDebut;
-		HeureFin hrFin;
+		nomZone nomZone;
+		HeureDebutString hrDebut;
+		HeureFinString hrFin;
+	};
+	
+	struct AutorisationTemp
+	{
+		Matricule matricule;
+		nomZone nomZone;
+		JourDebut jourDebut;
+		JourFin jourFin;
 	};
 	
 	struct LogAcces
@@ -62,7 +73,9 @@ module modEntreesSortiesZones
 	
 	typedef sequence<Zone> lesZones;
 	typedef sequence<Utilisateur> lesUtilisateurs;
-        typedef sequence<LogAcces> logsAcces;
+    typedef sequence<LogAcces> logsAcces;
+    typedef sequence<AutorisationPerm> lesAutorisationsPerm;
+    typedef sequence<AutorisationTemp> lesAutorisationsTemp;
 	
 	interface ServiceAuthentification
 	{
@@ -104,22 +117,37 @@ module modEntreesSortiesZones
 		boolean verifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
 		void ajouterEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteExistante);
 		void modifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
+                
+                //Supprimer une empreinte de collaborateur temporaire
                 void supprimerEmpreinteTemp(in Matricule matricule) raises (EmpreinteInconnue);
+
+                //vérifier si le collaborateur a déjà enregistré une empreinte
+                boolean verifierEmpreinteTempExistante(in Matricule matricule);
+                boolean verifierEmpreintePermExistante(in Matricule matricule);
 	};
 
 	interface ServiceAutorisation
 	{
 		//responsable de zone
 		boolean verifierAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue); 
+		
 		//Autorisations temporaires :
 		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante);
 		void modifierAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationInconnue);
+		
 		//Autorisations permanentes :
 		void ajouterAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationExistante); 
 		void modifierAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationInconnue); 
 		void supprimerAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
+		
+		//retourne l'idZone en fonction d'un id de porte
+		idZone getIdZoneFromPorte(in IdPorte idPorte);
 		//retourne les zones existantes
 		lesZones getZone();
+		
+		//recuperer les autorisations pour les listes
+		lesAutorisationsPerm getAutorisationPerm();
+		lesAutorisationsTemp getAutorisationTemp();
 	};
 	
 	interface ServiceJournalisation

@@ -371,6 +371,56 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     /**
+     * Operation getIdZoneFromPorte
+     */
+    public int getIdZoneFromPorte(int idPorte)
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getIdZoneFromPorte",true);
+                    modEntreesSortiesZones.IdPorteHelper.write(_output,idPorte);
+                    _input = this._invoke(_output);
+                    int _arg_ret = modEntreesSortiesZones.idZoneHelper.read(_input);
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getIdZoneFromPorte",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
+                try
+                {
+                    return _self.getIdZoneFromPorte( idPorte);
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
      * Operation getZone
      */
     public modEntreesSortiesZones.Zone[] getZone()
@@ -410,6 +460,104 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     return _self.getZone();
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation getAutorisationPerm
+     */
+    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getAutorisationPerm",true);
+                    _input = this._invoke(_output);
+                    modEntreesSortiesZones.AutorisationPerm[] _arg_ret = modEntreesSortiesZones.lesAutorisationsPermHelper.read(_input);
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getAutorisationPerm",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
+                try
+                {
+                    return _self.getAutorisationPerm();
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation getAutorisationTemp
+     */
+    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getAutorisationTemp",true);
+                    _input = this._invoke(_output);
+                    modEntreesSortiesZones.AutorisationTemp[] _arg_ret = modEntreesSortiesZones.lesAutorisationsTempHelper.read(_input);
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getAutorisationTemp",_opsClass);
+                if (_so == null)
+                   continue;
+                modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
+                try
+                {
+                    return _self.getAutorisationTemp();
                 }
                 finally
                 {

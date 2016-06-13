@@ -98,4 +98,20 @@ public class ServiceEmpreintePOATie extends ServiceEmpreintePOA
         _tie.supprimerEmpreinteTemp( matricule);
     }
 
+    /**
+     * Operation verifierEmpreinteTempExistante
+     */
+    public boolean verifierEmpreinteTempExistante(String matricule)
+    {
+        return _tie.verifierEmpreinteTempExistante( matricule);
+    }
+
+    /**
+     * Operation verifierEmpreintePermExistante
+     */
+    public boolean verifierEmpreintePermExistante(String matricule)
+    {
+        return _tie.verifierEmpreintePermExistante( matricule);
+    }
+
 }

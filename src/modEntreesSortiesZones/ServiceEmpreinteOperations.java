@@ -31,4 +31,14 @@ public interface ServiceEmpreinteOperations
     public void supprimerEmpreinteTemp(String matricule)
         throws modEntreesSortiesZones.EmpreinteInconnue;
 
+    /**
+     * Operation verifierEmpreinteTempExistante
+     */
+    public boolean verifierEmpreinteTempExistante(String matricule);
+
+    /**
+     * Operation verifierEmpreintePermExistante
+     */
+    public boolean verifierEmpreintePermExistante(String matricule);
+
 }

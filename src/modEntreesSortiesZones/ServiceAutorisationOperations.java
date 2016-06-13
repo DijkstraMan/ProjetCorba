@@ -44,8 +44,23 @@ public interface ServiceAutorisationOperations
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
+     * Operation getIdZoneFromPorte
+     */
+    public int getIdZoneFromPorte(int idPorte);
+
+    /**
      * Operation getZone
      */
     public modEntreesSortiesZones.Zone[] getZone();
+
+    /**
+     * Operation getAutorisationPerm
+     */
+    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm();
+
+    /**
+     * Operation getAutorisationTemp
+     */
+    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp();
 
 }

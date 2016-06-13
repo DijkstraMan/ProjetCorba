@@ -41,6 +41,10 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
                 return _invoke_supprimerEmpreinteTemp(_is, handler);
         } else if (opName.equals("verifierEmpreinte")) {
                 return _invoke_verifierEmpreinte(_is, handler);
+        } else if (opName.equals("verifierEmpreintePermExistante")) {
+                return _invoke_verifierEmpreintePermExistante(_is, handler);
+        } else if (opName.equals("verifierEmpreinteTempExistante")) {
+                return _invoke_verifierEmpreinteTempExistante(_is, handler);
         } else {
             throw new org.omg.CORBA.BAD_OPERATION(opName);
         }
@@ -132,6 +136,34 @@ public abstract class ServiceEmpreintePOA extends org.omg.PortableServer.Servant
             _output = handler.createExceptionReply();
             modEntreesSortiesZones.EmpreinteInconnueHelper.write(_output,_exception);
         }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_verifierEmpreinteTempExistante(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+
+        boolean _arg_result = verifierEmpreinteTempExistante(arg0_in);
+
+        _output = handler.createReply();
+        _output.write_boolean(_arg_result);
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_verifierEmpreintePermExistante(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+
+        boolean _arg_result = verifierEmpreintePermExistante(arg0_in);
+
+        _output = handler.createReply();
+        _output.write_boolean(_arg_result);
+
         return _output;
     }
 

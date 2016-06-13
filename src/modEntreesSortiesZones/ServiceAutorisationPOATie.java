@@ -117,11 +117,35 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     }
 
     /**
+     * Operation getIdZoneFromPorte
+     */
+    public int getIdZoneFromPorte(int idPorte)
+    {
+        return _tie.getIdZoneFromPorte( idPorte);
+    }
+
+    /**
      * Operation getZone
      */
     public modEntreesSortiesZones.Zone[] getZone()
     {
         return _tie.getZone();
+    }
+
+    /**
+     * Operation getAutorisationPerm
+     */
+    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm()
+    {
+        return _tie.getAutorisationPerm();
+    }
+
+    /**
+     * Operation getAutorisationTemp
+     */
+    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp()
+    {
+        return _tie.getAutorisationTemp();
     }
 
 }
