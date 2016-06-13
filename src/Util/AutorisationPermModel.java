@@ -57,6 +57,7 @@ public class AutorisationPermModel extends AbstractTableModel {
                 trouve = true;
             }
         }
+        fireTableDataChanged();
     }
 
     @Override

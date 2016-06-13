@@ -7,8 +7,6 @@ package Accueil;
 
 import Util.UserTableModel;
 import java.awt.Point;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
@@ -18,9 +16,6 @@ import modEntreesSortiesZones.ServiceEmpreinte;
 import modEntreesSortiesZones.Utilisateur;
 import modEntreesSortiesZones.UtilisateurExistant;
 import modEntreesSortiesZones.UtilisateurInconnu;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *

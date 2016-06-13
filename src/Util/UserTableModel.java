@@ -56,6 +56,7 @@ public class UserTableModel extends AbstractTableModel {
                 trouve = true;
             }
         }
+        fireTableDataChanged();
     }
 
     @Override
