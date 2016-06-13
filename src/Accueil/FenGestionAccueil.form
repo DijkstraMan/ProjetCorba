@@ -223,13 +223,11 @@
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jButtonSuppEmp" pref="227" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jButtonModifier" alignment="0" pref="227" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldNomModif" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldPrenomModif" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldPhotoModif" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabelMatriculeModif" alignment="1" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jButtonModifier" alignment="0" pref="227" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldNomModif" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldPrenomModif" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldPhotoModif" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabelMatriculeModif" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -352,6 +350,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Supprimer empreinte"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSuppEmpActionPerformed"/>

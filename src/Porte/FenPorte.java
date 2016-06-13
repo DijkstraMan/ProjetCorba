@@ -13,7 +13,6 @@ import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.EmpreinteInconnue;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.ServiceAutorisation;
-import modEntreesSortiesZones.ServiceEmpreinte;
 import modEntreesSortiesZones.Utilisateur;
 import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -33,6 +32,10 @@ public class FenPorte extends javax.swing.JFrame {
     private final int idZone;
     /**
      * Creates new form FenPorte
+     * @param monServAuth
+     * @param monServAuto
+     * @param idPorte
+     * @param idZone
      */
     public FenPorte(ServiceAuthentification monServAuth, ServiceAutorisation monServAuto, int idPorte, int idZone) {
         initComponents();
@@ -201,10 +204,10 @@ public class FenPorte extends javax.swing.JFrame {
                 
                 // Appel de l'interface graphique
                 int idPorte = Integer.parseInt(args[0]);
-                /*int idZone = monSAuto.getZone(idPorte);
+                int idZone = monSAuto.getIdZoneFromPorte(idPorte);
                 FenPorte myFen = new FenPorte(monSAuth, monSAuto, idPorte, idZone);
                 myFen.setVisible(true);
-                myFen.setLocationRelativeTo(null);*/
+                myFen.setLocationRelativeTo(null);
             }
             catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
                 Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, e);

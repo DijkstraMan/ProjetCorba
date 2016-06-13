@@ -19,8 +19,6 @@ import org.omg.PortableServer.POA;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modEntreesSortiesZones.ServiceAuthentification;
-import modEntreesSortiesZones.Utilisateur;
-import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -101,7 +99,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             if (lRs.getInt("rowcount") > 0) {
                 lRes = true;
             } else {
-                throw new EmpreinteInconnue("Erreur: empreinte inconnue");
+                throw new EmpreinteInconnue("Erreur vérification empreinte : l'utilisateur n'a pas enregistré d'empreinte");
             }
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -120,7 +118,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Empreinte ajoutée matricule "+matricule+"\n");
             } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible d'ajouter l'empreinte matricule "+matricule+"\n");
-                throw new EmpreinteInconnue("Erreur: empreinte déjà existante");
+                throw new EmpreinteExistante("Erreur ajout empreinte : l'utilisateur a déjà ajouté une empreinte.");
             }
             closeConnexion();
         } catch (SQLException ex) {
@@ -131,7 +129,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     }
 
     @Override
-    public void modifierEmpreinte(String empCollab, String matricule) throws UtilisateurInconnu {
+    public void modifierEmpreinte(String empCollab, String matricule) throws EmpreinteInconnue{
         String lQuery = "update empreinte set empreintecollab='"+ empCollab +"' where matricule_utilisateur='"+ matricule +"';";
         try {
             connexion();
@@ -139,7 +137,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Modification empreinte effectuée matricule "+matricule+"\n");
             } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de modifier l'empreinte matricule "+matricule+"\n");
-                throw new UtilisateurInconnu("Erreur: utilisateur inconnue");
+                throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
             }
             closeConnexion();
         } catch (SQLException ex) {
@@ -151,16 +149,51 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
 
     @Override
     public void supprimerEmpreinteTemp(String matricule) throws EmpreinteInconnue {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String lQuery = "delete from empreinte where matricule_utilisateur='"+ matricule +"';";
+        try {
+            connexion();
+            if(lancerManipulation(lQuery)) {
+                mAreaTextEvent.setText(mAreaTextEvent.getText()+"Suppression de l'empreinte du collaborateur temporaire matricule "+matricule+" effectuée\n");
+            } else {
+                mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de supprimer l'empreinte du collaborateur temporaire matricule "+matricule+"\n");
+                throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
+            }
+            closeConnexion();
+        } catch (SQLException ex) {
+            throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
+        } catch (Exception ex) {
+            throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
+        }
     }
     
     @Override
-    public boolean verifierEmpreinteTempExistante(String matricule) throws UtilisateurInconnu {
+    public boolean verifierEmpreinteTempExistante(String matricule) {
+        boolean lRes = false;
+        ResultSet lRs;
+        try {
+            connexion();
+            String lQuery = "SELECT COUNT(*) AS rowcount FROM empreinte "
+                    + "WHERE matricule_utilisateur='" + matricule + "'; ";
+            lRs = lancerInterrogation(lQuery);
+            lRs.next();
+            if (lRs.getInt("rowcount") > 0) {
+                lRes = true;
+            } else {
+                lRes = false;
+            }
+            closeConnexion();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lRes;
+    }
+
+    @Override
+    public boolean verifierEmpreintePermExistante(String matricule) {
         boolean lRes = false;
            ResultSet lRs;
         try {
             connexion();
-            if (collaborateurTemporaireExistant(matricule)) {
                 String lQuery = "SELECT COUNT(*) AS rowcount FROM empreinte "
                         + "WHERE matricule_utilisateur='" + matricule + "'; ";
                 lRs = lancerInterrogation(lQuery);
@@ -170,81 +203,11 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 } else {
                     lRes = false;
                 }
-            } else {
-                throw new UtilisateurInconnu("Erreur: collaborateur inconnu.");
-            }
             closeConnexion();
-        } catch (ClassNotFoundException | SQLException | NotFound | CannotProceed | InvalidName ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lRes;
-    }
-
-    @Override
-    public boolean verifierEmpreintePermExistante(String matricule) throws UtilisateurInconnu {
-        boolean lRes = false;
-           ResultSet lRs;
-        try {
-            connexion();
-            if (collaborateurPermanentExistant(matricule)) {
-                String lQuery = "SELECT COUNT(*) AS rowcount FROM empreinte "
-                        + "WHERE matricule_utilisateur='" + matricule + "'; ";
-                lRs = lancerInterrogation(lQuery);
-                lRs.next();
-                if (lRs.getInt("rowcount") > 0) {
-                    lRes = true;
-                } else {
-                    lRes = false;
-                }
-            } else {
-                throw new UtilisateurInconnu("Erreur: collaborateur inconnu.");
-            }
-
-            closeConnexion();
-        } catch (ClassNotFoundException | SQLException | NotFound | CannotProceed | InvalidName ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return lRes;
-    }
-    
-    private boolean collaborateurTemporaireExistant(String pMatriculeTemp) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, UtilisateurInconnu {
-        String idObj = "SAUTH";
-        // Construction du nom à rechercher
-        org.omg.CosNaming.NameComponent[] lNameToFind = new org.omg.CosNaming.NameComponent[1];
-        lNameToFind[0] = new org.omg.CosNaming.NameComponent(idObj, "");
-        // Recherche auprès du naming service
-        org.omg.CORBA.Object lDistantSAuth = mNameRoot.resolve(lNameToFind);
-        mAreaTextEvent.setText(mAreaTextEvent.getText() + "ServiceAuthentification '" + idObj + "' trouvé auprès du service de noms. IOR de l'objet : \n"
-                + mOrb.object_to_string(lDistantSAuth) + "\n");
-        // Casting de l'objet CORBA au type ServiceJournalisation
-        mServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(lDistantSAuth);
-        Utilisateur[] lLesCollabsTemp = mServAuth.getCollaborateursTemporaires();
-        for (Utilisateur usr : lLesCollabsTemp) {
-            if (usr.matricule.compareTo(pMatriculeTemp) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private boolean collaborateurPermanentExistant(String pMatriculePerm) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, UtilisateurInconnu {
-        String idObj = "SAUTH";
-        // Construction du nom à rechercher
-        org.omg.CosNaming.NameComponent[] lNameToFind = new org.omg.CosNaming.NameComponent[1];
-        lNameToFind[0] = new org.omg.CosNaming.NameComponent(idObj, "");
-        // Recherche auprès du naming service
-        org.omg.CORBA.Object lDistantSAuth = mNameRoot.resolve(lNameToFind);
-        mAreaTextEvent.setText(mAreaTextEvent.getText() + "ServiceAuthentification '" + idObj + "' trouvé auprès du service de noms. IOR de l'objet : \n"
-                + mOrb.object_to_string(lDistantSAuth) + "\n");
-        // Casting de l'objet CORBA au type ServiceJournalisation
-        mServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(lDistantSAuth);
-        Utilisateur[] lLesCollabsPerm = mServAuth.getCollaborateursPermanents();
-        for (Utilisateur usr : lLesCollabsPerm) {
-            if (usr.matricule.compareTo(pMatriculePerm) == 0) {
-                return true;
-            }
-        }
-        return false;
     }
        
     @Override

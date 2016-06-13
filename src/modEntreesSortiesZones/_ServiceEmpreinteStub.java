@@ -138,7 +138,7 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation modifierEmpreinte
      */
     public void modifierEmpreinte(String empCollab, String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu
+        throws modEntreesSortiesZones.EmpreinteInconnue
     {
         while(true)
         {
@@ -160,9 +160,9 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
+                    if (_exception_id.equals(modEntreesSortiesZones.EmpreinteInconnueHelper.id()))
                     {
-                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
+                        throw modEntreesSortiesZones.EmpreinteInconnueHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
@@ -251,7 +251,6 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation verifierEmpreinteTempExistante
      */
     public boolean verifierEmpreinteTempExistante(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
         {
@@ -273,11 +272,6 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
-                    {
-                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
-                    }
-
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
                 }
                 finally
@@ -307,7 +301,6 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation verifierEmpreintePermExistante
      */
     public boolean verifierEmpreintePermExistante(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
         {
@@ -329,11 +322,6 @@ public class _ServiceEmpreinteStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
-                    {
-                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
-                    }
-
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
                 }
                 finally
