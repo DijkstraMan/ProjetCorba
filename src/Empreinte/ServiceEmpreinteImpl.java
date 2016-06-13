@@ -160,9 +160,9 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             }
             closeConnexion();
         } catch (SQLException ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
         } catch (Exception ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
         }
     }
     
