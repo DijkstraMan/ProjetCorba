@@ -113,7 +113,8 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
         try {
-            if(monServAuth.verifierAuthentificationLogicielAccueil(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
+            if(monServAuth.verifierAuthentificationLogicielAccueil(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) 
+            {
                 FenGestionAccueil fenGest = new FenGestionAccueil(monServAuth, monServEmp);
                 this.setVisible(false);
                 fenGest.setVisible(true);

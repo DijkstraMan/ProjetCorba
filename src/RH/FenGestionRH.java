@@ -314,16 +314,19 @@ public class FenGestionRH extends javax.swing.JFrame {
         String prenomUsr = jTextFieldPrenomAjout.getText();
         String photoUsr = jTextFieldPhotoAjout.getText();
         String pwdUsr = new String(jPasswordField.getPassword());
-        try {
-            monServAuth.ajouterCollaborateurPerm(matricule, nomUsr, prenomUsr, photoUsr, pwdUsr);
-            Utilisateur newUsr = new Utilisateur(matricule, nomUsr, prenomUsr, photoUsr);
-            UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
-            modelCollabPerm.add(newUsr);
-        } catch (UtilisateurExistant ex){
-            JOptionPane.showMessageDialog(this,
-            "Erreur, ce collaborateur permanent existe déjà.",
-            "Erreur lors de l'ajout",
-            JOptionPane.ERROR_MESSAGE);
+        if(matricule != null && !matricule.isEmpty() && nomUsr != null && !nomUsr.isEmpty() && prenomUsr != null && !prenomUsr.isEmpty())
+        {
+            try {
+                monServAuth.ajouterCollaborateurPerm(matricule, nomUsr, prenomUsr, photoUsr, pwdUsr);
+                Utilisateur newUsr = new Utilisateur(matricule, nomUsr, prenomUsr, photoUsr);
+                UserTableModel modelCollabPerm = (UserTableModel) jTableCollab.getModel();
+                modelCollabPerm.add(newUsr);
+            } catch (UtilisateurExistant ex){
+                JOptionPane.showMessageDialog(this,
+                "Erreur, ce collaborateur permanent existe déjà.",
+                "Erreur lors de l'ajout",
+                JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 

@@ -205,7 +205,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 usr = new Utilisateur(matricule, nomUsr, null, null);
                 // Matricule => OK => Vérifier empreinte auprès du serviceEmpreinte : 
                 // /!\ DECOMMENTER CETTE LIGNE NECESSITE DE DECOMMENTER LES CATCH !
-                //lancerVerifierEmpreinte(empCollab, matricule);
+                lancerVerifierEmpreinte(empCollab, matricule);
             }
             else {
                 //On tente de chercher dans la baseTemp
@@ -219,7 +219,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                     usr = new Utilisateur(matricule, nomUsr, null, null);
                     // Matricule => OK => Vérifier empreinte auprès du serviceEmpreinte : 
                     // /!\ DECOMMENTER CETTE LIGNE NECESSITE DE DECOMMENTER LES CATCH !
-                    //lancerVerifierEmpreinte(empCollab, matricule);
+                    lancerVerifierEmpreinte(empCollab, matricule);
                 }
                 else {
                     SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -235,11 +235,11 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } /*catch (EmpreinteInconnue ex) {
+        } catch (EmpreinteInconnue ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
             //On "retourne" l'exception pour le client :
             throw new EmpreinteInconnue("Erreur: l'utilisateur est reconnu, mais pas son empreinte.");
-        }*/
+        }
         return usr;
     }
 
