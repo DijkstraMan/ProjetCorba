@@ -159,6 +159,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Suppression de l'empreinte du collaborateur temporaire matricule "+matricule+" effectuée\n");
             } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de supprimer l'empreinte du collaborateur temporaire matricule "+matricule+"\n");
+                throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
             }
             closeConnexion();
         } catch (SQLException | ClassNotFoundException ex) {

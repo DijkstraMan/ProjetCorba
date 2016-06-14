@@ -8,12 +8,6 @@ package modEntreesSortiesZones;
 public interface ServiceAuthentificationOperations
 {
     /**
-     * Operation getUtilisateur
-     */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
-
-    /**
      * Operation verifierAuthentificationPorte
      */
     public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone)

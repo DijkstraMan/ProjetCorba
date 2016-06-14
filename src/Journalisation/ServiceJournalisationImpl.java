@@ -63,7 +63,7 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
     /*Méthode générique pour les requêtes de manipulation 
     INSERT, UPDATE, DELETE ne nécessitant pas de récupérer
     un quelconque résultat */
-    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
+    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException {
         boolean res = true;
         // on cree un objet Statement qui va permettre l'execution des requetes
         Statement s = conn.createStatement();
@@ -96,9 +96,7 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             else
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouter l'accès: "+typeAccesStr+"\n");
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

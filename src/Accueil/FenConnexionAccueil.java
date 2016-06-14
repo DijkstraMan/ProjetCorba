@@ -122,7 +122,7 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
             }             
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
-            "Erreur, ce compte Accueil n'existe pas.",
+            ex.raison,
             "Erreur lors de la connexion",
             JOptionPane.ERROR_MESSAGE);
         }
