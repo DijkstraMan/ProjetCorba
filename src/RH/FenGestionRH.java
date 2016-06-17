@@ -40,6 +40,7 @@ public class FenGestionRH extends javax.swing.JFrame {
         jTableCollab.setModel(modelCollabsPerm);
         TableRowSorter<UserTableModel> sorter = new TableRowSorter<>(modelCollabsPerm);
         jTableCollab.setRowSorter(sorter);
+        setLocationRelativeTo(null);
     }
 
     /**

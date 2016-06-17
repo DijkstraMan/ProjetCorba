@@ -44,6 +44,7 @@ public class FenPorte extends javax.swing.JFrame {
         this.idPorte = idPorte;
         this.idZone = idZone;
         jLabelPorteZone.setText("Porte " + idPorte + " / Accès zone " + idZone);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -178,6 +179,9 @@ public class FenPorte extends javax.swing.JFrame {
                 // Recuperation du naming service
                 NamingContext nameRoot =
                         org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+                /*NamingContext nameRoot =
+                    org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
+                */
                 // SERVICE AUTHENTIFICATION
                 // ************************
                 // Nom de l'objet
@@ -205,9 +209,7 @@ public class FenPorte extends javax.swing.JFrame {
                 // Appel de l'interface graphique
                 int idPorte = Integer.parseInt(args[0]);
                 int idZone = monSAuto.getIdZoneFromPorte(idPorte);
-                FenPorte myFen = new FenPorte(monSAuth, monSAuto, idPorte, idZone);
-                myFen.setVisible(true);
-                myFen.setLocationRelativeTo(null);
+                new FenPorte(monSAuth, monSAuto, idPorte, idZone).setVisible(true);
             }
             catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
                 Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, e);
