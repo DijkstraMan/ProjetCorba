@@ -35,25 +35,25 @@ public class AutorisationTempModel extends AbstractTableModel {
         rowData = new ArrayList<>(Arrays.asList(utilisateurs));
     }
 
-    public void add(AutorisationTemp usr) {
-        add(Arrays.asList(usr));
+    public void add(AutorisationTemp auto) {
+        add(Arrays.asList(auto));
     }
 
-    public void add(List<AutorisationTemp> usr) {
-        rowData.addAll(usr);
+    public void add(List<AutorisationTemp> auto) {
+        rowData.addAll(auto);
         fireTableDataChanged();
     }
     
-    public void majAffichage(AutorisationTemp usr) {
+    public void majAffichage(AutorisationTemp auto) {
         int nbUsr = rowData.size();
         boolean trouve = false;
         AutorisationTemp usrTemp;
         for(int i = 0;!trouve && i < nbUsr; i++) {
             usrTemp = rowData.get(i);
-            if(usrTemp.matricule.equals(usr.matricule)){
-                usrTemp.nomZone = usr.nomZone;
-                usrTemp.jourDebut = usr.jourDebut;
-                usrTemp.jourFin = usr.jourFin;
+            if(usrTemp.matricule.equals(auto.matricule)){
+                usrTemp.nomZone = auto.nomZone;
+                usrTemp.jourDebut = auto.jourDebut;
+                usrTemp.jourFin = auto.jourFin;
                 trouve = true;
             }
         }

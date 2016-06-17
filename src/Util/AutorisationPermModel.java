@@ -35,25 +35,25 @@ public class AutorisationPermModel extends AbstractTableModel {
         rowData = new ArrayList<>(Arrays.asList(utilisateurs));
     }
 
-    public void add(AutorisationPerm usr) {
-        add(Arrays.asList(usr));
+    public void add(AutorisationPerm auto) {
+        add(Arrays.asList(auto));
     }
 
-    public void add(List<AutorisationPerm> usr) {
-        rowData.addAll(usr);
+    public void add(List<AutorisationPerm> auto) {
+        rowData.addAll(auto);
         fireTableDataChanged();
     }
     
-    public void majAffichage(AutorisationPerm usr) {
+    public void majAffichage(AutorisationPerm auto) {
         int nbUsr = rowData.size();
         boolean trouve = false;
         AutorisationPerm usrTemp;
         for(int i = 0;!trouve && i < nbUsr; i++) {
             usrTemp = rowData.get(i);
-            if(usrTemp.matricule.equals(usr.matricule)){
-                usrTemp.nomZone = usr.nomZone;
-                usrTemp.hrDebut = usr.hrDebut;
-                usrTemp.hrFin = usr.hrFin;
+            if(usrTemp.matricule.equals(auto.matricule)){
+                usrTemp.nomZone = auto.nomZone;
+                usrTemp.hrDebut = auto.hrDebut;
+                usrTemp.hrFin = auto.hrFin;
                 trouve = true;
             }
         }

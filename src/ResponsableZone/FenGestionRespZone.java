@@ -16,9 +16,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import modEntreesSortiesZones.AutorisationExistante;
+import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.AutorisationPerm;
 import modEntreesSortiesZones.AutorisationTemp;
 import modEntreesSortiesZones.ServiceAutorisation;
@@ -443,20 +445,31 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             {
                 String dateDebut = setDateFormatFR(jDateDebut.getDate(), Integer.parseInt(tabHrsDebut[0]), Integer.parseInt(tabHrsDebut[1]));
                 String dateFin = setDateFormatFR(jDateFin.getDate(), Integer.parseInt(tabHrsFin[0]), Integer.parseInt(tabHrsFin[1]));
-                
                 monServAuto.ajouterAutorisationTemp(matricule, idZone, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone), dateDebut, dateFin);
+                AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
+                modelAutoTemp.add(newAuto);
             }
             else //ajout d'une autorisation permanente
             {
                 int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
                 int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
                 monServAuto.ajouterAutorisationPerm(matricule, idZone, hrsDebut, hrsFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebut.getText(), jHrsFin.getText());
+                AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
+                modelAutoPerm.add(newAuto);
+                
             }
-           
         }catch(NumberFormatException e){
-            System.out.println("Veuillez renseigner les champs d'heures");
+            JOptionPane.showMessageDialog(this,
+                "Veuillez renseigner les champs d'heures",
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
         } catch (AutorisationExistante ex) {
-            System.out.println(ex.raison);
+             JOptionPane.showMessageDialog(this,
+                ex.raison,
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
@@ -475,7 +488,36 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     }//GEN-LAST:event_jTablePermMouseClicked
 
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
-        // TODO add your handling code here:
+        try{
+            String matricule = jLabelModif.getText();
+            String[] tabHrsDebut=jHrsDebutModif.getText().split(":");
+            String[] tabHrsFin=jHrsFinModif.getText().split(":");
+             
+            //modif d'une autorisation temporaire
+            if(jDateDebutModif.getDate()!=null && jDateFinModif.getDate()!=null)
+            {
+                String dateDebut = setDateFormatFR(jDateDebutModif.getDate(), Integer.parseInt(tabHrsDebut[0]), Integer.parseInt(tabHrsDebut[1]));
+                String dateFin = setDateFormatFR(jDateFinModif.getDate(), Integer.parseInt(tabHrsFin[0]), Integer.parseInt(tabHrsFin[1]));
+                monServAuto.modifierAutorisationTemp(matricule, idZone, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone), dateDebut, dateFin);
+                AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
+                modelAutoTemp.majAffichage(newAuto);
+            }
+            else //modif d'une autorisation permanente
+            {
+                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
+                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
+                monServAuto.modifierAutorisationPerm(matricule, idZone, hrsDebut, hrsFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebut.getText(), jHrsFin.getText());
+                AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
+                modelAutoPerm.majAffichage(newAuto);
+            }
+           
+        }catch(NumberFormatException e){
+            System.out.println("Veuillez renseigner les champs d'heures");
+        } catch (AutorisationInconnue ex) {
+            System.out.println(ex.raison);
+        }
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
 
