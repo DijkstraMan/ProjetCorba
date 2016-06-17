@@ -145,8 +145,10 @@ create table autorisationTemp
 (
 	matricule_utilisateur varchar(50) NOT NULL,
 	idZone_zone integer(5) NOT NULL,
-	jourDebut datetime,
-	jourFin datetime,
+	heureDebut int(4),
+	heureFin int(4),
+	jourDebut date,
+	jourFin date,
 	PRIMARY KEY(matricule_utilisateur,idZone_zone)
 );
 

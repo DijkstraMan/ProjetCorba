@@ -129,8 +129,8 @@ module modEntreesSortiesZones
 		boolean verifierAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue); 
 		
 		//Autorisations temporaires :
-		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante);
-		void modifierAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationInconnue);
+		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone,in HeureDebut hrDebut, in HeureFin hrFin, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante);
+		void modifierAutorisationTemp(in Matricule matricule, in idZone idZone,in HeureDebut hrDebut, in HeureFin hrFin, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationInconnue);
 		void supprimerAutorisationTemp(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
 		
 		//Autorisations permanentes :

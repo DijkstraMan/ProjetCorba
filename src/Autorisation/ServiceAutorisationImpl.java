@@ -169,8 +169,8 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     
     @Override
     public void ajouterAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin) throws AutorisationExistante {
-        VERIFIER QUE LE MATRICULE EXISTE, METHODE FABIEN IDL
-        CHANGER GESTION DES HEURES U_U heure separé de la date   
+        //VERIFIER QUE LE MATRICULE EXISTE, METHODE FABIEN IDL
+        //CHANGER GESTION DES HEURES U_U heure separé de la date   
         DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -223,7 +223,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         String query = "insert into autorisationPerm values ('"+ matricule +"','"+ idZone +"','"+ hrDebut +"','"+ hrFin +"')";
         try {
             connexion();
-            VERIFIER QUE LE MATRICULE EXISTE, METHODE FABIEN IDL
+            //VERIFIER QUE LE MATRICULE EXISTE, METHODE FABIEN IDL
             if(lancerManipulation(query))
                 areaTextEvent.setText(areaTextEvent.getText()+"Autorisation permanente ajouté matricule "+matricule+" zone "+idZone+"\n");
             else
