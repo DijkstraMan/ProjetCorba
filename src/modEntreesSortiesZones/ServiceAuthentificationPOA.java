@@ -55,6 +55,10 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                     new Operation_verifierAuthentificationMachineEmpreinteCollaborateurTemp());
             operationMap.put("verifierAuthentificationPorte",
                     new Operation_verifierAuthentificationPorte());
+            operationMap.put("verifierMatriculePerm",
+                    new Operation_verifierMatriculePerm());
+            operationMap.put("verifierMatriculeTemp",
+                    new Operation_verifierMatriculeTemp());
     }
 
     public final org.omg.CORBA.portable.OutputStream _invoke(final String opName,
@@ -219,6 +223,28 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         return _output;
     }
 
+    private org.omg.CORBA.portable.OutputStream _invoke_verifierMatriculeTemp(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+
+        try
+        {
+            boolean _arg_result = verifierMatriculeTemp(arg0_in);
+
+            _output = handler.createReply();
+            _output.write_boolean(_arg_result);
+
+        }
+        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
     private org.omg.CORBA.portable.OutputStream _invoke_verifierAuthentificationMachineEmpreinteCollaborateurTemp(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -280,6 +306,28 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
             modifierCollaborateurPerm(arg0_in, arg1_in, arg2_in, arg3_in);
 
             _output = handler.createReply();
+
+        }
+        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_verifierMatriculePerm(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+
+        try
+        {
+            boolean _arg_result = verifierMatriculePerm(arg0_in);
+
+            _output = handler.createReply();
+            _output.write_boolean(_arg_result);
 
         }
         catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
@@ -407,6 +455,16 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
         }
     }
 
+    private static final class Operation_verifierMatriculeTemp extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAuthentificationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_verifierMatriculeTemp(_is, handler);
+        }
+    }
+
     private static final class Operation_verifierAuthentificationMachineEmpreinteCollaborateurTemp extends AbstractOperation
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
@@ -434,6 +492,16 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
             return target._invoke_modifierCollaborateurPerm(_is, handler);
+        }
+    }
+
+    private static final class Operation_verifierMatriculePerm extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAuthentificationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_verifierMatriculePerm(_is, handler);
         }
     }
 

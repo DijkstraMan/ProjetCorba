@@ -117,6 +117,15 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
+     * Operation verifierMatriculeTemp
+     */
+    public boolean verifierMatriculeTemp(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierMatriculeTemp( matricule);
+    }
+
+    /**
      * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
      */
     public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
@@ -141,6 +150,15 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
         throws modEntreesSortiesZones.UtilisateurInconnu
     {
         _tie.modifierCollaborateurPerm( matricule,  nomUsr,  preUsr,  phoUsr);
+    }
+
+    /**
+     * Operation verifierMatriculePerm
+     */
+    public boolean verifierMatriculePerm(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu
+    {
+        return _tie.verifierMatriculePerm( matricule);
     }
 
     /**
