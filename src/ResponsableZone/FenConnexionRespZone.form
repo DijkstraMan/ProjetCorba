@@ -63,7 +63,7 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jTMatricule">
       <Properties>
-        <Property name="text" type="java.lang.String" value="mRZ"/>
+        <Property name="text" type="java.lang.String" value="RZ001"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTMatriculeActionPerformed"/>
@@ -89,7 +89,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="jMdp">
       <Properties>
-        <Property name="text" type="java.lang.String" value="mdpRZ"/>
+        <Property name="text" type="java.lang.String" value="mdpRZ001"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">

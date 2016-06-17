@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import modEntreesSortiesZones.AutorisationPerm;
-import modEntreesSortiesZones.AutorisationTemp;
 
 
 /**

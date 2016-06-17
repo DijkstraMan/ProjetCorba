@@ -23,6 +23,7 @@ import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.AutorisationPerm;
 import modEntreesSortiesZones.AutorisationTemp;
 import modEntreesSortiesZones.ServiceAutorisation;
+import modEntreesSortiesZones.UtilisateurInconnu;
 
 /**
  *
@@ -490,15 +491,15 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 AutorisationTemp autTemp = modelTemp.getAutoTempAt(row);
                 //Remplissage des champs de modification d'une autorisation :
                 jLabelModif.setText(autTemp.matricule);
-                jHrsDebutModif.setText(getHeureFromDate(autTemp.jourDebut));
-                jHrsFinModif.setText(getHeureFromDate(autTemp.jourFin));
+                jHrsDebutModif.setText(autTemp.hrDebut);
+                jHrsFinModif.setText(autTemp.hrFin);
                 jDateDebutModif.setDate(getJourFromDate(autTemp.jourDebut));
                 jDateFinModif.setDate(getJourFromDate(autTemp.jourFin));
                 
                 //Remplissage des champs de suppression d'une autorisation :
                 jMatSuppr.setText(autTemp.matricule);
-                jHrsDebutSuppr.setText(getHeureFromDate(autTemp.jourDebut));
-                jHrsFinSuppr.setText(getHeureFromDate(autTemp.jourFin));
+                jHrsDebutSuppr.setText(autTemp.hrDebut);
+                jHrsFinSuppr.setText(autTemp.hrFin);
                 jDateDebutSuppr.setText(autTemp.jourDebut);
                 jDateFinSuppr.setText(autTemp.jourFin);
                 
@@ -513,30 +514,21 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableTempMouseClicked
     
-    public String getHeureFromDate(String date) throws ParseException
-    {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-        DateFormat formatHeure = new SimpleDateFormat("HH:mm");
-        return formatHeure.format(formatFR.parse(date));
-    }
+
     
     public Date getJourFromDate(String date) throws ParseException
     {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");
         Calendar cal = Calendar.getInstance();
         cal.setTime(formatFR.parse(date));
         return cal.getTime();
     }
     
-    private String setDateFormatFR(Date date, int hrs, int min)
+    private String setDateFormatFR(Date date)
     {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");         
+        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");         
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY,hrs);
-        cal.set(Calendar.MINUTE,min);
-        cal.set(Calendar.SECOND,0);
-        cal.set(Calendar.MILLISECOND,0);
         return formatFR.format(cal.getTime());
     }
     
@@ -549,10 +541,12 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             //ajout d'une autorisation temporaire
             if(jDateDebut.getDate()!=null && jDateFin.getDate()!=null)
             {
-                String dateDebut = setDateFormatFR(jDateDebut.getDate(), Integer.parseInt(tabHrsDebut[0]), Integer.parseInt(tabHrsDebut[1]));
-                String dateFin = setDateFormatFR(jDateFin.getDate(), Integer.parseInt(tabHrsFin[0]), Integer.parseInt(tabHrsFin[1]));
-                monServAuto.ajouterAutorisationTemp(matricule, idZone, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone), dateDebut, dateFin);
+                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
+                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
+                String dateDebut = setDateFormatFR(jDateDebut.getDate());
+                String dateFin = setDateFormatFR(jDateFin.getDate());
+                monServAuto.ajouterAutorisationTemp(matricule, idZone,hrsDebut,hrsFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone),jHrsDebut.getText(),jHrsFin.getText(), dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.add(newAuto);
             }
@@ -571,8 +565,13 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 "Veuillez renseigner les champs d'heures",
                 "Erreur",
                 JOptionPane.ERROR_MESSAGE);
-        } catch (AutorisationExistante ex) {
+        } catch (AutorisationExistante  ex) {
              JOptionPane.showMessageDialog(this,
+                ex.raison,
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
+        } catch (UtilisateurInconnu ex) {
+            JOptionPane.showMessageDialog(this,
                 ex.raison,
                 "Erreur",
                 JOptionPane.ERROR_MESSAGE);
@@ -618,10 +617,12 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             //modif d'une autorisation temporaire
             if(jDateDebutModif.getDate()!=null && jDateFinModif.getDate()!=null)
             {
-                String dateDebut = setDateFormatFR(jDateDebutModif.getDate(), Integer.parseInt(tabHrsDebut[0]), Integer.parseInt(tabHrsDebut[1]));
-                String dateFin = setDateFormatFR(jDateFinModif.getDate(), Integer.parseInt(tabHrsFin[0]), Integer.parseInt(tabHrsFin[1]));
-                monServAuto.modifierAutorisationTemp(matricule, idZone, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone), dateDebut, dateFin);
+                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
+                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
+                String dateDebut = setDateFormatFR(jDateDebutModif.getDate());
+                String dateFin = setDateFormatFR(jDateFinModif.getDate());
+                monServAuto.modifierAutorisationTemp(matricule, idZone,hrsDebut,hrsFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone),jHrsDebutModif.getText(),jHrsFinModif.getText(), dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.majAffichage(newAuto);
             }
@@ -664,6 +665,20 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.delete(jTablePerm.getSelectedRow());
             }
+            //vidage des champs de modification d'une autorisation :
+            jLabelModif.setText("");
+            jHrsDebutModif.setText("");
+            jHrsFinModif.setText("");
+            jDateDebutModif.setDate(null);
+            jDateFinModif.setDate(null);
+
+            //vidage des champs de suppression d'une autorisation :
+            jMatSuppr.setText("");
+            jHrsDebutSuppr.setText("");
+            jHrsFinSuppr.setText("");
+            jDateDebutSuppr.setText("");
+            jDateFinSuppr.setText("");
+            
         } catch (AutorisationInconnue ex) {
             JOptionPane.showMessageDialog(this,
                 ex.raison,

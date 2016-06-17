@@ -73,7 +73,7 @@ public class AutorisationTempHelper
                     return org.omg.CORBA.ORB.init().create_recursive_tc(id());
                 _working = true;
                 org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-                org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[4];
+                org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[6];
 
                 _members[0] = new org.omg.CORBA.StructMember();
                 _members[0].name = "matricule";
@@ -82,11 +82,17 @@ public class AutorisationTempHelper
                 _members[1].name = "nomZone";
                 _members[1].type = modEntreesSortiesZones.nomZoneHelper.type();
                 _members[2] = new org.omg.CORBA.StructMember();
-                _members[2].name = "jourDebut";
-                _members[2].type = modEntreesSortiesZones.JourDebutHelper.type();
+                _members[2].name = "hrDebut";
+                _members[2].type = modEntreesSortiesZones.HeureDebutStringHelper.type();
                 _members[3] = new org.omg.CORBA.StructMember();
-                _members[3].name = "jourFin";
-                _members[3].type = modEntreesSortiesZones.JourFinHelper.type();
+                _members[3].name = "hrFin";
+                _members[3].type = modEntreesSortiesZones.HeureFinStringHelper.type();
+                _members[4] = new org.omg.CORBA.StructMember();
+                _members[4].name = "jourDebut";
+                _members[4].type = modEntreesSortiesZones.JourDebutHelper.type();
+                _members[5] = new org.omg.CORBA.StructMember();
+                _members[5].name = "jourFin";
+                _members[5].type = modEntreesSortiesZones.JourFinHelper.type();
                 _tc = orb.create_struct_tc(id(),"AutorisationTemp",_members);
                 _working = false;
             }
@@ -116,6 +122,8 @@ public class AutorisationTempHelper
 
         new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
         new_one.nomZone = modEntreesSortiesZones.nomZoneHelper.read(istream);
+        new_one.hrDebut = modEntreesSortiesZones.HeureDebutStringHelper.read(istream);
+        new_one.hrFin = modEntreesSortiesZones.HeureFinStringHelper.read(istream);
         new_one.jourDebut = modEntreesSortiesZones.JourDebutHelper.read(istream);
         new_one.jourFin = modEntreesSortiesZones.JourFinHelper.read(istream);
 
@@ -131,6 +139,8 @@ public class AutorisationTempHelper
     {
         modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
         modEntreesSortiesZones.nomZoneHelper.write(ostream,value.nomZone);
+        modEntreesSortiesZones.HeureDebutStringHelper.write(ostream,value.hrDebut);
+        modEntreesSortiesZones.HeureFinStringHelper.write(ostream,value.hrFin);
         modEntreesSortiesZones.JourDebutHelper.write(ostream,value.jourDebut);
         modEntreesSortiesZones.JourFinHelper.write(ostream,value.jourFin);
     }

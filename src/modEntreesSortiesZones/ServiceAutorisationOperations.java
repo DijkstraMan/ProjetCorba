@@ -16,13 +16,13 @@ public interface ServiceAutorisationOperations
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
-        throws modEntreesSortiesZones.AutorisationExistante;
+    public void ajouterAutorisationTemp(String matricule, int idZone, int hrDebut, int hrFin, String jrDebut, String jrFin)
+        throws modEntreesSortiesZones.AutorisationExistante, modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
+    public void modifierAutorisationTemp(String matricule, int idZone, int hrDebut, int hrFin, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
@@ -35,7 +35,7 @@ public interface ServiceAutorisationOperations
      * Operation ajouterAutorisationPerm
      */
     public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
-        throws modEntreesSortiesZones.AutorisationExistante;
+        throws modEntreesSortiesZones.AutorisationExistante, modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
      * Operation modifierAutorisationPerm

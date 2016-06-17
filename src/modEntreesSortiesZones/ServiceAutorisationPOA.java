@@ -99,12 +99,14 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
         int arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
-        String arg2_in = modEntreesSortiesZones.JourDebutHelper.read(_is);
-        String arg3_in = modEntreesSortiesZones.JourFinHelper.read(_is);
+        int arg2_in = modEntreesSortiesZones.HeureDebutHelper.read(_is);
+        int arg3_in = modEntreesSortiesZones.HeureFinHelper.read(_is);
+        String arg4_in = modEntreesSortiesZones.JourDebutHelper.read(_is);
+        String arg5_in = modEntreesSortiesZones.JourFinHelper.read(_is);
 
         try
         {
-            ajouterAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in);
+            ajouterAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in, arg5_in);
 
             _output = handler.createReply();
 
@@ -113,6 +115,11 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         {
             _output = handler.createExceptionReply();
             modEntreesSortiesZones.AutorisationExistanteHelper.write(_output,_exception);
+        }
+        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
         }
         return _output;
     }
@@ -123,12 +130,14 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
         int arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
-        String arg2_in = modEntreesSortiesZones.JourDebutHelper.read(_is);
-        String arg3_in = modEntreesSortiesZones.JourFinHelper.read(_is);
+        int arg2_in = modEntreesSortiesZones.HeureDebutHelper.read(_is);
+        int arg3_in = modEntreesSortiesZones.HeureFinHelper.read(_is);
+        String arg4_in = modEntreesSortiesZones.JourDebutHelper.read(_is);
+        String arg5_in = modEntreesSortiesZones.JourFinHelper.read(_is);
 
         try
         {
-            modifierAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in);
+            modifierAutorisationTemp(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in, arg5_in);
 
             _output = handler.createReply();
 
@@ -183,6 +192,11 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         {
             _output = handler.createExceptionReply();
             modEntreesSortiesZones.AutorisationExistanteHelper.write(_output,_exception);
+        }
+        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
         }
         return _output;
     }

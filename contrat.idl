@@ -53,6 +53,8 @@ module modEntreesSortiesZones
 	{
 		Matricule matricule;
 		nomZone nomZone;
+		HeureDebutString hrDebut;
+		HeureFinString hrFin;
 		JourDebut jourDebut;
 		JourFin jourFin;
 	};
@@ -131,12 +133,12 @@ module modEntreesSortiesZones
 		boolean verifierAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue); 
 		
 		//Autorisations temporaires :
-		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone,in HeureDebut hrDebut, in HeureFin hrFin, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante);
+		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone,in HeureDebut hrDebut, in HeureFin hrFin, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante,UtilisateurInconnu);
 		void modifierAutorisationTemp(in Matricule matricule, in idZone idZone,in HeureDebut hrDebut, in HeureFin hrFin, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationInconnue);
 		void supprimerAutorisationTemp(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
 		
 		//Autorisations permanentes :
-		void ajouterAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationExistante); 
+		void ajouterAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationExistante,UtilisateurInconnu); 
 		void modifierAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationInconnue); 
 		void supprimerAutorisationPerm(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
 		

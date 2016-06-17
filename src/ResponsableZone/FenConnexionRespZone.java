@@ -73,7 +73,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTMatricule.setText("mRZ");
+        jTMatricule.setText("RZ001");
         jTMatricule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTMatriculeActionPerformed(evt);
@@ -91,7 +91,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
 
         jLabel2.setText("Mot de passe");
 
-        jMdp.setText("mdpRZ");
+        jMdp.setText("mdpRZ001");
 
         jLabel3.setText("Nom de la zone");
 
