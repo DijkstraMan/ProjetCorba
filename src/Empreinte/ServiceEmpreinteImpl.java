@@ -62,7 +62,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     /*Méthode générique pour les requêtes de manipulation 
      INSERT, UPDATE, DELETE ne nécessitant pas de récupérer
      un quelconque résultat */
-    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
+    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException {
         boolean res = true;
         //connexion a la bdd
         // on cree un objet Statement qui va permettre l'execution des requetes
@@ -99,11 +99,12 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             if (lRs.getInt("rowcount") > 0) {
                 lRes = true;
             } else {
-                throw new EmpreinteInconnue("Erreur vérification empreinte : l'utilisateur n'a pas enregistré d'empreinte");
+                lRes = false;
             }
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new EmpreinteInconnue("Erreur vérification empreinte : l'utilisateur n'a pas enregistré d'empreinte");
         }
 
         return lRes;
@@ -118,13 +119,14 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Empreinte ajoutée matricule "+matricule+"\n");
             } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible d'ajouter l'empreinte matricule "+matricule+"\n");
-                throw new EmpreinteExistante("Erreur ajout empreinte : l'utilisateur a déjà ajouté une empreinte.");
             }
             closeConnexion();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new EmpreinteExistante("Erreur ajout empreinte : l'utilisateur a déjà ajouté une empreinte.");
         } catch (Exception ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new EmpreinteExistante("Erreur ajout empreinte : l'utilisateur a déjà ajouté une empreinte.");
         }
     }
 
@@ -137,16 +139,17 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Modification empreinte effectuée matricule "+matricule+"\n");
             } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de modifier l'empreinte matricule "+matricule+"\n");
-                throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
             }
             closeConnexion();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
         } catch (Exception ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
         }
     }
-
+    
     @Override
     public void supprimerEmpreinteTemp(String matricule) throws EmpreinteInconnue {
         String lQuery = "delete from empreinte where matricule_utilisateur='"+ matricule +"';";
@@ -159,9 +162,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
             }
             closeConnexion();
-        } catch (SQLException ex) {
-            throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
         }
     }

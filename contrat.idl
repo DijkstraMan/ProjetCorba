@@ -78,10 +78,7 @@ module modEntreesSortiesZones
     typedef sequence<AutorisationTemp> lesAutorisationsTemp;
 	
 	interface ServiceAuthentification
-	{
-		
-		Utilisateur getUtilisateur(in Matricule matricule) raises (UtilisateurInconnu);
-		
+	{	
 		//verif d'indentité pour la porte
 		Utilisateur verifierAuthentificationPorte(in EmpreinteCollab empCollab, in PhotoUsr phoUsr, in idZone zone) raises (UtilisateurInconnu, EmpreinteInconnue);
 		

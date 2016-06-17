@@ -323,7 +323,7 @@ public class FenGestionRH extends javax.swing.JFrame {
                 modelCollabPerm.add(newUsr);
             } catch (UtilisateurExistant ex){
                 JOptionPane.showMessageDialog(this,
-                "Erreur, ce collaborateur permanent existe déjà.",
+                ex.raison,
                 "Erreur lors de l'ajout",
                 JOptionPane.ERROR_MESSAGE);
             }
@@ -343,7 +343,7 @@ public class FenGestionRH extends javax.swing.JFrame {
                 modelCollabPerm.majAffichage(newUsr);
             } catch (UtilisateurInconnu ex) {
                 JOptionPane.showMessageDialog(this,
-                "Erreur, ce collaborateur permanent n'existe pas.",
+                ex.raison,
                 "Erreur lors de la modification",
                 JOptionPane.ERROR_MESSAGE);
             }

@@ -72,7 +72,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     /*Méthode générique pour les requêtes de manipulation 
     INSERT, UPDATE, DELETE ne nécessitant pas de récupérer
     un quelconque résultat */
-    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
+    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException {
         boolean res = true;
         // on cree un objet Statement qui va permettre l'execution des requetes
         Statement s = conn.createStatement();
@@ -123,11 +123,6 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         // Casting de l'objet CORBA au type ServiceJournalisation
         monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
         monServJour.ajouterEntree(matricule, zone, dateAcces, typeAcces);
-    }
-    
-    @Override
-    public Utilisateur getUtilisateur(String matricule) throws UtilisateurInconnu {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -262,7 +257,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             if (rowcount > 0 )
                 res = true;
             else 
-                throw new UtilisateurInconnu("Erreur: utilisateur inconnu.");
+                throw new UtilisateurInconnu("Erreur, vous n'êtes pas responsable de cette zone.");
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -290,11 +285,10 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             if (rowcount > 0 )
                 res = true;
             else 
-                throw new UtilisateurInconnu("Erreur: utilisateur inconnu.");
+                throw new UtilisateurInconnu("Erreur, ce compte RH n'existe pas.");
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
-            //Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new UtilisateurInconnu("Erreur: utilisateur inconnu.\n" + ex.getMessage());
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
@@ -319,7 +313,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             if (rowcount > 0 )
                 res = true;
             else 
-                throw new UtilisateurInconnu("Erreur: utilisateur inconnu.");
+                throw new UtilisateurInconnu("Erreur, ce compte Accueil n'existe pas.");
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -384,15 +378,17 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 areaTextEvent.setText(areaTextEvent.getText()+"Utilisateur temporaire ajouté avec matricule: "+matricule+"\n");
                 if(lancerManipulation(queryCollab))
                     areaTextEvent.setText(areaTextEvent.getText()+"Collaborateur temporaire ajouté avec matricule: "+matricule+"\n");
-                else
+                else {
                     areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouter le collaborateur temporaire avec matricule: "+matricule+"\n");
+                    throw new UtilisateurExistant("Erreur: collaborateur temporaire déjà connu.");
+                }
             }
-            else
+            else {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouter l'utilisateur temporaire avec matricule: "+matricule+"\n");
+                throw new UtilisateurExistant("Erreur: utilisateur déjà connu.");
+            }
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -407,15 +403,17 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 areaTextEvent.setText(areaTextEvent.getText()+"Utilisateur permanent ajouté avec matricule: "+matricule+"\n");
                 if(lancerManipulation(queryCollab))
                     areaTextEvent.setText(areaTextEvent.getText()+"Collaborateur permanent ajouté avec matricule: "+matricule+"\n");
-                else
+                else {
                     areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouter le collaborateur permanent avec matricule: "+matricule+"\n");
+                    throw new UtilisateurExistant("Erreur: collaborateur permanent déjà connu.");
+                }  
             }
-            else
+            else {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouter l'utilisateur permanent avec matricule: "+matricule+"\n");
+                throw new UtilisateurExistant("Erreur: utilisateur déjà connu.");
+            }  
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -432,9 +430,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 throw new UtilisateurInconnu("Erreur: ce collaborateur temporaire n'existe pas dans nos bases de données."); 
             }
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -451,9 +447,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 throw new UtilisateurInconnu("Erreur: ce collaborateur permanent n'existe pas dans nos bases de données.");  
             }
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

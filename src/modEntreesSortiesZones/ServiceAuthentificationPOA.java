@@ -39,8 +39,6 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                     new Operation_getCollaborateursPermanents());
             operationMap.put("getCollaborateursTemporaires",
                     new Operation_getCollaborateursTemporaires());
-            operationMap.put("getUtilisateur",
-                    new Operation_getUtilisateur());
             operationMap.put("modifierCollaborateurPerm",
                     new Operation_modifierCollaborateurPerm());
             operationMap.put("modifierCollaborateurTemp",
@@ -74,28 +72,6 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
     }
 
     // helper methods
-    private org.omg.CORBA.portable.OutputStream _invoke_getUtilisateur(
-            final org.omg.CORBA.portable.InputStream _is,
-            final org.omg.CORBA.portable.ResponseHandler handler) {
-        org.omg.CORBA.portable.OutputStream _output;
-        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
-
-        try
-        {
-            modEntreesSortiesZones.Utilisateur _arg_result = getUtilisateur(arg0_in);
-
-            _output = handler.createReply();
-            modEntreesSortiesZones.UtilisateurHelper.write(_output,_arg_result);
-
-        }
-        catch (modEntreesSortiesZones.UtilisateurInconnu _exception)
-        {
-            _output = handler.createExceptionReply();
-            modEntreesSortiesZones.UtilisateurInconnuHelper.write(_output,_exception);
-        }
-        return _output;
-    }
-
     private org.omg.CORBA.portable.OutputStream _invoke_verifierAuthentificationPorte(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -369,16 +345,6 @@ public abstract class ServiceAuthentificationPOA extends org.omg.PortableServer.
                 ServiceAuthentificationPOA target,
                 org.omg.CORBA.portable.InputStream _is,
                 org.omg.CORBA.portable.ResponseHandler handler);
-    }
-
-    private static final class Operation_getUtilisateur extends AbstractOperation
-    {
-        protected org.omg.CORBA.portable.OutputStream invoke(
-                final ServiceAuthentificationPOA target,
-                final org.omg.CORBA.portable.InputStream _is,
-                final org.omg.CORBA.portable.ResponseHandler handler) {
-            return target._invoke_getUtilisateur(_is, handler);
-        }
     }
 
     private static final class Operation_verifierAuthentificationPorte extends AbstractOperation

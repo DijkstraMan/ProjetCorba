@@ -329,7 +329,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
                 modelCollabTemp.add(newUsr);
             } catch (UtilisateurExistant ex){
                 JOptionPane.showMessageDialog(this,
-                "Erreur, ce collaborateur temporaire existe déjà.",
+                ex.raison,
                 "Erreur lors de l'ajout",
                 JOptionPane.ERROR_MESSAGE);
             }
@@ -349,7 +349,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
                 modelCollabTemp.majAffichage(newUsr);
             } catch (UtilisateurInconnu ex) {
                 JOptionPane.showMessageDialog(this,
-                "Erreur, ce collaborateur temporaire n'existe pas.",
+                ex.raison,
                 "Erreur lors de la modification",
                 JOptionPane.ERROR_MESSAGE);
             }
@@ -368,7 +368,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
             } catch (EmpreinteInconnue ex) {
                 JOptionPane.showMessageDialog(this,
-                "Erreur, ce collaborateur temporaire n'a pas d'empreinte enregistrée.",
+                ex.raison,
                 "Erreur lors de la suppression de l'empreinte",
                 JOptionPane.ERROR_MESSAGE);
             }
