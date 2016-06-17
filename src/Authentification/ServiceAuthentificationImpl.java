@@ -367,6 +367,52 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         }
         return res;
     }
+    
+    @Override
+    public boolean verifierMatriculeTemp(String matricule) throws UtilisateurInconnu {
+        String query = "SELECT COUNT(*) AS rowcount FROM collaborateurTemp "
+                        + "WHERE matricule_utilisateur = '" + matricule + "' ";
+        int rowcount;
+        ResultSet rs;
+        boolean res = false;
+        try {
+            connexion("Temp");
+            rs = lancerInterrogation(query);
+            rs.next();
+            rowcount = rs.getInt("rowcount");
+            if (rowcount > 0 )
+                res = true;
+            else 
+                throw new UtilisateurInconnu("Erreur: collaborateur temporaire inconnu.");
+            closeConnexion();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+
+    @Override
+    public boolean verifierMatriculePerm(String matricule) throws UtilisateurInconnu {
+        String query = "SELECT COUNT(*) AS rowcount FROM collaborateurPerm "
+                        + "WHERE matricule_utilisateur = '" + matricule + "' ";
+        int rowcount;
+        ResultSet rs;
+        boolean res = false;
+        try {
+            connexion("Perm");
+            rs = lancerInterrogation(query);
+            rs.next();
+            rowcount = rs.getInt("rowcount");
+            if (rowcount > 0 )
+                res = true;
+            else 
+                throw new UtilisateurInconnu("Erreur: collaborateur permanent inconnu.");
+            closeConnexion();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
 
     @Override
     public void ajouterCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr) throws UtilisateurExistant {

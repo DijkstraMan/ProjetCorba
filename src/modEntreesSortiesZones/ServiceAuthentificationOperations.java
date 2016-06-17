@@ -44,6 +44,12 @@ public interface ServiceAuthentificationOperations
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
+     * Operation verifierMatriculeTemp
+     */
+    public boolean verifierMatriculeTemp(String matricule)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
      * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
      */
     public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
@@ -59,6 +65,12 @@ public interface ServiceAuthentificationOperations
      * Operation modifierCollaborateurPerm
      */
     public void modifierCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr)
+        throws modEntreesSortiesZones.UtilisateurInconnu;
+
+    /**
+     * Operation verifierMatriculePerm
+     */
+    public boolean verifierMatriculePerm(String matricule)
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
