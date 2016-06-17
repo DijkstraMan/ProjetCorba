@@ -30,6 +30,7 @@ public class FenConnexionRH extends javax.swing.JFrame {
     public FenConnexionRH(ServiceAuthentification monServAuth) {
         initComponents();
         this.monServAuth = monServAuth;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -112,10 +113,8 @@ public class FenConnexionRH extends javax.swing.JFrame {
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
         try {
             if(monServAuth.verifierAuthentificationLogicielRH(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
-                FenGestionRH fenGest = new FenGestionRH(monServAuth);
+                new FenGestionRH(monServAuth).setVisible(true);
                 this.setVisible(false);
-                fenGest.setVisible(true);
-                fenGest.setLocationRelativeTo(null);
             }             
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
@@ -164,6 +163,9 @@ public class FenConnexionRH extends javax.swing.JFrame {
                 // Recuperation du naming service
                 NamingContext nameRoot =
                         org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+                /*NamingContext nameRoot =
+                    org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
+                */
                 // Construction du nom a rechercher
                 org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
                 nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
@@ -173,9 +175,7 @@ public class FenConnexionRH extends javax.swing.JFrame {
                 ServiceAuthentification monSAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
                 
                 // Appel de l'interface graphique
-                FenConnexionRH myFen = new FenConnexionRH(monSAuth);
-                myFen.setVisible(true);
-                myFen.setLocationRelativeTo(null);
+                new FenConnexionRH(monSAuth).setVisible(true);
             }
             catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
                 Logger.getLogger(FenConnexionRH.class.getName()).log(Level.SEVERE, null, e);

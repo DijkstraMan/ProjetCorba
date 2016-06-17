@@ -472,6 +472,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             //*******************************************
             // Recuperation du naming service
             nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            //nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
             nameToRegister[0] = new org.omg.CosNaming.NameComponent(nomObj,"");
