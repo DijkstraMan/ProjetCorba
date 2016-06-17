@@ -19,8 +19,6 @@ import org.omg.PortableServer.POA;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modEntreesSortiesZones.ServiceAuthentification;
-import modEntreesSortiesZones.Utilisateur;
-import modEntreesSortiesZones.UtilisateurInconnu;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -64,7 +62,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     /*Méthode générique pour les requêtes de manipulation 
      INSERT, UPDATE, DELETE ne nécessitant pas de récupérer
      un quelconque résultat */
-    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException, Exception {
+    private boolean lancerManipulation(String query) throws ClassNotFoundException, SQLException {
         boolean res = true;
         //connexion a la bdd
         // on cree un objet Statement qui va permettre l'execution des requetes
@@ -161,14 +159,11 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Suppression de l'empreinte du collaborateur temporaire matricule "+matricule+" effectuée\n");
             } else {
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de supprimer l'empreinte du collaborateur temporaire matricule "+matricule+"\n");
+                throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
             }
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
-                throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
-                throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
+        } catch (SQLException | ClassNotFoundException ex) {
+            throw new EmpreinteInconnue("Erreur suppression empreinte collaborateur temporaire : initialement, l'utilisateur ne dispose pas d'empreinte");
         }
     }
     

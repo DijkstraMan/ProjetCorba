@@ -63,15 +63,6 @@ public class ServiceAuthentificationPOATie extends ServiceAuthentificationPOA
     }
 
     /**
-     * Operation getUtilisateur
-     */
-    public modEntreesSortiesZones.Utilisateur getUtilisateur(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu
-    {
-        return _tie.getUtilisateur( matricule);
-    }
-
-    /**
      * Operation verifierAuthentificationPorte
      */
     public modEntreesSortiesZones.Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone)

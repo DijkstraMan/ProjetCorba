@@ -127,17 +127,17 @@ public class FenPorte extends javax.swing.JFrame {
                 "Bienvenue " + usr.preUsr + " " +usr.nomUsr);    
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
-            "Accès interdit : vous n'êtes pas reconnu.",
+            ex.raison,
             "Erreur lors de la prise de la photo",
             JOptionPane.ERROR_MESSAGE);
         } catch (EmpreinteInconnue ex) {
             JOptionPane.showMessageDialog(this,
-            "Accès interdit : votre empreinte n'est pas reconnue.",
+            ex.raison,
             "Erreur d'empreinte",
             JOptionPane.ERROR_MESSAGE);
         } catch (AutorisationInconnue ex) {
             JOptionPane.showMessageDialog(this,
-            "Accès interdit : vous n'avez pas l'autorisation d'accèder à cette zone",
+            ex.raison,
             "Erreur d'autorisation",
             JOptionPane.ERROR_MESSAGE);
         }
