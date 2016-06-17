@@ -94,10 +94,10 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         return res;
     }
     
-    private boolean verifierAutorisationPerm(String matricule,int idZone)
+    private boolean verifierAutorisationPerm(String matricule,int idZone) throws ClassNotFoundException, SQLException
     {
         boolean res = false;
-        try {
+
             int hr=(LocalDateTime.now().getHour()*10)+LocalDateTime.now().getMinute();
             String query = "SELECT COUNT(*) AS rowcount FROM autorisation "
                     + "WHERE matricule_utilisateur='"+ matricule +"' "
@@ -113,18 +113,16 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             }
             closeConnexion();
             
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
         
         return res;
     }
     
-    private boolean verifierAutorisationTemp(String matricule,int idZone)
+    private boolean verifierAutorisationTemp(String matricule,int idZone) throws ClassNotFoundException, SQLException
     {
                
         boolean res = false;
-        try {
+        
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             String query = "SELECT COUNT(*) AS rowcount FROM autorisationTemp "
                     + "WHERE matricule_utilisateur='"+ matricule +"' "
@@ -139,9 +137,6 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
                 res = true;
             }
             closeConnexion();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
         return res;
     }
@@ -149,14 +144,25 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     @Override
     public boolean verifierAutorisation(String matricule, int idZone) throws AutorisationInconnue {
         boolean res = false;
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande d'autorisation "+matricule+" zone "+idZone+"\n");
         try {
             connexion();
             if(verifierAutorisationPerm(matricule, idZone) || verifierAutorisationTemp(matricule, idZone))
+            {
                 res = true;
+                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation accordée "+matricule+" zone "+idZone+"\n");
+            } 
+            else
+            {
+                areaTextEvent.setText(areaTextEvent.getText()+"Autorisation refusée "+matricule+" zone "+idZone+"\n");
+                throw new AutorisationInconnue("Non autorisé");
+            }
+                
             closeConnexion();
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AutorisationInconnue("Non autorisé");
         }
         return res;
     }
@@ -175,11 +181,15 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             if(lancerManipulation(query))
                 areaTextEvent.setText(areaTextEvent.getText()+"Autorisation temporaire ajouté matricule "+matricule+" zone "+idZone+"\n");
             else
+            {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
+                throw new AutorisationExistante("Autorisation deja existante");
+            }
+                
             closeConnexion();
                 
         } catch (ParseException | SQLException | ClassNotFoundException ex) {
-            throw new AutorisationExistante("Autorisation deja attribué pour cet utilisateur");
+            throw new AutorisationExistante("Autorisation deja existante");
         } 
     }
 
@@ -190,15 +200,19 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         try {
             String dateDebut= formatSQL.format(formatFR.parse(jrDebut));
             String dateFin= formatSQL.format(formatFR.parse(jrFin));
-            String query = "update autorisationTemp set jourDebut='"+ dateDebut +"', jourFin='"+ dateFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+            String query = "update autorisationTemp set jourDebut='"+ dateDebut +"', jourFin='"+ dateFin +"' where matricule_utilisateur='"+ matricule +"' and idZone_zone ='"+ idZone +"'";
             connexion();
             if(lancerManipulation(query))
                 areaTextEvent.setText(areaTextEvent.getText()+"Modification temporaire effectué matricule "+matricule+" zone "+idZone+"\n");
             else
+            {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation temporaire matricule "+matricule+" zone "+idZone+"\n");
+                throw new AutorisationInconnue("Autorisation inconnue");
+            }
             closeConnexion();
         } catch (ParseException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AutorisationInconnue("Autorisation inconnue");
         } 
         
     }
@@ -211,25 +225,34 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             if(lancerManipulation(query))
                 areaTextEvent.setText(areaTextEvent.getText()+"Autorisation permanente ajouté matricule "+matricule+" zone "+idZone+"\n");
             else
+            {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible d'ajouté l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+                throw new AutorisationExistante("Autorisation deja existante");
+            }
+               
             closeConnexion();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AutorisationExistante("Autorisation deja existante");
         }
     }
 
     @Override
     public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationInconnue {
-        String query = "update autorisationPerm set heureDebut='"+ hrDebut +"', heureFin='"+ hrFin +"' where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+        String query = "update autorisationPerm set heureDebut='"+ hrDebut +"', heureFin='"+ hrFin +"' where matricule_utilisateur='"+ matricule +"' and idZone_zone ='"+ idZone +"'";
         try {
             connexion();
             if(lancerManipulation(query))
                 areaTextEvent.setText(areaTextEvent.getText()+"Modification permanente ajouté effectué matricule "+matricule+" zone "+idZone+"\n");
             else
+            {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+                throw new AutorisationInconnue("Autorisation inconnue");
+            }             
             closeConnexion();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AutorisationInconnue("Autorisation inconnue");
         }
     }
 
@@ -242,10 +265,15 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             if(lancerManipulation(query) && lancerManipulation(query2))
                 areaTextEvent.setText(areaTextEvent.getText()+"Suppression de l'autorisation effectué matricule "+matricule+" zone "+idZone+"\n");
             else
+            {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+                throw new AutorisationInconnue("Autorisation inconnue");
+            }
+                
             closeConnexion();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AutorisationInconnue("Autorisation inconnue");
         }
     }
     

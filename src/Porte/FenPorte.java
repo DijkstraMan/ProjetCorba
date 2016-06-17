@@ -123,8 +123,7 @@ public class FenPorte extends javax.swing.JFrame {
         try {
             Utilisateur usr = monServAuth.verifierAuthentificationPorte(jTextFieldEmpreinte.getText(), jTextFieldPhoto.getText(), idZone);
             if(monServAuto.verifierAutorisation(usr.matricule, idZone))
-                JOptionPane.showMessageDialog(this,
-                "Bienvenue " + usr.preUsr + " " +usr.nomUsr);    
+                JOptionPane.showMessageDialog(this,"Bienvenue " + usr.preUsr + " " +usr.nomUsr);    
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
             ex.raison,

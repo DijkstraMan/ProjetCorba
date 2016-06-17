@@ -7,7 +7,6 @@ package ResponsableZone;
 
 import Util.AutorisationPermModel;
 import Util.AutorisationTempModel;
-import Util.UserTableModel;
 import java.awt.Point;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,7 +23,6 @@ import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.AutorisationPerm;
 import modEntreesSortiesZones.AutorisationTemp;
 import modEntreesSortiesZones.ServiceAutorisation;
-import modEntreesSortiesZones.Utilisateur;
 
 /**
  *
@@ -51,20 +49,19 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         AutorisationPerm[] lesAutorisationPerm = monServAuto.getAutorisationPerm();
         AutorisationTemp[] lesAutorisationTemp = monServAuto.getAutorisationTemp();
         //Remplissage et flitrage des tableau
-        if(lesAutorisationPerm.length >0)
-        {
-            AutorisationPermModel modelAutorisationPerm = new AutorisationPermModel(lesAutorisationPerm);
-            jTablePerm.setModel(modelAutorisationPerm);
-            TableRowSorter<AutorisationPermModel> sorter = new TableRowSorter<>(modelAutorisationPerm);
-            jTablePerm.setRowSorter(sorter);
-        }
-        if(lesAutorisationTemp.length >0)
-        {
-            AutorisationTempModel modelAutorisationTemp = new AutorisationTempModel(lesAutorisationTemp);
-            jTableTemp.setModel(modelAutorisationTemp);
-            TableRowSorter<AutorisationTempModel> sorterTemp = new TableRowSorter<>(modelAutorisationTemp);
-            jTablePerm.setRowSorter(sorterTemp);
-        }
+        AutorisationPermModel modelAutorisationPerm = new AutorisationPermModel(lesAutorisationPerm);
+        jTablePerm.setModel(modelAutorisationPerm);
+        TableRowSorter<AutorisationPermModel> sorter = new TableRowSorter<>(modelAutorisationPerm);
+        jTablePerm.setRowSorter(sorter);
+
+
+        AutorisationTempModel modelAutorisationTemp = new AutorisationTempModel(lesAutorisationTemp);
+        jTableTemp.setModel(modelAutorisationTemp);
+        TableRowSorter<AutorisationTempModel> sorterTemp = new TableRowSorter<>(modelAutorisationTemp);
+        jTableTemp.setRowSorter(sorterTemp);
+        jButtonModifier.setEnabled(false);
+        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -401,6 +398,8 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 jDateDebutModif.setDate(getJourFromDate(autTemp.jourDebut));
                 jDateFinModif.setDate(getJourFromDate(autTemp.jourFin));
                 jButtonModifier.setEnabled(true);
+                jDateDebutModif.setEnabled(true);
+                jDateFinModif.setEnabled(true);
             } catch (ParseException ex) {
                 Logger.getLogger(FenGestionRespZone.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -483,7 +482,12 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             jLabelModif.setText(autPerm.matricule);
             jHrsDebutModif.setText(autPerm.hrDebut);
             jHrsFinModif.setText(autPerm.hrFin);
+            
             jButtonModifier.setEnabled(true);
+            jDateDebutModif.setDate(null);
+            jDateFinModif.setDate(null);
+            jDateDebutModif.setEnabled(false);
+            jDateFinModif.setEnabled(false);
         }
     }//GEN-LAST:event_jTablePermMouseClicked
 
@@ -508,15 +512,21 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
                 int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
                 monServAuto.modifierAutorisationPerm(matricule, idZone, hrsDebut, hrsFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebut.getText(), jHrsFin.getText());
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebutModif.getText(), jHrsFinModif.getText());
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.majAffichage(newAuto);
             }
            
         }catch(NumberFormatException e){
-            System.out.println("Veuillez renseigner les champs d'heures");
+            JOptionPane.showMessageDialog(this,
+                "Veuillez renseigner les champs d'heures",
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
         } catch (AutorisationInconnue ex) {
-            System.out.println(ex.raison);
+            JOptionPane.showMessageDialog(this,
+                ex.raison,
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
