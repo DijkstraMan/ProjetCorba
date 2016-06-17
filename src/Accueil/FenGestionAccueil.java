@@ -43,6 +43,7 @@ public class FenGestionAccueil extends javax.swing.JFrame {
         jTableCollab.setModel(modelCollabsTemp);
         TableRowSorter<UserTableModel> sorter = new TableRowSorter<>(modelCollabsTemp);
         jTableCollab.setRowSorter(sorter);
+        setLocationRelativeTo(null);
     }
 
     /**

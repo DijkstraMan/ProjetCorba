@@ -22,6 +22,7 @@ public class FenServiceAuthentification extends javax.swing.JFrame {
         thServ=new Thread(serv);
         jButtonStart.setEnabled(true);
         jButtonStop.setEnabled(false);
+        setLocationRelativeTo(null);
     }
 
     /**
