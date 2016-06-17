@@ -153,7 +153,6 @@ create table autorisationTemp
 /*bdlogAcces*/
 use bdlogAcces;
 drop table if exists logAcces;
-=======
 insert into gZone values ('1','Zone1');
 insert into gZone values ('2','Zone2');
 insert into gZone values ('3','Zone3');

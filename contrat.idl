@@ -94,13 +94,15 @@ module modEntreesSortiesZones
 		//Utilisateurs temporaires :
 		void ajouterCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurExistant);
 		void modifierCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
-		//verif de connexion pour la machine empreinte :
+		boolean verifierMatriculeTemp(in Matricule matricule) raises (UtilisateurInconnu);
+                //verif de connexion pour la machine empreinte :
 		boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(in Matricule matricule) raises (UtilisateurInconnu);
 		
 		//Utilisateurs permanents :
 		void ajouterCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr, in PasswordPerm pwd) raises (UtilisateurExistant);
 		void modifierCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
-		//verif de connexion pour la machine empreinte :
+		boolean verifierMatriculePerm(in Matricule matricule) raises (UtilisateurInconnu);
+                //verif de connexion pour la machine empreinte :
 		boolean verifierAuthentificationMachineEmpreinteCollaborateurPerm(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
 		
 		//recuperer utilisateurs pour listes
@@ -115,12 +117,12 @@ module modEntreesSortiesZones
 		void ajouterEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteExistante);
 		void modifierEmpreinte(in EmpreinteCollab empCollab, in Matricule matricule) raises (EmpreinteInconnue);
                 
-                //Supprimer une empreinte de collaborateur temporaire
-                void supprimerEmpreinteTemp(in Matricule matricule) raises (EmpreinteInconnue);
+		//Supprimer une empreinte de collaborateur temporaire
+		void supprimerEmpreinteTemp(in Matricule matricule) raises (EmpreinteInconnue);
 
-                //vérifier si le collaborateur a déjà enregistré une empreinte
-                boolean verifierEmpreinteTempExistante(in Matricule matricule);
-                boolean verifierEmpreintePermExistante(in Matricule matricule);
+		//vérifier si le collaborateur a déjà enregistré une empreinte
+		boolean verifierEmpreinteTempExistante(in Matricule matricule);
+		boolean verifierEmpreintePermExistante(in Matricule matricule);
 	};
 
 	interface ServiceAutorisation

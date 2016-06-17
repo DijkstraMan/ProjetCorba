@@ -9,6 +9,7 @@ import Util.ComboItem;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.ServiceAuthentificationHelper;
 import modEntreesSortiesZones.ServiceAutorisation;
@@ -30,11 +31,13 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
     private final String nomCorbaServAutorisation;
     private ServiceAutorisation servAuto;
     public FenConnexionRespZone() {
+        
         initComponents();
         nomCorbaServAuthentification="SAUTH";
         nomCorbaServAutorisation="SAUTO";
         jSelectZone.removeAllItems();
         getZoneA();
+        setLocationRelativeTo(null);
     }
     
     public final JComboBox<ComboItem> getZoneA()
@@ -140,7 +143,10 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
         try {
             connexionServAuto(jTMatricule.getText(),new String(jMdp.getPassword()),((ComboItem)jSelectZone.getSelectedItem()).getValue());
         } catch (UtilisateurInconnu ex) {
-            Logger.getLogger(FenConnexionRespZone.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+                ex.raison,
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnValidActionPerformed
     
@@ -158,7 +164,10 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
         }
         else
         {
-            //indiquer que non autorisé
+            JOptionPane.showMessageDialog(this,
+                "Utilisateur non autorisé",
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -223,6 +232,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
             @Override
             public void run() {
                 new FenConnexionRespZone().setVisible(true);
+                
             }
         });
     }

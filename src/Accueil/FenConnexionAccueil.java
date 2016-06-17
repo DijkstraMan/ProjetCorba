@@ -32,6 +32,7 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
         initComponents();
         this.monServAuth = monServAuth;
         this.monServEmp = monServEmp;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -115,10 +116,8 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
         try {
             if(monServAuth.verifierAuthentificationLogicielAccueil(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) 
             {
-                FenGestionAccueil fenGest = new FenGestionAccueil(monServAuth, monServEmp);
+                new FenGestionAccueil(monServAuth, monServEmp).setVisible(true);
                 this.setVisible(false);
-                fenGest.setVisible(true);
-                fenGest.setLocationRelativeTo(null);
             }             
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
@@ -164,7 +163,10 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
                 org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args,null);
                 // Recuperation du naming service
                 NamingContext nameRoot =
-                        org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+                    org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+                /*NamingContext nameRoot =
+                    org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
+                */
                 // SERVICE AUTHENTIFICATION
                 // ************************
                 // Nom de l'objet
@@ -190,9 +192,7 @@ public class FenConnexionAccueil extends javax.swing.JFrame {
                 ServiceEmpreinte monSEmp= modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(distantSEmp);
                 
                 // Appel de l'interface graphique
-                FenConnexionAccueil myFen = new FenConnexionAccueil(monSAuth, monSEmp);
-                myFen.setVisible(true);
-                myFen.setLocationRelativeTo(null);
+                new FenConnexionAccueil(monSAuth, monSEmp).setVisible(true);
             }
             catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
                 Logger.getLogger(FenConnexionAccueil.class.getName()).log(Level.SEVERE, null, e);

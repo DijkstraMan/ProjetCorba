@@ -367,6 +367,52 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         }
         return res;
     }
+    
+    @Override
+    public boolean verifierMatriculeTemp(String matricule) throws UtilisateurInconnu {
+        String query = "SELECT COUNT(*) AS rowcount FROM collaborateurTemp "
+                        + "WHERE matricule_utilisateur = '" + matricule + "' ";
+        int rowcount;
+        ResultSet rs;
+        boolean res = false;
+        try {
+            connexion("Temp");
+            rs = lancerInterrogation(query);
+            rs.next();
+            rowcount = rs.getInt("rowcount");
+            if (rowcount > 0 )
+                res = true;
+            else 
+                throw new UtilisateurInconnu("Erreur: collaborateur temporaire inconnu.");
+            closeConnexion();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+
+    @Override
+    public boolean verifierMatriculePerm(String matricule) throws UtilisateurInconnu {
+        String query = "SELECT COUNT(*) AS rowcount FROM collaborateurPerm "
+                        + "WHERE matricule_utilisateur = '" + matricule + "' ";
+        int rowcount;
+        ResultSet rs;
+        boolean res = false;
+        try {
+            connexion("Perm");
+            rs = lancerInterrogation(query);
+            rs.next();
+            rowcount = rs.getInt("rowcount");
+            if (rowcount > 0 )
+                res = true;
+            else 
+                throw new UtilisateurInconnu("Erreur: collaborateur permanent inconnu.");
+            closeConnexion();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
 
     @Override
     public void ajouterCollaborateurTemp(String matricule, String nomUsr, String preUsr, String phoUsr) throws UtilisateurExistant {
@@ -472,6 +518,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             //*******************************************
             // Recuperation du naming service
             nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            //nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
             nameToRegister[0] = new org.omg.CosNaming.NameComponent(nomObj,"");
