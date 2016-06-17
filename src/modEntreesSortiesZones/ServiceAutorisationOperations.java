@@ -26,6 +26,12 @@ public interface ServiceAutorisationOperations
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
+     * Operation supprimerAutorisationTemp
+     */
+    public void supprimerAutorisationTemp(String matricule, int idZone)
+        throws modEntreesSortiesZones.AutorisationInconnue;
+
+    /**
      * Operation ajouterAutorisationPerm
      */
     public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
@@ -38,9 +44,9 @@ public interface ServiceAutorisationOperations
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**
-     * Operation supprimerAutorisation
+     * Operation supprimerAutorisationPerm
      */
-    public void supprimerAutorisation(String matricule, int idZone)
+    public void supprimerAutorisationPerm(String matricule, int idZone)
         throws modEntreesSortiesZones.AutorisationInconnue;
 
     /**

@@ -44,6 +44,12 @@ public class AutorisationTempModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     
+    public void delete(int row)
+    {
+        rowData.remove(getAutoTempAt(row));
+        fireTableDataChanged();
+    }
+    
     public void majAffichage(AutorisationTemp auto) {
         int nbUsr = rowData.size();
         boolean trouve = false;
@@ -75,13 +81,13 @@ public class AutorisationTempModel extends AbstractTableModel {
         return COLUMN_NAMES[column];
     }
 
-    public AutorisationTemp getUserAt(int row) {
+    public AutorisationTemp getAutoTempAt(int row) {
         return rowData.get(row);
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        AutorisationTemp usr = getUserAt(rowIndex);
+        AutorisationTemp usr = getAutoTempAt(rowIndex);
         Object value = null;
         switch (columnIndex) {
             case 0:

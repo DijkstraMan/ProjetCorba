@@ -47,8 +47,10 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
                     new Operation_modifierAutorisationPerm());
             operationMap.put("modifierAutorisationTemp",
                     new Operation_modifierAutorisationTemp());
-            operationMap.put("supprimerAutorisation",
-                    new Operation_supprimerAutorisation());
+            operationMap.put("supprimerAutorisationPerm",
+                    new Operation_supprimerAutorisationPerm());
+            operationMap.put("supprimerAutorisationTemp",
+                    new Operation_supprimerAutorisationTemp());
             operationMap.put("verifierAutorisation",
                     new Operation_verifierAutorisation());
     }
@@ -139,6 +141,28 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         return _output;
     }
 
+    private org.omg.CORBA.portable.OutputStream _invoke_supprimerAutorisationTemp(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = modEntreesSortiesZones.MatriculeHelper.read(_is);
+        int arg1_in = modEntreesSortiesZones.idZoneHelper.read(_is);
+
+        try
+        {
+            supprimerAutorisationTemp(arg0_in, arg1_in);
+
+            _output = handler.createReply();
+
+        }
+        catch (modEntreesSortiesZones.AutorisationInconnue _exception)
+        {
+            _output = handler.createExceptionReply();
+            modEntreesSortiesZones.AutorisationInconnueHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
     private org.omg.CORBA.portable.OutputStream _invoke_ajouterAutorisationPerm(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -187,7 +211,7 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         return _output;
     }
 
-    private org.omg.CORBA.portable.OutputStream _invoke_supprimerAutorisation(
+    private org.omg.CORBA.portable.OutputStream _invoke_supprimerAutorisationPerm(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
@@ -196,7 +220,7 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
 
         try
         {
-            supprimerAutorisation(arg0_in, arg1_in);
+            supprimerAutorisationPerm(arg0_in, arg1_in);
 
             _output = handler.createReply();
 
@@ -300,6 +324,16 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         }
     }
 
+    private static final class Operation_supprimerAutorisationTemp extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final ServiceAutorisationPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_supprimerAutorisationTemp(_is, handler);
+        }
+    }
+
     private static final class Operation_ajouterAutorisationPerm extends AbstractOperation
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
@@ -320,13 +354,13 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
         }
     }
 
-    private static final class Operation_supprimerAutorisation extends AbstractOperation
+    private static final class Operation_supprimerAutorisationPerm extends AbstractOperation
     {
         protected org.omg.CORBA.portable.OutputStream invoke(
                 final ServiceAutorisationPOA target,
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
-            return target._invoke_supprimerAutorisation(_is, handler);
+            return target._invoke_supprimerAutorisationPerm(_is, handler);
         }
     }
 

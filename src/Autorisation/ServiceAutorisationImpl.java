@@ -169,7 +169,8 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     
     @Override
     public void ajouterAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin) throws AutorisationExistante {
-        
+        VERIFIER QUE LE MATRICULE EXISTE, METHODE FABIEN IDL
+        CHANGER GESTION DES HEURES U_U heure separé de la date   
         DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -222,6 +223,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         String query = "insert into autorisationPerm values ('"+ matricule +"','"+ idZone +"','"+ hrDebut +"','"+ hrFin +"')";
         try {
             connexion();
+            VERIFIER QUE LE MATRICULE EXISTE, METHODE FABIEN IDL
             if(lancerManipulation(query))
                 areaTextEvent.setText(areaTextEvent.getText()+"Autorisation permanente ajouté matricule "+matricule+" zone "+idZone+"\n");
             else
@@ -257,13 +259,12 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void supprimerAutorisation(String matricule, int idZone) throws AutorisationInconnue {
-        String query = "delete from autorisationPerm where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
-        String query2 = "delete from autorisationTemp where matricule_utilisateur='"+ matricule +"' and idZone ='"+ idZone +"'";
+    public void supprimerAutorisationTemp(String matricule, int idZone) throws AutorisationInconnue {
+        String query = "delete from autorisationTemp where matricule_utilisateur='"+ matricule +"' and idZone_zone ='"+ idZone +"'";
         try {
             connexion();
-            if(lancerManipulation(query) && lancerManipulation(query2))
-                areaTextEvent.setText(areaTextEvent.getText()+"Suppression de l'autorisation effectué matricule "+matricule+" zone "+idZone+"\n");
+            if(lancerManipulation(query))
+                areaTextEvent.setText(areaTextEvent.getText()+"Suppression de l'autorisation temporaire effectué matricule "+matricule+" zone "+idZone+"\n");
             else
             {
                 areaTextEvent.setText(areaTextEvent.getText()+"Impossible de modifier l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
@@ -278,10 +279,29 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
     
     @Override
+    public void supprimerAutorisationPerm(String matricule, int idZone) throws AutorisationInconnue {
+        String query = "delete from autorisationPerm where matricule_utilisateur='"+ matricule +"' and idZone_zone ='"+ idZone +"'";
+        try {
+            connexion();
+            if(lancerManipulation(query) )
+                areaTextEvent.setText(areaTextEvent.getText()+"Suppression de l'autorisation permanente effectué matricule "+matricule+" zone "+idZone+"\n");
+            else
+            {
+                areaTextEvent.setText(areaTextEvent.getText()+"Impossible de supprimer l'autorisation permanente matricule "+matricule+" zone "+idZone+"\n");
+                throw new AutorisationInconnue("Autorisation inconnue");
+            }
+                
+            closeConnexion();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AutorisationInconnue("Autorisation inconnue");
+        }
+    }
+    
+    @Override
     public int getIdZoneFromPorte(int idPorte) {
         int idZone = -1;
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             String query = "SELECT idZone_zone from porte "
                     + "WHERE idPorte='"+ idPorte +"' ";
             ResultSet rs;
