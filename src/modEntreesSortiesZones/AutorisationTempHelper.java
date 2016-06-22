@@ -83,10 +83,10 @@ public class AutorisationTempHelper
                 _members[1].type = modEntreesSortiesZones.nomZoneHelper.type();
                 _members[2] = new org.omg.CORBA.StructMember();
                 _members[2].name = "hrDebut";
-                _members[2].type = modEntreesSortiesZones.HeureDebutStringHelper.type();
+                _members[2].type = modEntreesSortiesZones.HeureDebutHelper.type();
                 _members[3] = new org.omg.CORBA.StructMember();
                 _members[3].name = "hrFin";
-                _members[3].type = modEntreesSortiesZones.HeureFinStringHelper.type();
+                _members[3].type = modEntreesSortiesZones.HeureFinHelper.type();
                 _members[4] = new org.omg.CORBA.StructMember();
                 _members[4].name = "jourDebut";
                 _members[4].type = modEntreesSortiesZones.JourDebutHelper.type();
@@ -122,8 +122,8 @@ public class AutorisationTempHelper
 
         new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
         new_one.nomZone = modEntreesSortiesZones.nomZoneHelper.read(istream);
-        new_one.hrDebut = modEntreesSortiesZones.HeureDebutStringHelper.read(istream);
-        new_one.hrFin = modEntreesSortiesZones.HeureFinStringHelper.read(istream);
+        new_one.hrDebut = modEntreesSortiesZones.HeureDebutHelper.read(istream);
+        new_one.hrFin = modEntreesSortiesZones.HeureFinHelper.read(istream);
         new_one.jourDebut = modEntreesSortiesZones.JourDebutHelper.read(istream);
         new_one.jourFin = modEntreesSortiesZones.JourFinHelper.read(istream);
 
@@ -139,8 +139,8 @@ public class AutorisationTempHelper
     {
         modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
         modEntreesSortiesZones.nomZoneHelper.write(ostream,value.nomZone);
-        modEntreesSortiesZones.HeureDebutStringHelper.write(ostream,value.hrDebut);
-        modEntreesSortiesZones.HeureFinStringHelper.write(ostream,value.hrFin);
+        modEntreesSortiesZones.HeureDebutHelper.write(ostream,value.hrDebut);
+        modEntreesSortiesZones.HeureFinHelper.write(ostream,value.hrFin);
         modEntreesSortiesZones.JourDebutHelper.write(ostream,value.jourDebut);
         modEntreesSortiesZones.JourFinHelper.write(ostream,value.jourFin);
     }

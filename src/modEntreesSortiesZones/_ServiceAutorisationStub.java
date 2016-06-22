@@ -80,7 +80,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(String matricule, int idZone, int hrDebut, int hrFin, String jrDebut, String jrFin)
+    public void ajouterAutorisationTemp(String matricule, int idZone, String hrDebut, String hrFin, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationExistante, modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -146,7 +146,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(String matricule, int idZone, int hrDebut, int hrFin, String jrDebut, String jrFin)
+    public void modifierAutorisationTemp(String matricule, int idZone, String hrDebut, String hrFin, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)
@@ -264,7 +264,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation ajouterAutorisationPerm
      */
-    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
+    public void ajouterAutorisationPerm(String matricule, int idZone, String hrDebut, String hrFin)
         throws modEntreesSortiesZones.AutorisationExistante, modEntreesSortiesZones.UtilisateurInconnu
     {
         while(true)
@@ -328,7 +328,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierAutorisationPerm
      */
-    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
+    public void modifierAutorisationPerm(String matricule, int idZone, String hrDebut, String hrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         while(true)

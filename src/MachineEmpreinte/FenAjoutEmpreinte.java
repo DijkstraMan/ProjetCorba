@@ -33,7 +33,6 @@ public class FenAjoutEmpreinte extends javax.swing.JFrame {
         initComponents();
         mServEmp = pServEmp;
         mMatricule = pMatricule;
-        
         matriculeUsrLbl.setText(mMatricule);
     }
 

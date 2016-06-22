@@ -40,9 +40,9 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     private NamingContext mNameRoot;
     private final String mNomObj;
     private final JTextArea mAreaTextEvent;
-    private static Connection mConn = null;
+    private Connection mConn = null;
     private final String mNomDB;
-    private static ServiceAuthentification mServAuth;
+    private ServiceAuthentification mServAuth;
 
     public ServiceEmpreinteImpl(JTextArea a) {
         mNomObj = "SEMP";
@@ -98,12 +98,9 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             lRs.next();
             if (lRs.getInt("rowcount") > 0) {
                 lRes = true;
-            } else {
-                lRes = false;
             }
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new EmpreinteInconnue("Erreur vérification empreinte : l'utilisateur n'a pas enregistré d'empreinte");
         }
 
@@ -121,10 +118,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible d'ajouter l'empreinte matricule "+matricule+"\n");
             }
             closeConnexion();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new EmpreinteExistante("Erreur ajout empreinte : l'utilisateur a déjà ajouté une empreinte.");
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new EmpreinteExistante("Erreur ajout empreinte : l'utilisateur a déjà ajouté une empreinte.");
         }
@@ -141,12 +135,9 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 mAreaTextEvent.setText(mAreaTextEvent.getText()+"Impossible de modifier l'empreinte matricule "+matricule+"\n");
             }
             closeConnexion();
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
-                throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceEmpreinteImpl.class.getName()).log(Level.SEVERE, null, ex);
-                throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
+            throw new EmpreinteInconnue("Erreur modification empreinte : initialement, l'utilisateur ne dispose pas d'empreinte");
         }
     }
     
@@ -179,8 +170,6 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             lRs.next();
             if (lRs.getInt("rowcount") > 0) {
                 lRes = true;
-            } else {
-                lRes = false;
             }
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -201,8 +190,6 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
                 lRs.next();
                 if (lRs.getInt("rowcount") > 0) {
                     lRes = true;
-                } else {
-                    lRes = false;
                 }
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {

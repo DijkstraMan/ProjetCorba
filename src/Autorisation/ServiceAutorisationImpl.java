@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +25,8 @@ import modEntreesSortiesZones.AutorisationTemp;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.ServiceAuthentificationHelper;
 import modEntreesSortiesZones.ServiceAutorisationPOA;
+import modEntreesSortiesZones.ServiceJournalisation;
+import modEntreesSortiesZones.TypeAcces;
 import modEntreesSortiesZones.UtilisateurInconnu;
 import modEntreesSortiesZones.Zone;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -54,6 +55,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     private static Connection conn = null;
     private final String nomDB;
     private final String nomCorbaServAuthentification;
+    private ServiceJournalisation monServJour;
 
     public ServiceAutorisationImpl(JTextArea a) {
         nomObj = "SAUTO";
@@ -100,12 +102,12 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     private boolean verifierAutorisationPerm(String matricule, int idZone) throws ClassNotFoundException, SQLException {
         boolean res = false;
 
-        int hr = (LocalDateTime.now().getHour() * 10) + LocalDateTime.now().getMinute();
+        SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
         String query = "SELECT COUNT(*) AS rowcount FROM autorisation "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
                 + "and idZone ='" + idZone + "' "
-                + "and heureDebut>='" + hr + "' "
-                + "and heureFin<='" + hr + "' ";
+                + "and heureDebut>='" + heureFormat + "' "
+                + "and heureFin<='" + heureFormat + "' ";
         ResultSet rs;
         connexion();
         rs = lancerInterrogation(query);
@@ -123,15 +125,15 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         boolean res = false;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        int hr = LocalDateTime.now().getHour() + LocalDateTime.now().getMinute();
+        SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
 
         String query = "SELECT COUNT(*) AS rowcount FROM autorisationTemp "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
                 + "and idZone ='" + idZone + "' "
                 + "and jourDebut>='" + dateFormat + "' "
                 + "and jourFin<='" + dateFormat + "' "
-                + "and heureDebut>='" + hr + "' "
-                + "and heureFin<='" + hr + "' ";
+                + "and heureDebut>='" + heureFormat + "' "
+                + "and heureFin<='" + heureFormat + "' ";
         ResultSet rs;
         connexion();
         rs = lancerInterrogation(query);
@@ -171,14 +173,17 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     @Override
     public boolean verifierAutorisation(String matricule, int idZone) throws AutorisationInconnue {
         boolean res = false;
+        SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         areaTextEvent.setText(areaTextEvent.getText() + "Demande d'autorisation " + matricule + " zone " + idZone + "\n");
         try {
             connexion();
             if (verifierAutorisationPerm(matricule, idZone) || verifierAutorisationTemp(matricule, idZone)) {
                 res = true;
-                areaTextEvent.setText(areaTextEvent.getText() + "Autorisation accordée " + matricule + " zone " + idZone + "\n");
+                areaTextEvent.setText(areaTextEvent.getText() + "Autorisation accordée " + matricule + " zone " + idZone + "\n");              
+                lancerAjouterEntree(matricule, idZone, formatSQL.toString(), TypeAcces.autorise );
             } else {
                 areaTextEvent.setText(areaTextEvent.getText() + "Autorisation refusée " + matricule + " zone " + idZone + "\n");
+                lancerAjouterEntree(matricule, idZone, formatSQL.toString(), TypeAcces.nonAutorise );
                 throw new AutorisationInconnue("Non autorisé");
             }
 
@@ -187,12 +192,14 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new AutorisationInconnue("Non autorisé");
+        } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
 
     @Override
-    public void ajouterAutorisationTemp(String matricule, int idZone, int hrDebut, int hrFin, String jrDebut, String jrFin) throws AutorisationExistante,UtilisateurInconnu {
+    public void ajouterAutorisationTemp(String matricule, int idZone, String hrDebut, String hrFin, String jrDebut, String jrFin) throws AutorisationExistante,UtilisateurInconnu {
         try {
             ServiceAuthentification servAuth = getServiceAuthentification();
             if (servAuth.verifierMatriculeTemp(matricule)) {
@@ -201,7 +208,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
 
                 String dateDebut = formatSQL.format(formatFR.parse(jrDebut));
                 String dateFin = formatSQL.format(formatFR.parse(jrFin));
-                String query = "insert into autorisationTemp values ('" + matricule + "','" + idZone + "','" + hrDebut + "','" + hrFin + "','" + dateDebut + "','" + dateFin + "')";
+                String query = "insert into autorisationTemp values ('" + matricule + "','" + idZone + "','" + hrDebut + ":00','" + hrFin + ":00','" + dateDebut + "','" + dateFin + "')";
                 //connexion à la bd
                 connexion();
                 if (lancerManipulation(query)) {
@@ -215,7 +222,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
 
             }
         } catch (UtilisateurInconnu ex) {
-            throw new UtilisateurInconnu("Matricule non enregistré dans l'annuaire");
+            throw new UtilisateurInconnu("Matricule temporaire non enregistré dans l'annuaire");
         } catch (ParseException | ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -224,13 +231,13 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void modifierAutorisationTemp(String matricule, int idZone, int hrDebut, int hrFin, String jrDebut, String jrFin) throws AutorisationInconnue {
+    public void modifierAutorisationTemp(String matricule, int idZone, String hrDebut, String hrFin, String jrDebut, String jrFin) throws AutorisationInconnue {
         DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");
         DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd");
         try {
             String dateDebut = formatSQL.format(formatFR.parse(jrDebut));
             String dateFin = formatSQL.format(formatFR.parse(jrFin));
-            String query = "update autorisationTemp set heureDebut='" + hrDebut + "', heureFin='" + hrFin + "', jourDebut='" + dateDebut + "', jourFin='" + dateFin + "' where matricule_utilisateur='" + matricule + "' and idZone_zone ='" + idZone + "'";
+            String query = "update autorisationTemp set heureDebut='" + hrDebut + ":00', heureFin='" + hrFin + ":00', jourDebut='" + dateDebut + "', jourFin='" + dateFin + "' where matricule_utilisateur='" + matricule + "' and idZone_zone ='" + idZone + "'";
             connexion();
             if (lancerManipulation(query)) {
                 areaTextEvent.setText(areaTextEvent.getText() + "Modification temporaire effectué matricule " + matricule + " zone " + idZone + "\n");
@@ -247,14 +254,13 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationExistante,UtilisateurInconnu {
+    public void ajouterAutorisationPerm(String matricule, int idZone, String hrDebut, String hrFin) throws AutorisationExistante,UtilisateurInconnu {
         try {
             ServiceAuthentification servAuth = getServiceAuthentification();
             if (servAuth.verifierMatriculePerm(matricule)) {
-                String query = "insert into autorisationPerm values ('" + matricule + "','" + idZone + "','" + hrDebut + "','" + hrFin + "')";
+                String query = "insert into autorisationPerm values ('" + matricule + "','" + idZone + "','" + hrDebut + ":00','" + hrFin + ":00')";
                 
                 connexion();
-                //VERIFIER QUE LE MATRICULE EXISTE, METHODE FABIEN IDL
                 if (lancerManipulation(query)) {
                     areaTextEvent.setText(areaTextEvent.getText() + "Autorisation permanente ajouté matricule " + matricule + " zone " + idZone + "\n");
                 } else {
@@ -265,7 +271,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
                 closeConnexion();
             }
         } catch (UtilisateurInconnu ex) {
-            throw new UtilisateurInconnu("Matricule non enregistré dans l'annuaire");
+            throw new UtilisateurInconnu("Matricule permanent non enregistré dans l'annuaire");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -275,8 +281,8 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin) throws AutorisationInconnue {
-        String query = "update autorisationPerm set heureDebut='" + hrDebut + "', heureFin='" + hrFin + "' where matricule_utilisateur='" + matricule + "' and idZone_zone ='" + idZone + "'";
+    public void modifierAutorisationPerm(String matricule, int idZone, String hrDebut, String hrFin) throws AutorisationInconnue {
+        String query = "update autorisationPerm set heureDebut='" + hrDebut + ":00', heureFin='" + hrFin + ":00' where matricule_utilisateur='" + matricule + "' and idZone_zone ='" + idZone + "'";
         try {
             connexion();
             if (lancerManipulation(query)) {
@@ -383,11 +389,11 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             rs = lancerInterrogation(query);
             while (rs.next()) {
                 //formattage des heures
-                String hrsDebut = Integer.toString(rs.getInt("heureDebut"));
-                String heureDebutFormat = hrsDebut.substring(0, 2) + ":" + hrsDebut.substring(2, hrsDebut.length());
-                String hrsFint = Integer.toString(rs.getInt("heureFin"));
-                String heureFinFormat = hrsFint.substring(0, 2) + ":" + hrsFint.substring(2, hrsFint.length());
-                tabAutorisation.add(new AutorisationPerm(rs.getString("matricule_utilisateur"), rs.getString("nomZone"), heureDebutFormat, heureFinFormat));
+                String hrsDebut = rs.getString("heureDebut");
+                String hrsFint = rs.getString("heureFin"); 
+                String nomZone = rs.getString("nomZone");
+                String matricule = rs.getString("matricule_utilisateur");
+                tabAutorisation.add(new AutorisationPerm(matricule, nomZone, hrsDebut, hrsFint));
             }
             closeConnexion();
             AutorisationPerm[] lesAutorisations = new AutorisationPerm[tabAutorisation.size()];
@@ -416,14 +422,13 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
                 DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd");
                 String dateDebut = formatFR.format(formatSQL.parse(rs.getString("jourDebut")));
                 String dateFin = formatFR.format(formatSQL.parse(rs.getString("jourFin")));
+                
+                String hrsDebut = rs.getString("heureDebut");
+                String hrsFint = rs.getString("heureFin"); 
+                String nomZone = rs.getString("nomZone");
+                String matricule = rs.getString("matricule_utilisateur");
+                tabAutorisation.add(new AutorisationTemp(matricule, nomZone, hrsDebut, hrsFint, dateDebut, dateFin));
 
-                //formattage des heures
-                String hrsDebut = Integer.toString(rs.getInt("heureDebut"));
-                String heureDebutFormat = hrsDebut.substring(0, 2) + ":" + hrsDebut.substring(2, hrsDebut.length());
-                String hrsFint = Integer.toString(rs.getInt("heureFin"));
-                String heureFinFormat = hrsFint.substring(0, 2) + ":" + hrsFint.substring(2, hrsFint.length());
-
-                tabAutorisation.add(new AutorisationTemp(rs.getString("matricule_utilisateur"), rs.getString("nomZone"), heureDebutFormat, heureFinFormat, dateDebut, dateFin));
             }
             closeConnexion();
             AutorisationTemp[] lesAutorisations = new AutorisationTemp[tabAutorisation.size()];
@@ -435,6 +440,20 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    //Méthode utilisée pour récupérer l'objet ServiceJournalisation distant et appeler sa méthode ajouterEntree
+    private void lancerAjouterEntree(String matricule, int zone, String dateAcces, TypeAcces typeAcces) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
+        String idObj = "SJOUR";
+        // Construction du nom à rechercher
+        org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
+        nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
+        // Recherche auprès du naming service
+        org.omg.CORBA.Object distantSJour = nameRoot.resolve(nameToFind);
+
+        // Casting de l'objet CORBA au type ServiceJournalisation
+        monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
+        monServJour.ajouterEntree(matricule, zone, dateAcces, typeAcces);
     }
 
     @Override

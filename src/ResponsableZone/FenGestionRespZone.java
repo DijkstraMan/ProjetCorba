@@ -32,6 +32,7 @@ import modEntreesSortiesZones.UtilisateurInconnu;
 public class FenGestionRespZone extends javax.swing.JFrame {
     private final ServiceAutorisation monServAuto;
     private final int idZone;
+    private final String nomZone;
     /**
      * Creates new form FenGestion
      * @param servAuto
@@ -42,10 +43,11 @@ public class FenGestionRespZone extends javax.swing.JFrame {
      * @param servAuto
      * @param idZ
      */
-    public FenGestionRespZone(ServiceAutorisation servAuto, int idZ) {
+    public FenGestionRespZone(ServiceAutorisation servAuto, int idZ, String pNomZ) {
         initComponents();
         monServAuto = servAuto;
         idZone =idZ;
+        nomZone=pNomZ;
         //Récupération des autorisation
         AutorisationPerm[] lesAutorisationPerm = monServAuto.getAutorisationPerm();
         AutorisationTemp[] lesAutorisationTemp = monServAuto.getAutorisationTemp();
@@ -535,27 +537,25 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         try{
             String matricule = jTextFieldMatriculeAjout.getText();
-            String[] tabHrsDebut=jHrsDebut.getText().split(":");
-            String[] tabHrsFin=jHrsFin.getText().split(":");
+            String heureDebut=jHrsDebut.getText();
+            String heureFin=jHrsFin.getText();
              
             //ajout d'une autorisation temporaire
             if(jDateDebut.getDate()!=null && jDateFin.getDate()!=null)
             {
-                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
-                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
+                
                 String dateDebut = setDateFormatFR(jDateDebut.getDate());
                 String dateFin = setDateFormatFR(jDateFin.getDate());
-                monServAuto.ajouterAutorisationTemp(matricule, idZone,hrsDebut,hrsFin, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone),jHrsDebut.getText(),jHrsFin.getText(), dateDebut, dateFin);
+                monServAuto.ajouterAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut,heureFin, dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.add(newAuto);
             }
             else //ajout d'une autorisation permanente
             {
-                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
-                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
-                monServAuto.ajouterAutorisationPerm(matricule, idZone, hrsDebut, hrsFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebut.getText(), jHrsFin.getText());
+
+                monServAuto.ajouterAutorisationPerm(matricule, idZone, heureDebut, heureFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut, heureFin);
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.add(newAuto);
                 
@@ -611,27 +611,23 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
         try{
             String matricule = jLabelModif.getText();
-            String[] tabHrsDebut=jHrsDebutModif.getText().split(":");
-            String[] tabHrsFin=jHrsFinModif.getText().split(":");
+            String heureDebut=jHrsDebutModif.getText();
+            String heureFin=jHrsFinModif.getText();
              
             //modif d'une autorisation temporaire
             if(jDateDebutModif.getDate()!=null && jDateFinModif.getDate()!=null)
             {
-                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
-                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
                 String dateDebut = setDateFormatFR(jDateDebutModif.getDate());
                 String dateFin = setDateFormatFR(jDateFinModif.getDate());
-                monServAuto.modifierAutorisationTemp(matricule, idZone,hrsDebut,hrsFin, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone),jHrsDebutModif.getText(),jHrsFinModif.getText(), dateDebut, dateFin);
+                monServAuto.modifierAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut,heureFin, dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.majAffichage(newAuto);
             }
             else //modif d'une autorisation permanente
             {
-                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
-                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
-                monServAuto.modifierAutorisationPerm(matricule, idZone, hrsDebut, hrsFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebutModif.getText(), jHrsFinModif.getText());
+                monServAuto.modifierAutorisationPerm(matricule, idZone, heureDebut, heureFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut, heureFin);
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.majAffichage(newAuto);
             }

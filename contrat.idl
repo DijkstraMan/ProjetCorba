@@ -12,10 +12,8 @@ module modEntreesSortiesZones
 	typedef string nomZone;
 	typedef string JourDebut;
 	typedef string JourFin;
-	typedef long HeureDebut;
-	typedef string HeureDebutString;
-	typedef long HeureFin;
-	typedef string HeureFinString;
+	typedef string HeureDebut;
+	typedef string HeureFin;
 	typedef string dateLog;
 	typedef long IdPorte;
 	enum TypeAcces {autorise, nonAutorise, nonAuthentifie}; 
@@ -45,16 +43,16 @@ module modEntreesSortiesZones
 	{
 		Matricule matricule;
 		nomZone nomZone;
-		HeureDebutString hrDebut;
-		HeureFinString hrFin;
+		HeureDebut hrDebut;
+		HeureFin hrFin;
 	};
 	
 	struct AutorisationTemp
 	{
 		Matricule matricule;
 		nomZone nomZone;
-		HeureDebutString hrDebut;
-		HeureFinString hrFin;
+		HeureDebut hrDebut;
+		HeureFin hrFin;
 		JourDebut jourDebut;
 		JourFin jourFin;
 	};
