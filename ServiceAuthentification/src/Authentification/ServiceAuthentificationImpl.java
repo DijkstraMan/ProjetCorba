@@ -5,6 +5,7 @@
  */
 package Authentification;
 
+import Util.Fonction;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -48,8 +49,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     private final String nomObj;
     private final JTextArea areaTextEvent;
     private Connection conn = null;
-    private ServiceEmpreinte monServEmp;
-    private ServiceJournalisation monServJour;
+    private final String nomServEmpreinte="SEMP";
+    private final String nomServJournalisation="SJOUR";
+    
     
     public ServiceAuthentificationImpl(JTextArea a) {
         nomObj="SAUTH";
@@ -94,32 +96,18 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
 
     //Méthode utilisée pour récupérer l'objet ServiceEmpreinte distant et appeler sa méthode verifierEmpreinte
     private boolean lancerVerifierEmpreinte(String empCollab, String matricule) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, EmpreinteInconnue {
-        String idObj = "SEMP";
-        // Construction du nom à rechercher
-        org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-        nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
-        // Recherche auprès du naming service
-        org.omg.CORBA.Object distantSEmp = nameRoot.resolve(nameToFind);
-        areaTextEvent.setText(areaTextEvent.getText()+"ServiceEmpreinte '" + idObj + "' trouvé auprès du service de noms. IOR de l'objet : \n"
-                                +orb.object_to_string(distantSEmp)+"\n");
-        // Casting de l'objet CORBA au type ServiceEmpreinte
-        monServEmp = modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(distantSEmp);   
+        org.omg.CORBA.Object distantSEmp = Fonction.connexionCorba(nomServEmpreinte);
+        ServiceEmpreinte servEmp = modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(distantSEmp);
+        
         //Finalement, on vérifie l'empreinte
-        return monServEmp.verifierEmpreinte(empCollab, matricule);
+        return servEmp.verifierEmpreinte(empCollab, matricule);
     }
     
     //Méthode utilisée pour récupérer l'objet ServiceJournalisation distant et appeler sa méthode ajouterEntree
     private void lancerAjouterEntree(String matricule, int zone, String dateAcces, TypeAcces typeAcces) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, EmpreinteInconnue {
-        String idObj = "SJOUR";
-        // Construction du nom à rechercher
-        org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-        nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
-        // Recherche auprès du naming service
-        org.omg.CORBA.Object distantSJour = nameRoot.resolve(nameToFind);
-        areaTextEvent.setText(areaTextEvent.getText()+"ServiceJournalisation '" + idObj + "' trouvé auprès du service de noms. IOR de l'objet : \n"
-                                +orb.object_to_string(distantSJour)+"\n");
-        // Casting de l'objet CORBA au type ServiceJournalisation
-        monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
+        org.omg.CORBA.Object distantSJour = Fonction.connexionCorba(nomServJournalisation);
+  
+        ServiceJournalisation monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
         monServJour.ajouterEntree(matricule, zone, dateAcces, typeAcces);
     }
 
@@ -515,8 +503,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             // Enregistrement dans le service de nommage
             //*******************************************
             // Recuperation du naming service
-            nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            //nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
+            nameRoot=Fonction.resolveNamingService(orb);
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
             nameToRegister[0] = new org.omg.CosNaming.NameComponent(nomObj,"");

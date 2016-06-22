@@ -5,7 +5,6 @@
  */
 package MachineEmpreinte;
 
-import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import modEntreesSortiesZones.EmpreinteExistante;
 import modEntreesSortiesZones.ServiceEmpreinte;

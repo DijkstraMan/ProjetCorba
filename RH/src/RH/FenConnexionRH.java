@@ -5,31 +5,29 @@
  */
 package RH;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Util.Fonction;
 import javax.swing.JOptionPane;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.UtilisateurInconnu;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *
  * @author Fabien
  */
 public class FenConnexionRH extends javax.swing.JFrame {
-    
+
     private final ServiceAuthentification monServAuth;
+    private final String nomServAuth = "SAUTH";
 
     /**
      * Creates new form FenConnexion
-     * @param monServAuth
+     *
      */
-    public FenConnexionRH(ServiceAuthentification monServAuth) {
+    public FenConnexionRH() {
         initComponents();
-        this.monServAuth = monServAuth;
+        org.omg.CORBA.Object distantSAuth = Fonction.connexionCorba(nomServAuth);
+        monServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
+        
         this.setLocationRelativeTo(null);
     }
 
@@ -112,17 +110,17 @@ public class FenConnexionRH extends javax.swing.JFrame {
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
         try {
-            if(monServAuth.verifierAuthentificationLogicielRH(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
+            if (monServAuth.verifierAuthentificationLogicielRH(jTextFieldMatricule.getText(), new String(jPasswordField.getPassword()))) {
                 new FenGestionRH(monServAuth).setVisible(true);
                 this.setVisible(false);
-            }             
+            }
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
-            ex.raison,
-            "Erreur lors de la connexion",
-            JOptionPane.ERROR_MESSAGE);
+                    ex.raison,
+                    "Erreur lors de la connexion",
+                    JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButtonConnexionActionPerformed
 
     /**
@@ -155,31 +153,7 @@ public class FenConnexionRH extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            try {
-                // Intialisation de l'orb
-                org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args,null);
-                // Nom de l'objet
-                String idObj = "SAUTH";
-                // Recuperation du naming service
-                NamingContext nameRoot =
-                        org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-                /*NamingContext nameRoot =
-                    org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
-                */
-                // Construction du nom a rechercher
-                org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
-                // Recherche aupres du naming service
-                org.omg.CORBA.Object distantSAuth = nameRoot.resolve(nameToFind);
-                // Casting de l'objet CORBA au type ServiceAuthentification
-                ServiceAuthentification monSAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
-                
-                // Appel de l'interface graphique
-                new FenConnexionRH(monSAuth).setVisible(true);
-            }
-            catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
-                Logger.getLogger(FenConnexionRH.class.getName()).log(Level.SEVERE, null, e);
-            }
+            new FenConnexionRH().setVisible(true);
         });
     }
 

@@ -7,6 +7,8 @@ package ResponsableZone;
 
 import Util.AutorisationPermModel;
 import Util.AutorisationTempModel;
+import Util.Fonction;
+import Util.LogAccesTableModel;
 import java.awt.Point;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,7 +24,10 @@ import modEntreesSortiesZones.AutorisationExistante;
 import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.AutorisationPerm;
 import modEntreesSortiesZones.AutorisationTemp;
+import modEntreesSortiesZones.LogAcces;
 import modEntreesSortiesZones.ServiceAutorisation;
+import modEntreesSortiesZones.ServiceJournalisation;
+import modEntreesSortiesZones.ServiceJournalisationHelper;
 import modEntreesSortiesZones.UtilisateurInconnu;
 
 /**
@@ -33,6 +38,8 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     private final ServiceAutorisation monServAuto;
     private final int idZone;
     private final String nomZone;
+    private final ServiceJournalisation monServJournal;
+    private final String nomServJournal="SJOUR";
     /**
      * Creates new form FenGestion
      * @param servAuto
@@ -48,22 +55,36 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         monServAuto = servAuto;
         idZone =idZ;
         nomZone=pNomZ;
+        
         //Récupération des autorisation
         AutorisationPerm[] lesAutorisationPerm = monServAuto.getAutorisationPerm();
         AutorisationTemp[] lesAutorisationTemp = monServAuto.getAutorisationTemp();
+        
+        //Recuperation des logs autorise
+        org.omg.CORBA.Object distantServJour = Fonction.connexionCorba(nomServJournal);
+        monServJournal=ServiceJournalisationHelper.narrow(distantServJour);
+        LogAcces[] lesLogsAutorise = monServJournal.consulterAcces(idZone);
+       
         //Remplissage et flitrage des tableau
         AutorisationPermModel modelAutorisationPerm = new AutorisationPermModel(lesAutorisationPerm);
         jTablePerm.setModel(modelAutorisationPerm);
         TableRowSorter<AutorisationPermModel> sorter = new TableRowSorter<>(modelAutorisationPerm);
         jTablePerm.setRowSorter(sorter);
 
-
         AutorisationTempModel modelAutorisationTemp = new AutorisationTempModel(lesAutorisationTemp);
         jTableTemp.setModel(modelAutorisationTemp);
         TableRowSorter<AutorisationTempModel> sorterTemp = new TableRowSorter<>(modelAutorisationTemp);
         jTableTemp.setRowSorter(sorterTemp);
+        
+        LogAccesTableModel modelJournalisation = new LogAccesTableModel(lesLogsAutorise);
+        jTableLogs.setModel(modelJournalisation);
+        TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
+        jTableLogs.setRowSorter(sorterJournal);
+        
         jButtonModifier.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
+        jBtnAcAut.setEnabled(false);
+        jBtnAcNonAut.setEnabled(true);
         
         setLocationRelativeTo(null);
     }
@@ -119,6 +140,11 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         jHrsFinSuppr = new javax.swing.JLabel();
         jDateDebutSuppr = new javax.swing.JLabel();
         jDateFinSuppr = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableLogs = new javax.swing.JTable();
+        jBtnAcAut = new javax.swing.JButton();
+        jBtnAcNonAut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableTemp = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -408,6 +434,62 @@ public class FenGestionRespZone extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Supprimer autorisation", jPanel2);
 
+        jTableLogs.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
+        jTableLogs.setToolTipText("");
+        jTableLogs.setFillsViewportHeight(true);
+        jTableLogs.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        jTableLogs.setShowHorizontalLines(false);
+        jTableLogs.setShowVerticalLines(false);
+        jTableLogs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableLogsMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTableLogs);
+
+        jBtnAcAut.setText("Acces autorisés");
+        jBtnAcAut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAcAutActionPerformed(evt);
+            }
+        });
+
+        jBtnAcNonAut.setText("Acces refusés");
+        jBtnAcNonAut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAcNonAutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(11, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jBtnAcAut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnAcNonAut)
+                .addGap(28, 28, 28))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnAcAut)
+                    .addComponent(jBtnAcNonAut))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Logs", jPanel3);
+
         jTableTemp.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
         jTableTemp.setToolTipText("");
         jTableTemp.setFillsViewportHeight(true);
@@ -516,7 +598,6 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableTempMouseClicked
     
-
     
     public Date getJourFromDate(String date) throws ParseException
     {
@@ -684,8 +765,39 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
+    private void jTableLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLogsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableLogsMouseClicked
+
+    private void jBtnAcAutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAcAutActionPerformed
+
+        LogAcces[] lesLogsAutorise = monServJournal.consulterAcces(idZone);
+
+        LogAccesTableModel modelJournalisation = new LogAccesTableModel(lesLogsAutorise);
+        jTableLogs.setModel(modelJournalisation);
+        TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
+        jTableLogs.setRowSorter(sorterJournal);
+        
+        jBtnAcAut.setEnabled(false);
+        jBtnAcNonAut.setEnabled(true);
+    }//GEN-LAST:event_jBtnAcAutActionPerformed
+
+    private void jBtnAcNonAutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAcNonAutActionPerformed
+        LogAcces[] lesLogsAutorise = monServJournal.consulterRefus(idZone);
+
+        LogAccesTableModel modelJournalisation = new LogAccesTableModel(lesLogsAutorise);
+        jTableLogs.setModel(modelJournalisation);
+        TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
+        jTableLogs.setRowSorter(sorterJournal);
+        
+        jBtnAcAut.setEnabled(true);
+        jBtnAcNonAut.setEnabled(false);
+    }//GEN-LAST:event_jBtnAcNonAutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnAcAut;
+    private javax.swing.JButton jBtnAcNonAut;
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonModifier;
     private javax.swing.JButton jButtonSupprimer;
@@ -726,9 +838,12 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     private javax.swing.JLabel jMatSuppr;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableLogs;
     private javax.swing.JTable jTablePerm;
     private javax.swing.JTable jTableTemp;
     private javax.swing.JTextField jTextFieldMatriculeAjout;

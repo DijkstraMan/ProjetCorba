@@ -6,6 +6,7 @@
 package ResponsableZone;
 
 import Util.ComboItem;
+import Util.Fonction;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modEntreesSortiesZones.ServiceAuthentification;
@@ -14,9 +15,6 @@ import modEntreesSortiesZones.ServiceAutorisation;
 import modEntreesSortiesZones.ServiceAutorisationHelper;
 import modEntreesSortiesZones.UtilisateurInconnu;
 import modEntreesSortiesZones.Zone;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 
 /**
@@ -25,14 +23,12 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class FenConnexionRespZone extends javax.swing.JFrame {
 
-    private final String nomCorbaServAuthentification;
-    private final String nomCorbaServAutorisation;
+    private final String nomCorbaServAuthentification="SAUTH";
+    private final String nomCorbaServAutorisation="SAUTO";
     private ServiceAutorisation servAuto;
     public FenConnexionRespZone() {
         
         initComponents();
-        nomCorbaServAuthentification="SAUTH";
-        nomCorbaServAutorisation="SAUTO";
         jSelectZone.removeAllItems();
         getZoneA();
         setLocationRelativeTo(null);
@@ -41,7 +37,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
     public final JComboBox<ComboItem> getZoneA()
     {
       
-        org.omg.CORBA.Object distantServAuto = connexionCorba(nomCorbaServAutorisation);
+        org.omg.CORBA.Object distantServAuto = Fonction.connexionCorba(nomCorbaServAutorisation);
         servAuto= ServiceAutorisationHelper.narrow(distantServAuto);
         Zone[] lesZones=servAuto.getZone();
 
@@ -150,7 +146,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
     
     public void connexionServAuto(String matricule, String mdp, int idZone, String nomZone) throws UtilisateurInconnu
     {
-        org.omg.CORBA.Object distantServAuth=connexionCorba(nomCorbaServAuthentification);
+        org.omg.CORBA.Object distantServAuth=Fonction.connexionCorba(nomCorbaServAuthentification);
         ServiceAuthentification servAuth= ServiceAuthentificationHelper.narrow(distantServAuth);
         if(servAuth.verifierAuthentificationLogicielResp(matricule,mdp,idZone))
         {
@@ -167,34 +163,6 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
                 "Erreur",
                 JOptionPane.ERROR_MESSAGE);
         }
-    }
-    
-    public org.omg.CORBA.Object connexionCorba(String nomServiceCorba)
-    {
-        try {
-            String[] args=null;
-            // Intialisation de l'orb
-            org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args, null);
-
-            // Recuperation du naming service
-            org.omg.CosNaming.NamingContext nameRoot
-                    = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-
-            // Construction du nom a rechercher
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            nameToFind[0] = new org.omg.CosNaming.NameComponent(nomServiceCorba, "");
-
-            // Recherche aupres du naming service
-            org.omg.CORBA.Object distantServ = nameRoot.resolve(nameToFind);
-            System.out.println("Objet '" + nomServiceCorba + "' trouve aupres du service de noms. IOR de l'objet :");
-            System.out.println(orb.object_to_string(distantServ));
-            
-            return distantServ;           
-            
-        } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
-            e.printStackTrace();
-        }
-        return null;
     }
     
     /**

@@ -5,6 +5,7 @@
  */
 package Porte;
 
+import Util.Fonction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -29,19 +30,25 @@ public class FenPorte extends javax.swing.JFrame {
     private final ServiceAutorisation monServAuto;
     private final int idPorte;
     private final int idZone;
+    private final String nomServAuth="SAUTH";
+    private final String nomServAuto="SAUTO";
     /**
      * Creates new form FenPorte
-     * @param monServAuth
-     * @param monServAuto
-     * @param idPorte
-     * @param idZone
+     * @param idP
      */
-    public FenPorte(ServiceAuthentification monServAuth, ServiceAutorisation monServAuto, int idPorte, int idZone) {
+    public FenPorte(int idP) {
         initComponents();
-        this.monServAuth = monServAuth;
-        this.monServAuto = monServAuto;
-        this.idPorte = idPorte;
-        this.idZone = idZone;
+        
+        org.omg.CORBA.Object distantSAuth = Fonction.connexionCorba(nomServAuth);
+        monServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
+
+        org.omg.CORBA.Object distantSEmp = Fonction.connexionCorba(nomServAuto);
+        monServAuto = modEntreesSortiesZones.ServiceAutorisationHelper.narrow(distantSEmp);
+        
+        // Appel de l'interface graphique
+        idPorte=idP;
+        idZone = monServAuto.getIdZoneFromPorte(idPorte);
+        
         jLabelPorteZone.setText("Porte " + idPorte + " / Accès zone " + idZone);
         setLocationRelativeTo(null);
     }
@@ -171,47 +178,8 @@ public class FenPorte extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            try {
-                // Intialisation de l'orb
-                org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args,null);
-                // Recuperation du naming service
-                NamingContext nameRoot =
-                        org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-                /*NamingContext nameRoot =
-                    org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
-                */
-                // SERVICE AUTHENTIFICATION
-                // ************************
-                // Nom de l'objet
-                String idObj = "SAUTH";
-                // Construction du nom a rechercher
-                org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
-                // Recherche aupres du naming service
-                org.omg.CORBA.Object distantSAuth = nameRoot.resolve(nameToFind);
-                // Casting de l'objet CORBA au type ServiceAuthentification
-                ServiceAuthentification monSAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
-                
-                // SERVICE AUTORISATION
-                // ************************
-                // Nom de l'objet
-                idObj = "SAUTO";
-                // Construction du nom a rechercher
-                nameToFind = new org.omg.CosNaming.NameComponent[1];
-                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
-                // Recherche aupres du naming service
-                org.omg.CORBA.Object distantSAuto = nameRoot.resolve(nameToFind);
-                // Casting de l'objet CORBA au type ServiceAuthentification
-                ServiceAutorisation monSAuto= modEntreesSortiesZones.ServiceAutorisationHelper.narrow(distantSAuto);
-                
-                // Appel de l'interface graphique
-                int idPorte = Integer.parseInt(args[0]);
-                int idZone = monSAuto.getIdZoneFromPorte(idPorte);
-                new FenPorte(monSAuth, monSAuto, idPorte, idZone).setVisible(true);
-            }
-            catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
-                Logger.getLogger(FenPorte.class.getName()).log(Level.SEVERE, null, e);
-            }
+            int idPorte = Integer.parseInt(args[0]);
+            new FenPorte(idPorte).setVisible(true); 
         });
     }
 

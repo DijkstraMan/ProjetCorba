@@ -5,16 +5,11 @@
  */
 package MachineEmpreinte;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Util.Fonction;
 import javax.swing.JOptionPane;
 import modEntreesSortiesZones.ServiceAuthentification;
 import modEntreesSortiesZones.ServiceEmpreinte;
 import modEntreesSortiesZones.UtilisateurInconnu;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *
@@ -24,17 +19,22 @@ public class FenConnexionCollab extends javax.swing.JFrame {
 
     private final ServiceAuthentification mServAuth;
     private final ServiceEmpreinte mServEmp;
+    private final String nomServAuth = "SAUTH";
+    private final String nomServEmp = "SEMP";
 
     /**
      * Creates new form FenConnexionCollab
-     *
-     * @param pServAuth
-     * @param pServEmp
      */
-    public FenConnexionCollab(ServiceAuthentification pServAuth, ServiceEmpreinte pServEmp) {
+    public FenConnexionCollab() {
         initComponents();
-        this.mServAuth = pServAuth;
-        this.mServEmp = pServEmp;
+             
+        org.omg.CORBA.Object distantSAuth = Fonction.connexionCorba(nomServAuth);
+        mServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(distantSAuth);
+
+        org.omg.CORBA.Object distantSEmp = Fonction.connexionCorba(nomServEmp);
+        mServEmp = modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(distantSEmp);
+        
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -274,43 +274,7 @@ public class FenConnexionCollab extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            try {
-                // Intialisation de l'orb
-                org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args, null);
-                // Recuperation du naming service
-                NamingContext nameRoot
-                        = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-                // SERVICE AUTHENTIFICATION
-                // ************************
-                // Nom de l'objet
-                String idObj = "SAUTH";
-                // Construction du nom a rechercher
-                org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj, "");
-                // Recherche aupres du naming service
-                org.omg.CORBA.Object lDistantSAuth = nameRoot.resolve(nameToFind);
-                // Casting de l'objet CORBA au type ServiceAuthentification
-                ServiceAuthentification lServAuth = modEntreesSortiesZones.ServiceAuthentificationHelper.narrow(lDistantSAuth);
-
-                // SERVICE EMPREINTE
-                // ************************
-                // Nom de l'objet
-                idObj = "SEMP";
-                // Construction du nom a rechercher
-                nameToFind = new org.omg.CosNaming.NameComponent[1];
-                nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj, "");
-                // Recherche aupres du naming service
-                org.omg.CORBA.Object lDistantSEmp = nameRoot.resolve(nameToFind);
-                // Casting de l'objet CORBA au type ServiceAuthentification
-                ServiceEmpreinte lServEmp = modEntreesSortiesZones.ServiceEmpreinteHelper.narrow(lDistantSEmp);
-
-                // Appel de l'interface graphique
-                FenConnexionCollab mFenConnexionCollab = new FenConnexionCollab(lServAuth, lServEmp);
-                mFenConnexionCollab.setVisible(true);
-                mFenConnexionCollab.setLocationRelativeTo(null);
-            } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
-                Logger.getLogger(FenConnexionCollab.class.getName()).log(Level.SEVERE, null, e);
-            }
+            new FenConnexionCollab().setVisible(true);        
         });
     }
 

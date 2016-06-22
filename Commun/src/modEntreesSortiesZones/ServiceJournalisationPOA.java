@@ -39,6 +39,10 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
                 return _invoke_consulterAcces(_is, handler);
         } else if (opName.equals("consulterRefus")) {
                 return _invoke_consulterRefus(_is, handler);
+        } else if (opName.equals("consulterTousAcces")) {
+                return _invoke_consulterTousAcces(_is, handler);
+        } else if (opName.equals("consulterTousRefus")) {
+                return _invoke_consulterTousRefus(_is, handler);
         } else {
             throw new org.omg.CORBA.BAD_OPERATION(opName);
         }
@@ -65,8 +69,22 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
+        int arg0_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
-        modEntreesSortiesZones.LogAcces[] _arg_result = consulterAcces();
+        modEntreesSortiesZones.LogAcces[] _arg_result = consulterAcces(arg0_in);
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_consulterTousAcces(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        modEntreesSortiesZones.LogAcces[] _arg_result = consulterTousAcces();
 
         _output = handler.createReply();
         modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
@@ -78,8 +96,22 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
+        int arg0_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
-        modEntreesSortiesZones.LogAcces[] _arg_result = consulterRefus();
+        modEntreesSortiesZones.LogAcces[] _arg_result = consulterRefus(arg0_in);
+
+        _output = handler.createReply();
+        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_consulterTousRefus(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        modEntreesSortiesZones.LogAcces[] _arg_result = consulterTousRefus();
 
         _output = handler.createReply();
         modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);

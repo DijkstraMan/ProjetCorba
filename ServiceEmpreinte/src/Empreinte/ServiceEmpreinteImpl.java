@@ -5,6 +5,7 @@
  */
 package Empreinte;
 
+import Util.Fonction;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,7 +19,6 @@ import org.omg.CosNaming.NamingContext;
 import org.omg.PortableServer.POA;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modEntreesSortiesZones.ServiceAuthentification;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -42,7 +42,6 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
     private final JTextArea mAreaTextEvent;
     private Connection mConn = null;
     private final String mNomDB;
-    private ServiceAuthentification mServAuth;
 
     public ServiceEmpreinteImpl(JTextArea a) {
         mNomObj = "SEMP";
@@ -227,7 +226,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             // Enregistrement dans le service de nommage
             //*******************************************
             // Recuperation du naming service
-            mNameRoot=org.omg.CosNaming.NamingContextHelper.narrow(mOrb.resolve_initial_references("NameService"));
+            mNameRoot=Fonction.resolveNamingService(mOrb);
 
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];

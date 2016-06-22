@@ -73,17 +73,33 @@ public class ServiceJournalisationPOATie extends ServiceJournalisationPOA
     /**
      * Operation consulterAcces
      */
-    public modEntreesSortiesZones.LogAcces[] consulterAcces()
+    public modEntreesSortiesZones.LogAcces[] consulterAcces(int idZone)
     {
-        return _tie.consulterAcces();
+        return _tie.consulterAcces( idZone);
+    }
+
+    /**
+     * Operation consulterTousAcces
+     */
+    public modEntreesSortiesZones.LogAcces[] consulterTousAcces()
+    {
+        return _tie.consulterTousAcces();
     }
 
     /**
      * Operation consulterRefus
      */
-    public modEntreesSortiesZones.LogAcces[] consulterRefus()
+    public modEntreesSortiesZones.LogAcces[] consulterRefus(int idZone)
     {
-        return _tie.consulterRefus();
+        return _tie.consulterRefus( idZone);
+    }
+
+    /**
+     * Operation consulterTousRefus
+     */
+    public modEntreesSortiesZones.LogAcces[] consulterTousRefus()
+    {
+        return _tie.consulterTousRefus();
     }
 
 }

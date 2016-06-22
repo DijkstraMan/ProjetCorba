@@ -5,6 +5,7 @@
  */
 package Autorisation;
 
+import Util.Fonction;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -54,14 +55,13 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     private final JTextArea areaTextEvent;
     private static Connection conn = null;
     private final String nomDB;
-    private final String nomCorbaServAuthentification;
-    private ServiceJournalisation monServJour;
+    private final String nomCorbaServAuthentification="SAUTH";
+    private final String nomServJournalisation="SJOUR";
 
     public ServiceAutorisationImpl(JTextArea a) {
         nomObj = "SAUTO";
         areaTextEvent = a;
         nomDB = "bdZone";
-        nomCorbaServAuthentification = "SAUTH";
     }
 
     private void connexion() throws ClassNotFoundException, SQLException {
@@ -147,27 +147,9 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     public ServiceAuthentification getServiceAuthentification() {
-        try {
-            String[] args = null;
-            // Intialisation de l'orb
-            org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args, null);
 
-            // Recuperation du naming service
-            org.omg.CosNaming.NamingContext nameRoot
-                    = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-
-            // Construction du nom a rechercher
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            nameToFind[0] = new org.omg.CosNaming.NameComponent(nomCorbaServAuthentification, "");
-
-            // Recherche aupres du naming service
-            org.omg.CORBA.Object distantServ = nameRoot.resolve(nameToFind);
-            return ServiceAuthentificationHelper.narrow(distantServ);
-
-        } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-            Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        org.omg.CORBA.Object distantServ = Fonction.connexionCorba(nomCorbaServAuthentification);
+        return ServiceAuthentificationHelper.narrow(distantServ);
     }
 
     @Override
@@ -444,15 +426,9 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     
     //Méthode utilisée pour récupérer l'objet ServiceJournalisation distant et appeler sa méthode ajouterEntree
     private void lancerAjouterEntree(String matricule, int zone, String dateAcces, TypeAcces typeAcces) throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
-        String idObj = "SJOUR";
-        // Construction du nom à rechercher
-        org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-        nameToFind[0] = new org.omg.CosNaming.NameComponent(idObj,"");
-        // Recherche auprès du naming service
-        org.omg.CORBA.Object distantSJour = nameRoot.resolve(nameToFind);
-
-        // Casting de l'objet CORBA au type ServiceJournalisation
-        monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
+        org.omg.CORBA.Object distantSJour = Fonction.connexionCorba(nomServJournalisation);
+  
+        ServiceJournalisation monServJour = modEntreesSortiesZones.ServiceJournalisationHelper.narrow(distantSJour);   
         monServJour.ajouterEntree(matricule, zone, dateAcces, typeAcces);
     }
 
@@ -483,7 +459,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             // Enregistrement dans le service de nommage
             //*******************************************
             // Recuperation du naming service
-            nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            nameRoot=Fonction.resolveNamingService(orb);
 
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];

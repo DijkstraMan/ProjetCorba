@@ -5,6 +5,7 @@
  */
 package Journalisation;
 
+import Util.Fonction;
 import Util.TypeAccesFromString;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -102,7 +103,35 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
     }
 
     @Override
-    public LogAcces[] consulterAcces() {
+    public LogAcces[] consulterAcces(int idZone) {
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des accès\n"); 
+        List<LogAcces> tabLogAcces= new ArrayList();
+        try {
+            String query = "SELECT matricule_utilisateur , dateAcces, acces "
+                    + "from logAcces "
+                    + "WHERE acces = 'autorise' "
+                    + "and idZone_zone='"+idZone+"' "
+                    + "order by dateAcces DESC";
+            ResultSet rs;
+            connexion();
+            rs = lancerInterrogation(query);
+            while(rs.next())
+            {
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, rs.getDate("dateAcces").toString(), TypeAccesFromString.parse(rs.getString("acces"))));           
+            }
+            closeConnexion();
+            LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
+            lesLogAcces = tabLogAcces.toArray(lesLogAcces);
+                    
+            areaTextEvent.setText(areaTextEvent.getText()+"Listes des accès envoyée\n");
+            return lesLogAcces;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    @Override
+    public LogAcces[] consulterTousAcces() {
         areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des accès\n"); 
         List<LogAcces> tabLogAcces= new ArrayList();
         try {
@@ -128,9 +157,38 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
         }
         return null;
     }
-
+    
     @Override
-    public LogAcces[] consulterRefus() {
+    public LogAcces[] consulterRefus(int idZone) {
+        areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des refus\n"); 
+        List<LogAcces> tabLogAcces= new ArrayList();
+        try {
+            String query = "SELECT matricule_utilisateur, dateAcces, acces "
+                    + "from logAcces "
+                    + "WHERE acces != 'autorise' "
+                    + "and idZone_zone='"+idZone+"' "
+                    + "order by dateAcces DESC";
+            ResultSet rs;
+            connexion();
+            rs = lancerInterrogation(query);
+            while(rs.next())
+            {
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, rs.getDate("dateAcces").toString(), TypeAccesFromString.parse(rs.getString("acces"))));           
+            }
+            closeConnexion();
+            LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
+            lesLogAcces = tabLogAcces.toArray(lesLogAcces);
+                    
+            areaTextEvent.setText(areaTextEvent.getText()+"Listes des refus envoyée\n");
+            return lesLogAcces;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public LogAcces[] consulterTousRefus() {
         areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des refus\n"); 
         List<LogAcces> tabLogAcces= new ArrayList();
         try {
@@ -176,8 +234,8 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             // Enregistrement dans le service de nommage
             //*******************************************
             // Recuperation du naming service
-            nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            //nameRoot=org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
+            nameRoot=Fonction.resolveNamingService(orb);
+           
             // Construction du nom a enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
             nameToRegister[0] = new org.omg.CosNaming.NameComponent(nomObj,"");
@@ -200,4 +258,6 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
     public byte[] getServiceAuthId() {
         return serviceAuthId;
     } 
+
+   
 }

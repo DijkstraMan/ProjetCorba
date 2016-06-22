@@ -24,6 +24,7 @@ public class FenServAutorisation extends javax.swing.JFrame {
         thServ=new Thread(serv);
         btnStart.setEnabled(true);
         btnStop.setEnabled(false);
+        setLocationRelativeTo(null);
     }
 
     /**
