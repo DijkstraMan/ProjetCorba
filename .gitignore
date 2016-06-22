@@ -12,3 +12,15 @@ nbdist/
 nbactions.xml
 .nb-gradle/
 
+/CORBA_ServiceAuthentification/nbproject/private/
+/MultiProjet_CORBA/Accueil/nbproject/private/
+/MultiProjet_CORBA/MachineEmpreinte/nbproject/private/
+/MultiProjet_CORBA/Porte/nbproject/private/
+/MultiProjet_CORBA/RH/nbproject/private/
+/MultiProjet_CORBA/ResponsableZone/nbproject/private/
+/MultiProjet_CORBA/ServiceAuthentification/nbproject/private/
+/MultiProjet_CORBA/ServiceAutorisation/nbproject/private/
+/MultiProjet_CORBA/ServiceEmpreinte/nbproject/private/
+/MultiProjet_CORBA/ServiceJournalisation/nbproject/private/
+/ServiceNom/nbproject/private/
+/NammingService/nbproject/private/

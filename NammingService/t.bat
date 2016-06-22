@@ -1,0 +1,1 @@
+java -jar -Dorg.omg.CORBA.ORBClass=org.openorb.CORBA.ORB NammingService.jar
