@@ -83,4 +83,4 @@ insert into autorisationPerm values ('CP001', 3, '07:15:00', '18:30:00');
 
 /*Collaborateur temporaire*/
 insert into autorisationTemp values ('CT001', 1, '08:00:00', '18:30:00', '2016-05-01', '2016-07-01');
-insert into autorisationTemp values (8, 3, '08:00:00', '18:30:00', '2016-05-01', '2016-07-01');
+insert into autorisationTemp values ('CT001', 3, '08:00:00', '18:30:00', '2016-05-01', '2016-07-01');
