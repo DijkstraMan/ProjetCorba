@@ -106,8 +106,8 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         String query = "SELECT COUNT(*) AS rowcount FROM autorisation "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
                 + "and idZone ='" + idZone + "' "
-                + "and heureDebut>='" + heureFormat + "' "
-                + "and heureFin<='" + heureFormat + "' ";
+                + "and heureDebut<='" + heureFormat + "' "
+                + "and heureFin>'" + heureFormat + "' ";
         ResultSet rs;
         connexion();
         rs = lancerInterrogation(query);
@@ -130,10 +130,10 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         String query = "SELECT COUNT(*) AS rowcount FROM autorisationTemp "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
                 + "and idZone ='" + idZone + "' "
-                + "and jourDebut>='" + dateFormat + "' "
-                + "and jourFin<='" + dateFormat + "' "
-                + "and heureDebut>='" + heureFormat + "' "
-                + "and heureFin<='" + heureFormat + "' ";
+                + "and jourDebut<='" + dateFormat + "' "
+                + "and jourFin>='" + dateFormat + "' "
+                + "and heureDebut<='" + heureFormat + "' "
+                + "and heureFin>'" + heureFormat + "' ";
         ResultSet rs;
         connexion();
         rs = lancerInterrogation(query);
