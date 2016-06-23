@@ -421,7 +421,8 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             }
             closeConnexion();
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UtilisateurExistant("Erreur: collaborateur temporaire déjà connu.");
         }
     }
 
@@ -446,7 +447,8 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             }  
             closeConnexion();
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UtilisateurExistant("Erreur: collaborateur permanent déjà connu.");
         }
     }
     
