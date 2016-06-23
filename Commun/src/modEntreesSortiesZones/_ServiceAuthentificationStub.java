@@ -430,62 +430,6 @@ public class _ServiceAuthentificationStub extends org.omg.CORBA.portable.ObjectI
     }
 
     /**
-     * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
-     */
-    public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu
-    {
-        while(true)
-        {
-            if (!this._is_local())
-            {
-                org.omg.CORBA.portable.InputStream _input = null;
-                try
-                {
-                    org.omg.CORBA.portable.OutputStream _output = this._request("verifierAuthentificationMachineEmpreinteCollaborateurTemp",true);
-                    modEntreesSortiesZones.MatriculeHelper.write(_output,matricule);
-                    _input = this._invoke(_output);
-                    boolean _arg_ret = _input.read_boolean();
-                    return _arg_ret;
-                }
-                catch(org.omg.CORBA.portable.RemarshalException _exception)
-                {
-                    continue;
-                }
-                catch(org.omg.CORBA.portable.ApplicationException _exception)
-                {
-                    String _exception_id = _exception.getId();
-                    if (_exception_id.equals(modEntreesSortiesZones.UtilisateurInconnuHelper.id()))
-                    {
-                        throw modEntreesSortiesZones.UtilisateurInconnuHelper.read(_exception.getInputStream());
-                    }
-
-                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
-                }
-                finally
-                {
-                    this._releaseReply(_input);
-                }
-            }
-            else
-            {
-                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("verifierAuthentificationMachineEmpreinteCollaborateurTemp",_opsClass);
-                if (_so == null)
-                   continue;
-                modEntreesSortiesZones.ServiceAuthentificationOperations _self = (modEntreesSortiesZones.ServiceAuthentificationOperations) _so.servant;
-                try
-                {
-                    return _self.verifierAuthentificationMachineEmpreinteCollaborateurTemp( matricule);
-                }
-                finally
-                {
-                    _servant_postinvoke(_so);
-                }
-            }
-        }
-    }
-
-    /**
      * Operation ajouterCollaborateurPerm
      */
     public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)
