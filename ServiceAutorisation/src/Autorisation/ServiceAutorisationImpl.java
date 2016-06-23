@@ -416,7 +416,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             AutorisationTemp[] lesAutorisations = new AutorisationTemp[tabAutorisation.size()];
             lesAutorisations = tabAutorisation.toArray(lesAutorisations);
 
-            areaTextEvent.setText(areaTextEvent.getText() + "Liste des autorisation permanentes envoyée !\n");
+            areaTextEvent.setText(areaTextEvent.getText() + "Liste des autorisation temporaire envoyée !\n");
             return lesAutorisations;
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(ServiceAutorisationImpl.class.getName()).log(Level.SEVERE, null, ex);
