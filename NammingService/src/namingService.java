@@ -9,8 +9,8 @@ public class namingService {
 
     public static void main(String args[]) {
        String []t= new String[2];
-         //t[0]="-ORBPort=20017";
-         t[0]="-ORBPort=2001";
+         t[0]="-ORBPort=20017";
+        // t[0]="-ORBPort=2001"; // pour le local
          t[1]="-print";
          MapNamingContext.main(t);
     }
