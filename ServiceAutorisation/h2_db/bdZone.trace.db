@@ -1,0 +1,3 @@
+06-23 13:13:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "AUTORISATION" not found; SQL statement:
+SELECT COUNT(*) AS rowcount FROM autorisation WHERE matricule_utilisateur='CT003' and idZone ='1' and heureDebut>='java.text.SimpleDateFormat@4183e5a' and heureFin<='java.text.SimpleDateFormat@4183e5a'  [42102-147]
