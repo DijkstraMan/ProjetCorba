@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import modEntreesSortiesZones.LogAcces;
+import modEntreesSortiesZones.LogAccesZone;
 import modEntreesSortiesZones.ServiceJournalisationPOA;
 import modEntreesSortiesZones.TypeAcces;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -104,9 +107,9 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
     }
 
     @Override
-    public LogAcces[] consulterAcces(int idZone) {
+    public LogAccesZone[] consulterAcces(int idZone) {
         areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des accès\n"); 
-        List<LogAcces> tabLogAcces= new ArrayList();
+        List<LogAccesZone> tabLogAcces= new ArrayList();
         try {
             String query = "SELECT matricule_utilisateur , dateAcces, acces "
                     + "from logAcces "
@@ -118,16 +121,18 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
+                DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateAcces = formatFR.format(formatSQL.parse(rs.getString("dateAcces")));
+                tabLogAcces.add(new LogAccesZone(rs.getString("matricule_utilisateur"), dateAcces, TypeAccesFromString.parse(rs.getString("acces"))));            
             }
             closeConnexion();
-            LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
+            LogAccesZone[] lesLogAcces = new LogAccesZone[tabLogAcces.size()];
             lesLogAcces = tabLogAcces.toArray(lesLogAcces);
                     
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des accès envoyée\n");
             return lesLogAcces;
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -146,8 +151,10 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
+                DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateAcces = formatFR.format(formatSQL.parse(rs.getString("dateAcces")));
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), dateAcces, TypeAccesFromString.parse(rs.getString("acces"))));            
             }
             closeConnexion();
             LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
@@ -155,16 +162,16 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
                     
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des accès envoyée\n");
             return lesLogAcces;
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
     
     @Override
-    public LogAcces[] consulterRefus(int idZone) {
+    public LogAccesZone[] consulterRefus(int idZone) {
         areaTextEvent.setText(areaTextEvent.getText()+"Demande de la liste des refus\n"); 
-        List<LogAcces> tabLogAcces= new ArrayList();
+        List<LogAccesZone> tabLogAcces= new ArrayList();
         try {
             String query = "SELECT matricule_utilisateur, dateAcces, acces "
                     + "from logAcces "
@@ -176,16 +183,18 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
+                DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateAcces = formatFR.format(formatSQL.parse(rs.getString("dateAcces")));
+                tabLogAcces.add(new LogAccesZone(rs.getString("matricule_utilisateur"), dateAcces, TypeAccesFromString.parse(rs.getString("acces"))));            
             }
             closeConnexion();
-            LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
+            LogAccesZone[] lesLogAcces = new LogAccesZone[tabLogAcces.size()];
             lesLogAcces = tabLogAcces.toArray(lesLogAcces);
                     
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des refus envoyée\n");
             return lesLogAcces;
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -205,8 +214,10 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
+                DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateAcces = formatFR.format(formatSQL.parse(rs.getString("dateAcces")));
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), dateAcces, TypeAccesFromString.parse(rs.getString("acces"))));            
             }
             closeConnexion();
             LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
@@ -214,7 +225,7 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
                     
             areaTextEvent.setText(areaTextEvent.getText()+"Listes des refus envoyée\n");
             return lesLogAcces;
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(ServiceJournalisationImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

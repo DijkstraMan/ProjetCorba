@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import modEntreesSortiesZones.LogAcces;
+import modEntreesSortiesZones.LogAccesZone;
 
 /**
  *
@@ -19,26 +19,25 @@ public class LogAccesTableModel extends AbstractTableModel{
     
     protected static final String[] COLUMN_NAMES = {
         "Matricule",
-        "Zone",
         "Date et heure",
         "Type d'accès"
     };
 
-    private List<LogAcces> rowData;
+    private List<LogAccesZone> rowData;
 
     public LogAccesTableModel() {
         rowData = new ArrayList<>(25);
     }
     
-    public LogAccesTableModel(LogAcces[] logsAcces) {
+    public LogAccesTableModel(LogAccesZone[] logsAcces) {
         rowData = new ArrayList<>(Arrays.asList(logsAcces));
     }
 
-    public void add(LogAcces... log) {
+    public void add(LogAccesZone... log) {
         add(Arrays.asList(log));
     }
 
-    public void add(List<LogAcces> log) {
+    public void add(List<LogAccesZone> log) {
         rowData.addAll(log);
         fireTableDataChanged();
     }
@@ -58,25 +57,22 @@ public class LogAccesTableModel extends AbstractTableModel{
         return COLUMN_NAMES[column];
     }
 
-    public LogAcces getLogAt(int row) {
+    public LogAccesZone getLogAt(int row) {
         return rowData.get(row);
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        LogAcces log = getLogAt(rowIndex);
+        LogAccesZone log = getLogAt(rowIndex);
         Object value = null;
         switch (columnIndex) {
             case 0:
                 value = log.matricule;
                 break;
             case 1:
-                value = log.idZone;
-                break;
-            case 2:
                 value = log.dateAcces;
                 break;
-            case 3:
+            case 2:
                 value = log.typeAcces;
                 break;
         }

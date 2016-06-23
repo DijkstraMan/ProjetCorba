@@ -65,6 +65,13 @@ module modEntreesSortiesZones
 		TypeAcces typeAcces;
 	};
 	
+	struct LogAccesZone
+	{
+		Matricule matricule;
+		dateLog dateAcces;
+		TypeAcces typeAcces;
+	};
+	
 	struct Zone
 	{
 		idZone idZne;
@@ -73,9 +80,10 @@ module modEntreesSortiesZones
 	
 	typedef sequence<Zone> lesZones;
 	typedef sequence<Utilisateur> lesUtilisateurs;
-        typedef sequence<LogAcces> logsAcces;
-        typedef sequence<AutorisationPerm> lesAutorisationsPerm;
-        typedef sequence<AutorisationTemp> lesAutorisationsTemp;
+	typedef sequence<LogAcces> lesLogsAcces;
+	typedef sequence<LogAccesZone> lesLogsAccesZone;
+	typedef sequence<AutorisationPerm> lesAutorisationsPerm;
+	typedef sequence<AutorisationTemp> lesAutorisationsTemp;
 	
 	interface ServiceAuthentification
 	{	
@@ -144,16 +152,16 @@ module modEntreesSortiesZones
 		lesZones getZone();
 		
 		//recuperer les autorisations pour les listes
-		lesAutorisationsPerm getAutorisationPerm();
-		lesAutorisationsTemp getAutorisationTemp();
+		lesAutorisationsPerm getAutorisationPerm(in idZone idZone);
+		lesAutorisationsTemp getAutorisationTemp(in idZone idZone);
 	};
 	
 	interface ServiceJournalisation
 	{
 		void ajouterEntree(in Matricule matricule, in idZone idZone, in dateLog dateAcces, in TypeAcces typeAcces);
-		logsAcces consulterAcces(in idZone idZone);
-		logsAcces consulterTousAcces();
-		logsAcces consulterRefus(in idZone idZone);
-		logsAcces consulterTousRefus();
+		lesLogsAccesZone consulterAcces(in idZone idZone);
+		lesLogsAcces consulterTousAcces();
+		lesLogsAccesZone consulterRefus(in idZone idZone);
+		lesLogsAcces consulterTousRefus();
 	};
 };

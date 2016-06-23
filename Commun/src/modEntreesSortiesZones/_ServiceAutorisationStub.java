@@ -543,7 +543,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation getAutorisationPerm
      */
-    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm()
+    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm(int idZone)
     {
         while(true)
         {
@@ -553,6 +553,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getAutorisationPerm",true);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
                     _input = this._invoke(_output);
                     modEntreesSortiesZones.AutorisationPerm[] _arg_ret = modEntreesSortiesZones.lesAutorisationsPermHelper.read(_input);
                     return _arg_ret;
@@ -579,7 +580,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    return _self.getAutorisationPerm();
+                    return _self.getAutorisationPerm( idZone);
                 }
                 finally
                 {
@@ -592,7 +593,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation getAutorisationTemp
      */
-    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp()
+    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp(int idZone)
     {
         while(true)
         {
@@ -602,6 +603,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getAutorisationTemp",true);
+                    modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
                     _input = this._invoke(_output);
                     modEntreesSortiesZones.AutorisationTemp[] _arg_ret = modEntreesSortiesZones.lesAutorisationsTempHelper.read(_input);
                     return _arg_ret;
@@ -628,7 +630,7 @@ public class _ServiceAutorisationStub extends org.omg.CORBA.portable.ObjectImpl
                 modEntreesSortiesZones.ServiceAutorisationOperations _self = (modEntreesSortiesZones.ServiceAutorisationOperations) _so.servant;
                 try
                 {
-                    return _self.getAutorisationTemp();
+                    return _self.getAutorisationTemp( idZone);
                 }
                 finally
                 {

@@ -278,8 +278,9 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
+        int arg0_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
-        modEntreesSortiesZones.AutorisationPerm[] _arg_result = getAutorisationPerm();
+        modEntreesSortiesZones.AutorisationPerm[] _arg_result = getAutorisationPerm(arg0_in);
 
         _output = handler.createReply();
         modEntreesSortiesZones.lesAutorisationsPermHelper.write(_output,_arg_result);
@@ -291,8 +292,9 @@ public abstract class ServiceAutorisationPOA extends org.omg.PortableServer.Serv
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
+        int arg0_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
-        modEntreesSortiesZones.AutorisationTemp[] _arg_result = getAutorisationTemp();
+        modEntreesSortiesZones.AutorisationTemp[] _arg_result = getAutorisationTemp(arg0_in);
 
         _output = handler.createReply();
         modEntreesSortiesZones.lesAutorisationsTempHelper.write(_output,_arg_result);

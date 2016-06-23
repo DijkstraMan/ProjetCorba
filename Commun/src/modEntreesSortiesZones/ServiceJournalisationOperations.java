@@ -15,7 +15,7 @@ public interface ServiceJournalisationOperations
     /**
      * Operation consulterAcces
      */
-    public modEntreesSortiesZones.LogAcces[] consulterAcces(int idZone);
+    public modEntreesSortiesZones.LogAccesZone[] consulterAcces(int idZone);
 
     /**
      * Operation consulterTousAcces
@@ -25,7 +25,7 @@ public interface ServiceJournalisationOperations
     /**
      * Operation consulterRefus
      */
-    public modEntreesSortiesZones.LogAcces[] consulterRefus(int idZone);
+    public modEntreesSortiesZones.LogAccesZone[] consulterRefus(int idZone);
 
     /**
      * Operation consulterTousRefus

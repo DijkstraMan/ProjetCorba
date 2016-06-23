@@ -76,7 +76,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
     /**
      * Operation consulterAcces
      */
-    public modEntreesSortiesZones.LogAcces[] consulterAcces(int idZone)
+    public modEntreesSortiesZones.LogAccesZone[] consulterAcces(int idZone)
     {
         while(true)
         {
@@ -88,7 +88,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                     org.omg.CORBA.portable.OutputStream _output = this._request("consulterAcces",true);
                     modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.logsAccesHelper.read(_input);
+                    modEntreesSortiesZones.LogAccesZone[] _arg_ret = modEntreesSortiesZones.lesLogsAccesZoneHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -137,7 +137,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("consulterTousAcces",true);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.logsAccesHelper.read(_input);
+                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.lesLogsAccesHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -175,7 +175,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
     /**
      * Operation consulterRefus
      */
-    public modEntreesSortiesZones.LogAcces[] consulterRefus(int idZone)
+    public modEntreesSortiesZones.LogAccesZone[] consulterRefus(int idZone)
     {
         while(true)
         {
@@ -187,7 +187,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                     org.omg.CORBA.portable.OutputStream _output = this._request("consulterRefus",true);
                     modEntreesSortiesZones.idZoneHelper.write(_output,idZone);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.logsAccesHelper.read(_input);
+                    modEntreesSortiesZones.LogAccesZone[] _arg_ret = modEntreesSortiesZones.lesLogsAccesZoneHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -236,7 +236,7 @@ public class _ServiceJournalisationStub extends org.omg.CORBA.portable.ObjectImp
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("consulterTousRefus",true);
                     _input = this._invoke(_output);
-                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.logsAccesHelper.read(_input);
+                    modEntreesSortiesZones.LogAcces[] _arg_ret = modEntreesSortiesZones.lesLogsAccesHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)

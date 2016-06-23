@@ -62,11 +62,11 @@ public interface ServiceAutorisationOperations
     /**
      * Operation getAutorisationPerm
      */
-    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm();
+    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm(int idZone);
 
     /**
      * Operation getAutorisationTemp
      */
-    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp();
+    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp(int idZone);
 
 }

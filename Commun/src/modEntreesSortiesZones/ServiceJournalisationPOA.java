@@ -71,10 +71,10 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         org.omg.CORBA.portable.OutputStream _output;
         int arg0_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
-        modEntreesSortiesZones.LogAcces[] _arg_result = consulterAcces(arg0_in);
+        modEntreesSortiesZones.LogAccesZone[] _arg_result = consulterAcces(arg0_in);
 
         _output = handler.createReply();
-        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.lesLogsAccesZoneHelper.write(_output,_arg_result);
 
         return _output;
     }
@@ -87,7 +87,7 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         modEntreesSortiesZones.LogAcces[] _arg_result = consulterTousAcces();
 
         _output = handler.createReply();
-        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.lesLogsAccesHelper.write(_output,_arg_result);
 
         return _output;
     }
@@ -98,10 +98,10 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         org.omg.CORBA.portable.OutputStream _output;
         int arg0_in = modEntreesSortiesZones.idZoneHelper.read(_is);
 
-        modEntreesSortiesZones.LogAcces[] _arg_result = consulterRefus(arg0_in);
+        modEntreesSortiesZones.LogAccesZone[] _arg_result = consulterRefus(arg0_in);
 
         _output = handler.createReply();
-        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.lesLogsAccesZoneHelper.write(_output,_arg_result);
 
         return _output;
     }
@@ -114,7 +114,7 @@ public abstract class ServiceJournalisationPOA extends org.omg.PortableServer.Se
         modEntreesSortiesZones.LogAcces[] _arg_result = consulterTousRefus();
 
         _output = handler.createReply();
-        modEntreesSortiesZones.logsAccesHelper.write(_output,_arg_result);
+        modEntreesSortiesZones.lesLogsAccesHelper.write(_output,_arg_result);
 
         return _output;
     }

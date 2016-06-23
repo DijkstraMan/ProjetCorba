@@ -366,11 +366,14 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public AutorisationPerm[] getAutorisationPerm() {
+    public AutorisationPerm[] getAutorisationPerm(int idZone) {
         areaTextEvent.setText(areaTextEvent.getText() + "Demande de la liste des Autorisation permanentes\n");
         List<AutorisationPerm> tabAutorisation = new ArrayList();
         try {
-            String query = "SELECT  matricule_utilisateur, nomZone, heureDebut, heureFin from autorisationPerm, gZone where idZone_zone=idZone";
+            String query = "SELECT  matricule_utilisateur, nomZone, heureDebut, heureFin "
+                    + "from autorisationPerm a, gZone z "
+                    + "where z.idZone='"+ idZone +"' "
+                    + "and a.idZone_zone=z.idZone;";
             ResultSet rs;
             connexion();
             rs = lancerInterrogation(query);
@@ -395,11 +398,14 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     }
 
     @Override
-    public AutorisationTemp[] getAutorisationTemp() {
+    public AutorisationTemp[] getAutorisationTemp(int idZone) {
         areaTextEvent.setText(areaTextEvent.getText() + "Demande de la liste des Autorisation permanentes\n");
         List<AutorisationTemp> tabAutorisation = new ArrayList();
         try {
-            String query = "SELECT  matricule_utilisateur, nomZone, heureDebut, heureFin, jourDebut, jourFin from autorisationTemp, gZone where idZone_zone=idZone";
+            String query = "SELECT  matricule_utilisateur, nomZone, heureDebut, heureFin, jourDebut, jourFin "
+                    + "from autorisationTemp a, gZone z "
+                    + "where z.idZone='"+ idZone +"' "
+                    + "and a.idZone_zone=z.idZone;";
             ResultSet rs;
             connexion();
             rs = lancerInterrogation(query);
@@ -448,7 +454,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         //****************
         // Recuperation du POA
         try {
-            areaTextEvent.setText(areaTextEvent.getText() + "Démarrage du serveur\n");
+            areaTextEvent.setText(areaTextEvent.getText() + "Démarrage du service d'autorisation\n");
             rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             // Creation du servant
             //*********************

@@ -144,17 +144,17 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation getAutorisationPerm
      */
-    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm()
+    public modEntreesSortiesZones.AutorisationPerm[] getAutorisationPerm(int idZone)
     {
-        return _tie.getAutorisationPerm();
+        return _tie.getAutorisationPerm( idZone);
     }
 
     /**
      * Operation getAutorisationTemp
      */
-    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp()
+    public modEntreesSortiesZones.AutorisationTemp[] getAutorisationTemp(int idZone)
     {
-        return _tie.getAutorisationTemp();
+        return _tie.getAutorisationTemp( idZone);
     }
 
 }

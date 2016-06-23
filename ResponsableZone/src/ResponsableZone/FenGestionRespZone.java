@@ -13,6 +13,7 @@ import java.awt.Point;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -24,7 +25,7 @@ import modEntreesSortiesZones.AutorisationExistante;
 import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.AutorisationPerm;
 import modEntreesSortiesZones.AutorisationTemp;
-import modEntreesSortiesZones.LogAcces;
+import modEntreesSortiesZones.LogAccesZone;
 import modEntreesSortiesZones.ServiceAutorisation;
 import modEntreesSortiesZones.ServiceJournalisation;
 import modEntreesSortiesZones.ServiceJournalisationHelper;
@@ -35,36 +36,39 @@ import modEntreesSortiesZones.UtilisateurInconnu;
  * @author Fabien
  */
 public class FenGestionRespZone extends javax.swing.JFrame {
+
     private final ServiceAutorisation monServAuto;
     private final int idZone;
     private final String nomZone;
     private final ServiceJournalisation monServJournal;
-    private final String nomServJournal="SJOUR";
-    /**
-     * Creates new form FenGestion
-     * @param servAuto
-     */
+    private final String nomServJournal = "SJOUR";
 
     /**
      * Creates new form FenGestion
+     *
+     * @param servAuto
+     */
+    /**
+     * Creates new form FenGestion
+     *
      * @param servAuto
      * @param idZ
      */
     public FenGestionRespZone(ServiceAutorisation servAuto, int idZ, String pNomZ) {
         initComponents();
         monServAuto = servAuto;
-        idZone =idZ;
-        nomZone=pNomZ;
-        
+        idZone = idZ;
+        nomZone = pNomZ;
+
         //Récupération des autorisation
-        AutorisationPerm[] lesAutorisationPerm = monServAuto.getAutorisationPerm();
-        AutorisationTemp[] lesAutorisationTemp = monServAuto.getAutorisationTemp();
-        
+        AutorisationPerm[] lesAutorisationPerm = monServAuto.getAutorisationPerm(idZone);
+        AutorisationTemp[] lesAutorisationTemp = monServAuto.getAutorisationTemp(idZone);
+
         //Recuperation des logs autorise
         org.omg.CORBA.Object distantServJour = Fonction.connexionCorba(nomServJournal);
-        monServJournal=ServiceJournalisationHelper.narrow(distantServJour);
-        LogAcces[] lesLogsAutorise = monServJournal.consulterAcces(idZone);
-       
+        monServJournal = ServiceJournalisationHelper.narrow(distantServJour);
+        LogAccesZone[] lesLogsAutorise = monServJournal.consulterAcces(idZone);
+
         //Remplissage et flitrage des tableau
         AutorisationPermModel modelAutorisationPerm = new AutorisationPermModel(lesAutorisationPerm);
         jTablePerm.setModel(modelAutorisationPerm);
@@ -75,19 +79,17 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         jTableTemp.setModel(modelAutorisationTemp);
         TableRowSorter<AutorisationTempModel> sorterTemp = new TableRowSorter<>(modelAutorisationTemp);
         jTableTemp.setRowSorter(sorterTemp);
-        
+
         LogAccesTableModel modelJournalisation = new LogAccesTableModel(lesLogsAutorise);
         jTableLogs.setModel(modelJournalisation);
         TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
         jTableLogs.setRowSorter(sorterJournal);
-        
+
         jButtonModifier.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
         jBtnAcAut.setText("Actualiser");
         jBtnAcNonAut.setText("Accès refusés");
-        
-        
-        
+
         setLocationRelativeTo(null);
     }
 
@@ -155,7 +157,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Logiciel RH");
+        setTitle("Logiciel responsable zone");
         setResizable(false);
 
         jTabbedPane1.setToolTipText("Ajouter collaborateur permanent");
@@ -222,7 +224,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                             .addComponent(jHrsDebut, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jHrsFin, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel11))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +320,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                             .addComponent(jLabel20)
                             .addComponent(jLabelModif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel14))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         jpanelLayout.setVerticalGroup(
             jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,7 +404,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                             .addComponent(jDateDebutSuppr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jDateFinSuppr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel21))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,16 +469,16 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jBtnAcAut)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                 .addComponent(jBtnAcNonAut)
                 .addGap(28, 28, 28))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,37 +530,40 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jTabbedPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel13))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel13)
+                        .addComponent(jLabel10))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(471, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(514, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
                         .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(173, 173, 173)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(50, 50, 50)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(249, Short.MAX_VALUE)))
+                    .addContainerGap(233, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("Modifier collaborateur permanent");
@@ -568,10 +573,10 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableTempMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTempMouseClicked
-        JTable table =(JTable) evt.getSource();
+        JTable table = (JTable) evt.getSource();
         Point p = evt.getPoint();
         int row = table.rowAtPoint(p);
-        if ( row != -1) {
+        if (row != -1) {
             try {
                 AutorisationTempModel modelTemp = (AutorisationTempModel) table.getModel();
                 AutorisationTemp autTemp = modelTemp.getAutoTempAt(row);
@@ -581,17 +586,17 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 jHrsFinModif.setText(autTemp.hrFin);
                 jDateDebutModif.setDate(getJourFromDate(autTemp.jourDebut));
                 jDateFinModif.setDate(getJourFromDate(autTemp.jourFin));
-                
+
                 //Remplissage des champs de suppression d'une autorisation :
                 jMatSuppr.setText(autTemp.matricule);
                 jHrsDebutSuppr.setText(autTemp.hrDebut);
                 jHrsFinSuppr.setText(autTemp.hrFin);
                 jDateDebutSuppr.setText(autTemp.jourDebut);
                 jDateFinSuppr.setText(autTemp.jourFin);
-                
+
                 jButtonModifier.setEnabled(true);
                 jButtonSupprimer.setEnabled(true);
-                
+
                 jDateDebutModif.setEnabled(true);
                 jDateFinModif.setEnabled(true);
             } catch (ParseException ex) {
@@ -599,80 +604,96 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jTableTempMouseClicked
-    
-    
-    public Date getJourFromDate(String date) throws ParseException
-    {
+
+    public Date getJourFromDate(String date) throws ParseException {
         DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         cal.setTime(formatFR.parse(date));
         return cal.getTime();
     }
-    
-    private String setDateFormatFR(Date date)
-    {
-        DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");         
+
+    private String setDateFormatFR(Date date) {
+        DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return formatFR.format(cal.getTime());
     }
-    
-    private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
-        try{
-            String matricule = jTextFieldMatriculeAjout.getText();
-            String heureDebut=jHrsDebut.getText();
-            String heureFin=jHrsFin.getText();
-             
-            //ajout d'une autorisation temporaire
-            if(jDateDebut.getDate()!=null && jDateFin.getDate()!=null)
-            {
-                
-                String dateDebut = setDateFormatFR(jDateDebut.getDate());
-                String dateFin = setDateFormatFR(jDateFin.getDate());
-                monServAuto.ajouterAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut+":00",heureFin+":00", dateDebut, dateFin);
-                AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
-                modelAutoTemp.add(newAuto);
-            }
-            else //ajout d'une autorisation permanente
-            {
 
-                monServAuto.ajouterAutorisationPerm(matricule, idZone, heureDebut, heureFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut+":00", heureFin+":00");
-                AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
-                modelAutoPerm.add(newAuto);
-                
+    private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
+        try {
+            String matricule = jTextFieldMatriculeAjout.getText();
+            String heureDebut = jHrsDebut.getText();
+            String heureFin = jHrsFin.getText();
+
+            SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+            Date heureDebutLocal = parser.parse(heureDebut);
+            Date heureFinLocal = parser.parse(heureFin);
+
+            //on verifie datedebut <= datefin
+            if (heureDebutLocal.compareTo(heureFinLocal) < 0) {
+                //ajout d'une autorisation temporaire
+                if (jDateDebut.getDate() != null && jDateFin.getDate() != null) {
+                    Date dateDebut = jDateDebut.getDate();
+                    Date dateFin = jDateFin.getDate();
+
+                    if ((dateDebut.compareTo(dateFin)) <= 0) {
+                        String dateDebutString = setDateFormatFR(dateDebut);
+                        String dateFinString = setDateFormatFR(dateFin);
+                        monServAuto.ajouterAutorisationTemp(matricule, idZone, heureDebut, heureFin, dateDebutString, dateFinString);
+                        AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone, heureDebut + ":00", heureFin + ":00", dateDebutString, dateFinString);
+                        AutorisationTempModel modelAutoTemp = (AutorisationTempModel) jTableTemp.getModel();
+                        modelAutoTemp.add(newAuto);
+                    } else {
+                        JOptionPane.showMessageDialog(this,
+                                "La date de début doit être inferieur ou égale à la date de fin",
+                                "Erreur",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } else //ajout d'une autorisation permanente
+                {
+
+                    monServAuto.ajouterAutorisationPerm(matricule, idZone, heureDebut, heureFin);
+                    AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut + ":00", heureFin + ":00");
+                    AutorisationPermModel modelAutoPerm = (AutorisationPermModel) jTablePerm.getModel();
+                    modelAutoPerm.add(newAuto);
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "L'heure de fin doit être supérieur à l'heure de début",
+                        "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
             }
-        }catch(NumberFormatException e){
+        } catch (AutorisationExistante ex) {
             JOptionPane.showMessageDialog(this,
-                "Veuillez renseigner les champs d'heures",
-                "Erreur",
-                JOptionPane.ERROR_MESSAGE);
-        } catch (AutorisationExistante  ex) {
-             JOptionPane.showMessageDialog(this,
-                ex.raison,
-                "Erreur",
-                JOptionPane.ERROR_MESSAGE);
+                    ex.raison,
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
-                ex.raison,
-                "Erreur",
-                JOptionPane.ERROR_MESSAGE);
+                    ex.raison,
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Le format des heures est hh:mm ex: 08:02",
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jTablePermMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePermMouseClicked
-        JTable table =(JTable) evt.getSource();
+        JTable table = (JTable) evt.getSource();
         Point p = evt.getPoint();
         int row = table.rowAtPoint(p);
-        if ( row != -1) {
+        if (row != -1) {
             AutorisationPermModel modelPerm = (AutorisationPermModel) table.getModel();
             AutorisationPerm autPerm = modelPerm.getAutoPermAt(row);
             //Remplissage des champs de modification d'une autorisation :
             jLabelModif.setText(autPerm.matricule);
             jHrsDebutModif.setText(autPerm.hrDebut);
             jHrsFinModif.setText(autPerm.hrFin);
-            
+
             //Remplissage des champs de suppression d'une autorisation :
             jMatSuppr.setText(autPerm.matricule);
             jHrsDebutSuppr.setText(autPerm.hrDebut);
@@ -680,51 +701,80 @@ public class FenGestionRespZone extends javax.swing.JFrame {
 
             jButtonModifier.setEnabled(true);
             jButtonSupprimer.setEnabled(true);
-            
+
             jDateDebutModif.setDate(null);
             jDateFinModif.setDate(null);
             jDateDebutSuppr.setText("");
             jDateFinSuppr.setText("");
-            
+
             jDateDebutModif.setEnabled(false);
             jDateFinModif.setEnabled(false);
         }
     }//GEN-LAST:event_jTablePermMouseClicked
 
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
-        try{
+        try {
             String matricule = jLabelModif.getText();
-            String heureDebut=jHrsDebutModif.getText();
-            String heureFin=jHrsFinModif.getText();
-             
-            //modif d'une autorisation temporaire
-            if(jDateDebutModif.getDate()!=null && jDateFinModif.getDate()!=null)
-            {
-                String dateDebut = setDateFormatFR(jDateDebutModif.getDate());
-                String dateFin = setDateFormatFR(jDateFinModif.getDate());
-                monServAuto.modifierAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut+":00",heureFin+":00", dateDebut, dateFin);
-                AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
-                modelAutoTemp.majAffichage(newAuto);
+            String heureDebut = jHrsDebutModif.getText();
+            String heureFin = jHrsFinModif.getText();
+
+            SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+            Date heureDebutLocal = parser.parse(heureDebut);
+            Date heureFinLocal = parser.parse(heureFin);
+
+            //on verifie datedebut <= datefin
+            if (heureDebutLocal.compareTo(heureFinLocal) < 0) {
+
+                //modif d'une autorisation temporaire
+                if (jDateDebutModif.getDate() != null && jDateFinModif.getDate() != null) {
+                    Date dateDebut = jDateDebutModif.getDate();
+                    Date dateFin = jDateFinModif.getDate();
+
+                    if ((dateDebut.compareTo(dateFin)) <= 0) {
+                        String dateDebutString = setDateFormatFR(dateDebut);
+                        String dateFinString = setDateFormatFR(dateFin);
+                        monServAuto.modifierAutorisationTemp(matricule, idZone, heureDebut, heureFin, dateDebutString, dateFinString);
+                        AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone, heureDebut + ":00", heureFin + ":00", dateDebutString, dateFinString);
+                        AutorisationTempModel modelAutoTemp = (AutorisationTempModel) jTableTemp.getModel();
+                        modelAutoTemp.majAffichage(newAuto);
+                    } 
+                    else {
+                        JOptionPane.showMessageDialog(this,
+                                "La date de début doit être inferieur ou égale à la date de fin",
+                                "Erreur",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } 
+                else //modif d'une autorisation permanente
+                {
+                    monServAuto.modifierAutorisationPerm(matricule, idZone, heureDebut, heureFin);
+                    AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut + ":00", heureFin + ":00");
+                    AutorisationPermModel modelAutoPerm = (AutorisationPermModel) jTablePerm.getModel();
+                    modelAutoPerm.majAffichage(newAuto);
+                }
+            } 
+            else {
+                JOptionPane.showMessageDialog(this,
+                        "L'heure de fin doit être supérieur à l'heure de début",
+                        "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
             }
-            else //modif d'une autorisation permanente
-            {
-                monServAuto.modifierAutorisationPerm(matricule, idZone, heureDebut, heureFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut+":00", heureFin+":00");
-                AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
-                modelAutoPerm.majAffichage(newAuto);
-            }
-           
-        }catch(NumberFormatException e){
+        } 
+        catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
-                "Veuillez renseigner les champs d'heures",
-                "Erreur",
-                JOptionPane.ERROR_MESSAGE);
+                    "Veuillez renseigner les champs d'heures",
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (AutorisationInconnue ex) {
             JOptionPane.showMessageDialog(this,
-                ex.raison,
-                "Erreur",
-                JOptionPane.ERROR_MESSAGE);
+                    ex.raison,
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Le format des heures est hh:mm ex: 08:02",
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
@@ -732,16 +782,14 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         try {
             String matricule = jMatSuppr.getText();
             //autorisationTemp
-            if(!jDateDebutSuppr.getText().isEmpty())
-            {
+            if (!jDateDebutSuppr.getText().isEmpty()) {
                 monServAuto.supprimerAutorisationTemp(matricule, idZone);
-                AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
+                AutorisationTempModel modelAutoTemp = (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.delete(jTableTemp.getSelectedRow());
-            }
-            else //autorisationPerm
+            } else //autorisationPerm
             {
                 monServAuto.supprimerAutorisationPerm(matricule, idZone);
-                AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
+                AutorisationPermModel modelAutoPerm = (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.delete(jTablePerm.getSelectedRow());
             }
             //vidage des champs de modification d'une autorisation :
@@ -757,14 +805,14 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             jHrsFinSuppr.setText("");
             jDateDebutSuppr.setText("");
             jDateFinSuppr.setText("");
-            
+
         } catch (AutorisationInconnue ex) {
             JOptionPane.showMessageDialog(this,
-                ex.raison,
-                "Erreur",
-                JOptionPane.ERROR_MESSAGE);
+                    ex.raison,
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
     private void jTableLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLogsMouseClicked
@@ -773,25 +821,25 @@ public class FenGestionRespZone extends javax.swing.JFrame {
 
     private void jBtnAcAutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAcAutActionPerformed
 
-        LogAcces[] lesLogsAutorise = monServJournal.consulterAcces(idZone);
+        LogAccesZone[] lesLogsAutorise = monServJournal.consulterAcces(idZone);
 
         LogAccesTableModel modelJournalisation = new LogAccesTableModel(lesLogsAutorise);
         jTableLogs.setModel(modelJournalisation);
         TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
         jTableLogs.setRowSorter(sorterJournal);
-        
+
         jBtnAcAut.setText("Actualiser");
         jBtnAcNonAut.setText("Accès refusés");
     }//GEN-LAST:event_jBtnAcAutActionPerformed
 
     private void jBtnAcNonAutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAcNonAutActionPerformed
-        LogAcces[] lesLogsAutorise = monServJournal.consulterRefus(idZone);
+        LogAccesZone[] lesLogsAutorise = monServJournal.consulterRefus(idZone);
 
         LogAccesTableModel modelJournalisation = new LogAccesTableModel(lesLogsAutorise);
         jTableLogs.setModel(modelJournalisation);
         TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
         jTableLogs.setRowSorter(sorterJournal);
-        
+
         jBtnAcAut.setText("Acces autorisés");
         jBtnAcNonAut.setText("Actualiser");
     }//GEN-LAST:event_jBtnAcNonAutActionPerformed
