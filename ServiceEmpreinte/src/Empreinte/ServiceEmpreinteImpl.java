@@ -86,6 +86,7 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
    
     @Override
     public boolean verifierEmpreinte(String empCollab, String matricule) throws EmpreinteInconnue {
+        mAreaTextEvent.setText(mAreaTextEvent.getText()+"Demande vérification d'empreinte matricule:"+matricule+"\n");
         boolean lRes = false;
         try {
             connexion();
@@ -97,6 +98,12 @@ public class ServiceEmpreinteImpl extends ServiceEmpreintePOA implements Runnabl
             lRs.next();
             if (lRs.getInt("rowcount") > 0) {
                 lRes = true;
+                mAreaTextEvent.setText(mAreaTextEvent.getText()+"Empreinte verifié\n");
+            }
+            else
+            {
+                mAreaTextEvent.setText(mAreaTextEvent.getText()+"Empreinte inconnue\n");
+                throw new EmpreinteInconnue("Erreur vérification empreinte : l'utilisateur n'a pas enregistré d'empreinte");
             }
             closeConnexion();
         } catch (ClassNotFoundException | SQLException ex) {
