@@ -83,8 +83,10 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         
         jButtonModifier.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
-        jBtnAcAut.setEnabled(false);
-        jBtnAcNonAut.setEnabled(true);
+        jBtnAcAut.setText("Actualiser");
+        jBtnAcNonAut.setText("Accès refusés");
+        
+        
         
         setLocationRelativeTo(null);
     }
@@ -601,7 +603,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     
     public Date getJourFromDate(String date) throws ParseException
     {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         cal.setTime(formatFR.parse(date));
         return cal.getTime();
@@ -609,7 +611,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     
     private String setDateFormatFR(Date date)
     {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");         
+        DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");         
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return formatFR.format(cal.getTime());
@@ -778,8 +780,8 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
         jTableLogs.setRowSorter(sorterJournal);
         
-        jBtnAcAut.setEnabled(false);
-        jBtnAcNonAut.setEnabled(true);
+        jBtnAcAut.setText("Actualiser");
+        jBtnAcNonAut.setText("Accès refusés");
     }//GEN-LAST:event_jBtnAcAutActionPerformed
 
     private void jBtnAcNonAutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAcNonAutActionPerformed
@@ -790,8 +792,8 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         TableRowSorter<LogAccesTableModel> sorterJournal = new TableRowSorter<>(modelJournalisation);
         jTableLogs.setRowSorter(sorterJournal);
         
-        jBtnAcAut.setEnabled(true);
-        jBtnAcNonAut.setEnabled(false);
+        jBtnAcAut.setText("Acces autorisés");
+        jBtnAcNonAut.setText("Actualiser");
     }//GEN-LAST:event_jBtnAcNonAutActionPerformed
 
 

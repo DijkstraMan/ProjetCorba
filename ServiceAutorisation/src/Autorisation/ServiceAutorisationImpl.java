@@ -168,7 +168,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             } else {
                 areaTextEvent.setText(areaTextEvent.getText() + "Autorisation refusée " + matricule + " zone " + idZone + "\n");
                 lancerAjouterEntree(matricule, idZone, formatSQL, TypeAcces.nonAutorise );
-                throw new AutorisationInconnue("Non autorisé");
+                throw new AutorisationInconnue("Accès non autorisé");
             }
 
             closeConnexion();

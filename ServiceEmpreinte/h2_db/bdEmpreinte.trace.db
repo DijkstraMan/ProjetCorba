@@ -1,0 +1,17 @@
+06-23 16:25:41 jdbc[3]: connection not closed
+java.lang.Exception: Stack Trace
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:121)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:94)
+	at org.h2.Driver.connect(Driver.java:72)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at Empreinte.ServiceEmpreinteImpl.connexion(ServiceEmpreinteImpl.java:54)
+	at Empreinte.ServiceEmpreinteImpl.verifierEmpreinte(ServiceEmpreinteImpl.java:92)
+	at modEntreesSortiesZones.ServiceEmpreintePOA._invoke_verifierEmpreinte(ServiceEmpreintePOA.java:63)
+	at modEntreesSortiesZones.ServiceEmpreintePOA._invoke(ServiceEmpreintePOA.java:43)
+	at org.openorb.adapter.poa.POA.dispatch(Unknown Source)
+	at org.openorb.net.AbstractServerRequest.dispatch(Unknown Source)
+	at org.openorb.net.ServerManagerImpl.serve_request(Unknown Source)
+	at org.openorb.net.ServerManagerImpl.thread_pool_main(Unknown Source)
+	at org.openorb.net.ServerManagerImpl.access$200(Unknown Source)
+	at org.openorb.net.ServerManagerImpl$PoolThread.run(Unknown Source)
