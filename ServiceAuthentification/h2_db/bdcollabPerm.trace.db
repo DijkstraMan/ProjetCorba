@@ -1,0 +1,2 @@
+06-23 12:51:36 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-147]
