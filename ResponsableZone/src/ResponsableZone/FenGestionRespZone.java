@@ -628,7 +628,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 String dateDebut = setDateFormatFR(jDateDebut.getDate());
                 String dateFin = setDateFormatFR(jDateFin.getDate());
                 monServAuto.ajouterAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut,heureFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut+":00",heureFin+":00", dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.add(newAuto);
             }
@@ -636,7 +636,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
             {
 
                 monServAuto.ajouterAutorisationPerm(matricule, idZone, heureDebut, heureFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut, heureFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut+":00", heureFin+":00");
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.add(newAuto);
                 
@@ -701,14 +701,14 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 String dateDebut = setDateFormatFR(jDateDebutModif.getDate());
                 String dateFin = setDateFormatFR(jDateFinModif.getDate());
                 monServAuto.modifierAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut,heureFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut+":00",heureFin+":00", dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.majAffichage(newAuto);
             }
             else //modif d'une autorisation permanente
             {
                 monServAuto.modifierAutorisationPerm(matricule, idZone, heureDebut, heureFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut, heureFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut+":00", heureFin+":00");
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.majAffichage(newAuto);
             }

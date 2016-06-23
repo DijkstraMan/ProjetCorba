@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,10 +103,11 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     private boolean verifierAutorisationPerm(String matricule, int idZone) throws ClassNotFoundException, SQLException {
         boolean res = false;
 
-        SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
-        String query = "SELECT COUNT(*) AS rowcount FROM autorisation "
+        String heureFormat = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        
+        String query = "SELECT COUNT(*) AS rowcount FROM autorisationPerm "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
-                + "and idZone ='" + idZone + "' "
+                + "and idZone_zone ='" + idZone + "' "
                 + "and heureDebut<='" + heureFormat + "' "
                 + "and heureFin>'" + heureFormat + "' ";
         ResultSet rs;
@@ -124,12 +126,12 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
 
         boolean res = false;
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
+        String dateFormat = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String heureFormat = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
         String query = "SELECT COUNT(*) AS rowcount FROM autorisationTemp "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
-                + "and idZone ='" + idZone + "' "
+                + "and idZone_zone ='" + idZone + "' "
                 + "and jourDebut<='" + dateFormat + "' "
                 + "and jourFin>='" + dateFormat + "' "
                 + "and heureDebut<='" + heureFormat + "' "
@@ -155,17 +157,17 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     @Override
     public boolean verifierAutorisation(String matricule, int idZone) throws AutorisationInconnue {
         boolean res = false;
-        SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         areaTextEvent.setText(areaTextEvent.getText() + "Demande d'autorisation " + matricule + " zone " + idZone + "\n");
         try {
             connexion();
             if (verifierAutorisationPerm(matricule, idZone) || verifierAutorisationTemp(matricule, idZone)) {
                 res = true;
                 areaTextEvent.setText(areaTextEvent.getText() + "Autorisation accordée " + matricule + " zone " + idZone + "\n");              
-                lancerAjouterEntree(matricule, idZone, formatSQL.toString(), TypeAcces.autorise );
+                lancerAjouterEntree(matricule, idZone, formatSQL, TypeAcces.autorise );
             } else {
                 areaTextEvent.setText(areaTextEvent.getText() + "Autorisation refusée " + matricule + " zone " + idZone + "\n");
-                lancerAjouterEntree(matricule, idZone, formatSQL.toString(), TypeAcces.nonAutorise );
+                lancerAjouterEntree(matricule, idZone, formatSQL, TypeAcces.nonAutorise );
                 throw new AutorisationInconnue("Non autorisé");
             }
 

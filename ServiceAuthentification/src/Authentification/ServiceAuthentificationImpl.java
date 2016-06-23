@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -200,10 +201,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                     lancerVerifierEmpreinte(empCollab, matricule);
                 } else {
                     areaTextEvent.setText(areaTextEvent.getText() + "Collaborateur inconnu : enregistrement journal\n");
-                    SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    /*Date now = new Date();
-                     String dateAccesStr = formatSQL.format(now);*/
-                    lancerAjouterEntree("inconnu", zone, formatSQL.toString(), TypeAcces.nonAuthentifie);
+                    String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                    
+                    lancerAjouterEntree("inconnu", zone, formatSQL, TypeAcces.nonAuthentifie);
                     //Exception à catcher côté client scanneur d'empreinte :
                     throw new UtilisateurInconnu("Erreur: l'utilisateur n'existe pas dans nos bases de données.");
                 }
