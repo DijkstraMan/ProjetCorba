@@ -167,9 +167,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     @Override
     public Utilisateur verifierAuthentificationPorte(String empCollab, String phoUsr, int zone) throws UtilisateurInconnu, EmpreinteInconnue {
         areaTextEvent.setText(areaTextEvent.getText() + "Vérification porte\n");
-        String matricule, nomUsr;
+        String matricule, nomUsr, preUsr;
         Utilisateur usr = null;
-        String query = "SELECT matricule, nomUrs FROM utilisateur "
+        String query = "SELECT matricule, nomUrs, prenomUsr FROM utilisateur "
                 + "WHERE photoUsr='" + phoUsr + "'";
         ResultSet rs;
         try {
@@ -182,8 +182,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
             if (res) {
                 areaTextEvent.setText(areaTextEvent.getText() + "Collaborateur permanent à la porte\n");
                 nomUsr = rs.getString("nomUrs");
+                preUsr = rs.getString("prenomUsr");
                 matricule = rs.getString("matricule");
-                usr = new Utilisateur(matricule, nomUsr, "dqd", "dqdqd");
+                usr = new Utilisateur(matricule, nomUsr, preUsr, "");
                 // Matricule => OK => Vérifier empreinte auprès du serviceEmpreinte : 
                 lancerVerifierEmpreinte(empCollab, matricule);
             } else {
@@ -195,13 +196,14 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                 if (res) {
                     areaTextEvent.setText(areaTextEvent.getText() + "Collaborateur temporaire à la porte\n");
                     nomUsr = rs.getString("nomUrs");
+                    preUsr = rs.getString("prenomUsr");
                     matricule = rs.getString("matricule");
-                    usr = new Utilisateur(matricule, nomUsr, "dqd", "dqdqd");
+                    usr = new Utilisateur(matricule, nomUsr, preUsr, "");
                     // Matricule => OK => Vérifier empreinte auprès du serviceEmpreinte : 
                     lancerVerifierEmpreinte(empCollab, matricule);
                 } else {
                     areaTextEvent.setText(areaTextEvent.getText() + "Collaborateur inconnu : enregistrement journal\n");
-                    String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                    String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                     
                     lancerAjouterEntree("inconnu", zone, formatSQL, TypeAcces.nonAuthentifie);
                     //Exception à catcher côté client scanneur d'empreinte :
@@ -214,7 +216,12 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (EmpreinteInconnue ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
+            String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            try {
+                lancerAjouterEntree(usr.matricule, zone, formatSQL, TypeAcces.nonAuthentifie);
+            } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex1) {
+                Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             //On "retourne" l'exception pour le client :
             throw new EmpreinteInconnue("Erreur: l'utilisateur est reconnu, mais pas son empreinte.");
         }

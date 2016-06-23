@@ -1,2 +1,28 @@
 06-23 12:51:36 jdbc[2]: exception
 org.h2.jdbc.JdbcSQLException: No data is available [2000-147]
+06-23 16:18:44 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Column "PREUSR" not found; SQL statement:
+SELECT matricule, nomUrs, preUsr FROM utilisateur WHERE photoUsr='jf.jpg' [42122-147]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:126)
+	at org.h2.command.dml.Select.prepare(Select.java:773)
+	at org.h2.command.Parser.prepare(Parser.java:202)
+	at org.h2.command.Parser.prepareCommand(Parser.java:214)
+	at org.h2.engine.Session.prepareLocal(Session.java:425)
+	at org.h2.engine.Session.prepareCommand(Session.java:374)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1056)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:71)
+	at Authentification.ServiceAuthentificationImpl.lancerInterrogation(ServiceAuthentificationImpl.java:92)
+	at Authentification.ServiceAuthentificationImpl.verifierAuthentificationPorte(ServiceAuthentificationImpl.java:180)
+	at modEntreesSortiesZones.ServiceAuthentificationPOA._invoke_verifierAuthentificationPorte(ServiceAuthentificationPOA.java:89)
+	at modEntreesSortiesZones.ServiceAuthentificationPOA.access$1500(ServiceAuthentificationPOA.java:8)
+	at modEntreesSortiesZones.ServiceAuthentificationPOA$Operation_verifierAuthentificationPorte.invoke(ServiceAuthentificationPOA.java:404)
+	at modEntreesSortiesZones.ServiceAuthentificationPOA._invoke(ServiceAuthentificationPOA.java:75)
+	at org.openorb.adapter.poa.POA.dispatch(Unknown Source)
+	at org.openorb.net.AbstractServerRequest.dispatch(Unknown Source)
+	at org.openorb.net.ServerManagerImpl.serve_request(Unknown Source)
+	at org.openorb.net.ServerManagerImpl.thread_pool_main(Unknown Source)
+	at org.openorb.net.ServerManagerImpl.access$200(Unknown Source)
+	at org.openorb.net.ServerManagerImpl$PoolThread.run(Unknown Source)
