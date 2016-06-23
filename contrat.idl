@@ -12,10 +12,8 @@ module modEntreesSortiesZones
 	typedef string nomZone;
 	typedef string JourDebut;
 	typedef string JourFin;
-	typedef long HeureDebut;
-	typedef string HeureDebutString;
-	typedef long HeureFin;
-	typedef string HeureFinString;
+	typedef string HeureDebut;
+	typedef string HeureFin;
 	typedef string dateLog;
 	typedef long IdPorte;
 	enum TypeAcces {autorise, nonAutorise, nonAuthentifie}; 
@@ -45,14 +43,16 @@ module modEntreesSortiesZones
 	{
 		Matricule matricule;
 		nomZone nomZone;
-		HeureDebutString hrDebut;
-		HeureFinString hrFin;
+		HeureDebut hrDebut;
+		HeureFin hrFin;
 	};
 	
 	struct AutorisationTemp
 	{
 		Matricule matricule;
 		nomZone nomZone;
+		HeureDebut hrDebut;
+		HeureFin hrFin;
 		JourDebut jourDebut;
 		JourFin jourFin;
 	};
@@ -131,13 +131,14 @@ module modEntreesSortiesZones
 		boolean verifierAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue); 
 		
 		//Autorisations temporaires :
-		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante);
-		void modifierAutorisationTemp(in Matricule matricule, in idZone idZone, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationInconnue);
+		void ajouterAutorisationTemp(in Matricule matricule, in idZone idZone,in HeureDebut hrDebut, in HeureFin hrFin, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationExistante,UtilisateurInconnu);
+		void modifierAutorisationTemp(in Matricule matricule, in idZone idZone,in HeureDebut hrDebut, in HeureFin hrFin, in JourDebut jrDebut, in JourFin jrFin) raises (AutorisationInconnue);
+		void supprimerAutorisationTemp(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
 		
 		//Autorisations permanentes :
-		void ajouterAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationExistante); 
+		void ajouterAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationExistante,UtilisateurInconnu); 
 		void modifierAutorisationPerm(in Matricule matricule, in idZone idZone, in HeureDebut hrDebut, in HeureFin hrFin) raises (AutorisationInconnue); 
-		void supprimerAutorisation(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
+		void supprimerAutorisationPerm(in Matricule matricule, in idZone idZone) raises (AutorisationInconnue);
 		
 		//retourne l'idZone en fonction d'un id de porte
 		idZone getIdZoneFromPorte(in IdPorte idPorte);

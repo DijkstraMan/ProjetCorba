@@ -44,6 +44,12 @@ public class AutorisationPermModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     
+    public void delete(int row)
+    {
+        rowData.remove(getAutoPermAt(row));
+        fireTableDataChanged();
+    }
+    
     public void majAffichage(AutorisationPerm auto) {
         int nbUsr = rowData.size();
         boolean trouve = false;
@@ -75,13 +81,13 @@ public class AutorisationPermModel extends AbstractTableModel {
         return COLUMN_NAMES[column];
     }
 
-    public AutorisationPerm getUserAt(int row) {
+    public AutorisationPerm getAutoPermAt(int row) {
         return rowData.get(row);
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        AutorisationPerm usr = getUserAt(rowIndex);
+        AutorisationPerm usr = getAutoPermAt(rowIndex);
         Object value = null;
         switch (columnIndex) {
             case 0:

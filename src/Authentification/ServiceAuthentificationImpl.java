@@ -49,9 +49,9 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     private NamingContext nameRoot;
     private final String nomObj;
     private final JTextArea areaTextEvent;
-    private static Connection conn = null;
-    private static ServiceEmpreinte monServEmp;
-    private static ServiceJournalisation monServJour;
+    private Connection conn = null;
+    private ServiceEmpreinte monServEmp;
+    private ServiceJournalisation monServJour;
     
     public ServiceAuthentificationImpl(JTextArea a) {
         nomObj="SAUTH";
@@ -217,10 +217,10 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                     lancerVerifierEmpreinte(empCollab, matricule);
                 }
                 else {
-                    SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date now = new Date();
-                    String dateAccesStr = formatSQL.format(now);
-                    lancerAjouterEntree(matricule, zone, dateAccesStr, TypeAcces.nonAuthentifie );
+                    SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    /*Date now = new Date();
+                    String dateAccesStr = formatSQL.format(now);*/
+                    lancerAjouterEntree(matricule, zone, formatSQL.toString(), TypeAcces.nonAuthentifie );
                     //Exception à catcher côté client scanneur d'empreinte :
                     throw new UtilisateurInconnu("Erreur: l'utilisateur n'existe pas dans nos bases de données.");
                 }    

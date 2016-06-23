@@ -22,7 +22,9 @@ public class AutorisationTempModel extends AbstractTableModel {
         "Matricule",
         "Nom de la zone",
         "Heure de début",
-        "Heure de fin"
+        "Heure de fin",
+        "Date de début",
+        "Date de fin"
     };
 
     private List<AutorisationTemp> rowData;
@@ -44,6 +46,12 @@ public class AutorisationTempModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     
+    public void delete(int row)
+    {
+        rowData.remove(getAutoTempAt(row));
+        fireTableDataChanged();
+    }
+    
     public void majAffichage(AutorisationTemp auto) {
         int nbUsr = rowData.size();
         boolean trouve = false;
@@ -52,6 +60,8 @@ public class AutorisationTempModel extends AbstractTableModel {
             usrTemp = rowData.get(i);
             if(usrTemp.matricule.equals(auto.matricule)){
                 usrTemp.nomZone = auto.nomZone;
+                usrTemp.hrDebut = auto.hrDebut;
+                usrTemp.hrFin = auto.hrFin;
                 usrTemp.jourDebut = auto.jourDebut;
                 usrTemp.jourFin = auto.jourFin;
                 trouve = true;
@@ -75,13 +85,13 @@ public class AutorisationTempModel extends AbstractTableModel {
         return COLUMN_NAMES[column];
     }
 
-    public AutorisationTemp getUserAt(int row) {
+    public AutorisationTemp getAutoTempAt(int row) {
         return rowData.get(row);
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        AutorisationTemp usr = getUserAt(rowIndex);
+        AutorisationTemp usr = getAutoTempAt(rowIndex);
         Object value = null;
         switch (columnIndex) {
             case 0:
@@ -91,9 +101,15 @@ public class AutorisationTempModel extends AbstractTableModel {
                 value = usr.nomZone;
                 break;
             case 2:
-                value = usr.jourDebut;
+                value = usr.hrDebut;
                 break;
             case 3:
+                value = usr.hrFin;
+                break;
+            case 4:
+                value = usr.jourDebut;
+                break;
+            case 5:
                 value = usr.jourFin;
                 break;
         }

@@ -83,10 +83,10 @@ public class AutorisationPermHelper
                 _members[1].type = modEntreesSortiesZones.nomZoneHelper.type();
                 _members[2] = new org.omg.CORBA.StructMember();
                 _members[2].name = "hrDebut";
-                _members[2].type = modEntreesSortiesZones.HeureDebutStringHelper.type();
+                _members[2].type = modEntreesSortiesZones.HeureDebutHelper.type();
                 _members[3] = new org.omg.CORBA.StructMember();
                 _members[3].name = "hrFin";
-                _members[3].type = modEntreesSortiesZones.HeureFinStringHelper.type();
+                _members[3].type = modEntreesSortiesZones.HeureFinHelper.type();
                 _tc = orb.create_struct_tc(id(),"AutorisationPerm",_members);
                 _working = false;
             }
@@ -116,8 +116,8 @@ public class AutorisationPermHelper
 
         new_one.matricule = modEntreesSortiesZones.MatriculeHelper.read(istream);
         new_one.nomZone = modEntreesSortiesZones.nomZoneHelper.read(istream);
-        new_one.hrDebut = modEntreesSortiesZones.HeureDebutStringHelper.read(istream);
-        new_one.hrFin = modEntreesSortiesZones.HeureFinStringHelper.read(istream);
+        new_one.hrDebut = modEntreesSortiesZones.HeureDebutHelper.read(istream);
+        new_one.hrFin = modEntreesSortiesZones.HeureFinHelper.read(istream);
 
         return new_one;
     }
@@ -131,8 +131,8 @@ public class AutorisationPermHelper
     {
         modEntreesSortiesZones.MatriculeHelper.write(ostream,value.matricule);
         modEntreesSortiesZones.nomZoneHelper.write(ostream,value.nomZone);
-        modEntreesSortiesZones.HeureDebutStringHelper.write(ostream,value.hrDebut);
-        modEntreesSortiesZones.HeureFinStringHelper.write(ostream,value.hrFin);
+        modEntreesSortiesZones.HeureDebutHelper.write(ostream,value.hrDebut);
+        modEntreesSortiesZones.HeureFinHelper.write(ostream,value.hrFin);
     }
 
 }

@@ -6,8 +6,6 @@
 package ResponsableZone;
 
 import Util.ComboItem;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modEntreesSortiesZones.ServiceAuthentification;
@@ -73,7 +71,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTMatricule.setText("mRZ");
+        jTMatricule.setText("RZ001");
         jTMatricule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTMatriculeActionPerformed(evt);
@@ -91,7 +89,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
 
         jLabel2.setText("Mot de passe");
 
-        jMdp.setText("mdpRZ");
+        jMdp.setText("mdpRZ001");
 
         jLabel3.setText("Nom de la zone");
 
@@ -141,7 +139,7 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
     private void btnValidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidActionPerformed
 
         try {
-            connexionServAuto(jTMatricule.getText(),new String(jMdp.getPassword()),((ComboItem)jSelectZone.getSelectedItem()).getValue());
+            connexionServAuto(jTMatricule.getText(),new String(jMdp.getPassword()),((ComboItem)jSelectZone.getSelectedItem()).getValue(),((ComboItem)jSelectZone.getSelectedItem()).getLabel());
         } catch (UtilisateurInconnu ex) {
             JOptionPane.showMessageDialog(this,
                 ex.raison,
@@ -150,13 +148,13 @@ public class FenConnexionRespZone extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnValidActionPerformed
     
-    public void connexionServAuto(String matricule, String mdp, int idZone) throws UtilisateurInconnu
+    public void connexionServAuto(String matricule, String mdp, int idZone, String nomZone) throws UtilisateurInconnu
     {
         org.omg.CORBA.Object distantServAuth=connexionCorba(nomCorbaServAuthentification);
         ServiceAuthentification servAuth= ServiceAuthentificationHelper.narrow(distantServAuth);
         if(servAuth.verifierAuthentificationLogicielResp(matricule,mdp,idZone))
         {
-            FenGestionRespZone fenGest = new FenGestionRespZone(servAuto,idZone);
+            FenGestionRespZone fenGest = new FenGestionRespZone(servAuto,idZone,nomZone);
             this.setVisible(false);
             fenGest.setVisible(true);
             fenGest.setLocationRelativeTo(null);

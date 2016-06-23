@@ -135,8 +135,8 @@ create table autorisationPerm
 (
 	matricule_utilisateur varchar(50) NOT NULL,
 	idZone_zone integer(5) NOT NULL,
-	heureDebut int(4),
-	heureFin int(4),
+	heureDebut TIME,
+	heureFin TIME,
 	PRIMARY KEY(matricule_utilisateur,idZone_zone),
 	CONSTRAINT fk_autorisation_idZone_zone FOREIGN KEY (idZone_zone) REFERENCES gzone(idZone)
 );
@@ -145,8 +145,10 @@ create table autorisationTemp
 (
 	matricule_utilisateur varchar(50) NOT NULL,
 	idZone_zone integer(5) NOT NULL,
-	jourDebut datetime,
-	jourFin datetime,
+	heureDebut TIME,
+	heureFin TIME,
+	jourDebut date,
+	jourFin date,
 	PRIMARY KEY(matricule_utilisateur,idZone_zone)
 );
 

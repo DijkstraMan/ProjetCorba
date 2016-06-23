@@ -74,26 +74,35 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation ajouterAutorisationTemp
      */
-    public void ajouterAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
-        throws modEntreesSortiesZones.AutorisationExistante
+    public void ajouterAutorisationTemp(String matricule, int idZone, String hrDebut, String hrFin, String jrDebut, String jrFin)
+        throws modEntreesSortiesZones.AutorisationExistante, modEntreesSortiesZones.UtilisateurInconnu
     {
-        _tie.ajouterAutorisationTemp( matricule,  idZone,  jrDebut,  jrFin);
+        _tie.ajouterAutorisationTemp( matricule,  idZone,  hrDebut,  hrFin,  jrDebut,  jrFin);
     }
 
     /**
      * Operation modifierAutorisationTemp
      */
-    public void modifierAutorisationTemp(String matricule, int idZone, String jrDebut, String jrFin)
+    public void modifierAutorisationTemp(String matricule, int idZone, String hrDebut, String hrFin, String jrDebut, String jrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
-        _tie.modifierAutorisationTemp( matricule,  idZone,  jrDebut,  jrFin);
+        _tie.modifierAutorisationTemp( matricule,  idZone,  hrDebut,  hrFin,  jrDebut,  jrFin);
+    }
+
+    /**
+     * Operation supprimerAutorisationTemp
+     */
+    public void supprimerAutorisationTemp(String matricule, int idZone)
+        throws modEntreesSortiesZones.AutorisationInconnue
+    {
+        _tie.supprimerAutorisationTemp( matricule,  idZone);
     }
 
     /**
      * Operation ajouterAutorisationPerm
      */
-    public void ajouterAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
-        throws modEntreesSortiesZones.AutorisationExistante
+    public void ajouterAutorisationPerm(String matricule, int idZone, String hrDebut, String hrFin)
+        throws modEntreesSortiesZones.AutorisationExistante, modEntreesSortiesZones.UtilisateurInconnu
     {
         _tie.ajouterAutorisationPerm( matricule,  idZone,  hrDebut,  hrFin);
     }
@@ -101,19 +110,19 @@ public class ServiceAutorisationPOATie extends ServiceAutorisationPOA
     /**
      * Operation modifierAutorisationPerm
      */
-    public void modifierAutorisationPerm(String matricule, int idZone, int hrDebut, int hrFin)
+    public void modifierAutorisationPerm(String matricule, int idZone, String hrDebut, String hrFin)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
         _tie.modifierAutorisationPerm( matricule,  idZone,  hrDebut,  hrFin);
     }
 
     /**
-     * Operation supprimerAutorisation
+     * Operation supprimerAutorisationPerm
      */
-    public void supprimerAutorisation(String matricule, int idZone)
+    public void supprimerAutorisationPerm(String matricule, int idZone)
         throws modEntreesSortiesZones.AutorisationInconnue
     {
-        _tie.supprimerAutorisation( matricule,  idZone);
+        _tie.supprimerAutorisationPerm( matricule,  idZone);
     }
 
     /**

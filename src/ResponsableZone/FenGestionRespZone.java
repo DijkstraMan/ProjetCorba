@@ -23,6 +23,7 @@ import modEntreesSortiesZones.AutorisationInconnue;
 import modEntreesSortiesZones.AutorisationPerm;
 import modEntreesSortiesZones.AutorisationTemp;
 import modEntreesSortiesZones.ServiceAutorisation;
+import modEntreesSortiesZones.UtilisateurInconnu;
 
 /**
  *
@@ -31,6 +32,7 @@ import modEntreesSortiesZones.ServiceAutorisation;
 public class FenGestionRespZone extends javax.swing.JFrame {
     private final ServiceAutorisation monServAuto;
     private final int idZone;
+    private final String nomZone;
     /**
      * Creates new form FenGestion
      * @param servAuto
@@ -41,10 +43,11 @@ public class FenGestionRespZone extends javax.swing.JFrame {
      * @param servAuto
      * @param idZ
      */
-    public FenGestionRespZone(ServiceAutorisation servAuto, int idZ) {
+    public FenGestionRespZone(ServiceAutorisation servAuto, int idZ, String pNomZ) {
         initComponents();
         monServAuto = servAuto;
         idZone =idZ;
+        nomZone=pNomZ;
         //Récupération des autorisation
         AutorisationPerm[] lesAutorisationPerm = monServAuto.getAutorisationPerm();
         AutorisationTemp[] lesAutorisationTemp = monServAuto.getAutorisationTemp();
@@ -60,6 +63,7 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         TableRowSorter<AutorisationTempModel> sorterTemp = new TableRowSorter<>(modelAutorisationTemp);
         jTableTemp.setRowSorter(sorterTemp);
         jButtonModifier.setEnabled(false);
+        jButtonSupprimer.setEnabled(false);
         
         setLocationRelativeTo(null);
     }
@@ -102,6 +106,19 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         jButtonModifier = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jLabelModif = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jButtonSupprimer = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jMatSuppr = new javax.swing.JLabel();
+        jHrsDebutSuppr = new javax.swing.JLabel();
+        jHrsFinSuppr = new javax.swing.JLabel();
+        jDateDebutSuppr = new javax.swing.JLabel();
+        jDateFinSuppr = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableTemp = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -308,6 +325,89 @@ public class FenGestionRespZone extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Modifier autorisation", jpanel);
 
+        jButtonSupprimer.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButtonSupprimer.setText("Supprimer");
+        jButtonSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSupprimerActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel21.setText("Supprimer une autorisation");
+
+        jLabel22.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
+        jLabel22.setText("Matricule : ");
+
+        jLabel23.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
+        jLabel23.setText("Heure début");
+
+        jLabel24.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
+        jLabel24.setText("Heure fin");
+
+        jLabel25.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
+        jLabel25.setText("Date début");
+
+        jLabel26.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
+        jLabel26.setText("Date fin");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel23)
+                            .addComponent(jLabel24)
+                            .addComponent(jLabel25))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonSupprimer, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(jMatSuppr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jHrsDebutSuppr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jHrsFinSuppr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDateDebutSuppr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDateFinSuppr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel21))
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel21)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(jMatSuppr))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jHrsDebutSuppr))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jHrsFinSuppr))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(jDateDebutSuppr))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(jDateFinSuppr))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Supprimer autorisation", jPanel2);
+
         jTableTemp.setFont(new java.awt.Font("Roboto Light", 0, 11)); // NOI18N
         jTableTemp.setToolTipText("");
         jTableTemp.setFillsViewportHeight(true);
@@ -390,14 +490,24 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         if ( row != -1) {
             try {
                 AutorisationTempModel modelTemp = (AutorisationTempModel) table.getModel();
-                AutorisationTemp autTemp = modelTemp.getUserAt(row);
-                //Remplissage des champs de modification d'un collab :
+                AutorisationTemp autTemp = modelTemp.getAutoTempAt(row);
+                //Remplissage des champs de modification d'une autorisation :
                 jLabelModif.setText(autTemp.matricule);
-                jHrsDebutModif.setText(getHeureFromDate(autTemp.jourDebut));
-                jHrsFinModif.setText(getHeureFromDate(autTemp.jourFin));
+                jHrsDebutModif.setText(autTemp.hrDebut);
+                jHrsFinModif.setText(autTemp.hrFin);
                 jDateDebutModif.setDate(getJourFromDate(autTemp.jourDebut));
                 jDateFinModif.setDate(getJourFromDate(autTemp.jourFin));
+                
+                //Remplissage des champs de suppression d'une autorisation :
+                jMatSuppr.setText(autTemp.matricule);
+                jHrsDebutSuppr.setText(autTemp.hrDebut);
+                jHrsFinSuppr.setText(autTemp.hrFin);
+                jDateDebutSuppr.setText(autTemp.jourDebut);
+                jDateFinSuppr.setText(autTemp.jourFin);
+                
                 jButtonModifier.setEnabled(true);
+                jButtonSupprimer.setEnabled(true);
+                
                 jDateDebutModif.setEnabled(true);
                 jDateFinModif.setEnabled(true);
             } catch (ParseException ex) {
@@ -406,55 +516,46 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableTempMouseClicked
     
-    public String getHeureFromDate(String date) throws ParseException
-    {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-        DateFormat formatHeure = new SimpleDateFormat("HH:mm");
-        return formatHeure.format(formatFR.parse(date));
-    }
+
     
     public Date getJourFromDate(String date) throws ParseException
     {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");
         Calendar cal = Calendar.getInstance();
         cal.setTime(formatFR.parse(date));
         return cal.getTime();
     }
     
-    private String setDateFormatFR(Date date, int hrs, int min)
+    private String setDateFormatFR(Date date)
     {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy HH:mm");         
+        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");         
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY,hrs);
-        cal.set(Calendar.MINUTE,min);
-        cal.set(Calendar.SECOND,0);
-        cal.set(Calendar.MILLISECOND,0);
         return formatFR.format(cal.getTime());
     }
     
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         try{
             String matricule = jTextFieldMatriculeAjout.getText();
-            String[] tabHrsDebut=jHrsDebut.getText().split(":");
-            String[] tabHrsFin=jHrsFin.getText().split(":");
+            String heureDebut=jHrsDebut.getText();
+            String heureFin=jHrsFin.getText();
              
             //ajout d'une autorisation temporaire
             if(jDateDebut.getDate()!=null && jDateFin.getDate()!=null)
             {
-                String dateDebut = setDateFormatFR(jDateDebut.getDate(), Integer.parseInt(tabHrsDebut[0]), Integer.parseInt(tabHrsDebut[1]));
-                String dateFin = setDateFormatFR(jDateFin.getDate(), Integer.parseInt(tabHrsFin[0]), Integer.parseInt(tabHrsFin[1]));
-                monServAuto.ajouterAutorisationTemp(matricule, idZone, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone), dateDebut, dateFin);
+                
+                String dateDebut = setDateFormatFR(jDateDebut.getDate());
+                String dateFin = setDateFormatFR(jDateFin.getDate());
+                monServAuto.ajouterAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut,heureFin, dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.add(newAuto);
             }
             else //ajout d'une autorisation permanente
             {
-                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
-                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
-                monServAuto.ajouterAutorisationPerm(matricule, idZone, hrsDebut, hrsFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebut.getText(), jHrsFin.getText());
+
+                monServAuto.ajouterAutorisationPerm(matricule, idZone, heureDebut, heureFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut, heureFin);
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.add(newAuto);
                 
@@ -464,8 +565,13 @@ public class FenGestionRespZone extends javax.swing.JFrame {
                 "Veuillez renseigner les champs d'heures",
                 "Erreur",
                 JOptionPane.ERROR_MESSAGE);
-        } catch (AutorisationExistante ex) {
+        } catch (AutorisationExistante  ex) {
              JOptionPane.showMessageDialog(this,
+                ex.raison,
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
+        } catch (UtilisateurInconnu ex) {
+            JOptionPane.showMessageDialog(this,
                 ex.raison,
                 "Erreur",
                 JOptionPane.ERROR_MESSAGE);
@@ -478,14 +584,25 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         int row = table.rowAtPoint(p);
         if ( row != -1) {
             AutorisationPermModel modelPerm = (AutorisationPermModel) table.getModel();
-            AutorisationPerm autPerm = modelPerm.getUserAt(row);
+            AutorisationPerm autPerm = modelPerm.getAutoPermAt(row);
+            //Remplissage des champs de modification d'une autorisation :
             jLabelModif.setText(autPerm.matricule);
             jHrsDebutModif.setText(autPerm.hrDebut);
             jHrsFinModif.setText(autPerm.hrFin);
             
+            //Remplissage des champs de suppression d'une autorisation :
+            jMatSuppr.setText(autPerm.matricule);
+            jHrsDebutSuppr.setText(autPerm.hrDebut);
+            jHrsFinSuppr.setText(autPerm.hrFin);
+
             jButtonModifier.setEnabled(true);
+            jButtonSupprimer.setEnabled(true);
+            
             jDateDebutModif.setDate(null);
             jDateFinModif.setDate(null);
+            jDateDebutSuppr.setText("");
+            jDateFinSuppr.setText("");
+            
             jDateDebutModif.setEnabled(false);
             jDateFinModif.setEnabled(false);
         }
@@ -494,25 +611,23 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
         try{
             String matricule = jLabelModif.getText();
-            String[] tabHrsDebut=jHrsDebutModif.getText().split(":");
-            String[] tabHrsFin=jHrsFinModif.getText().split(":");
+            String heureDebut=jHrsDebutModif.getText();
+            String heureFin=jHrsFinModif.getText();
              
             //modif d'une autorisation temporaire
             if(jDateDebutModif.getDate()!=null && jDateFinModif.getDate()!=null)
             {
-                String dateDebut = setDateFormatFR(jDateDebutModif.getDate(), Integer.parseInt(tabHrsDebut[0]), Integer.parseInt(tabHrsDebut[1]));
-                String dateFin = setDateFormatFR(jDateFinModif.getDate(), Integer.parseInt(tabHrsFin[0]), Integer.parseInt(tabHrsFin[1]));
-                monServAuto.modifierAutorisationTemp(matricule, idZone, dateDebut, dateFin);
-                AutorisationTemp newAuto = new AutorisationTemp(matricule, Integer.toString(idZone), dateDebut, dateFin);
+                String dateDebut = setDateFormatFR(jDateDebutModif.getDate());
+                String dateFin = setDateFormatFR(jDateFinModif.getDate());
+                monServAuto.modifierAutorisationTemp(matricule, idZone,heureDebut,heureFin, dateDebut, dateFin);
+                AutorisationTemp newAuto = new AutorisationTemp(matricule, nomZone,heureDebut,heureFin, dateDebut, dateFin);
                 AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
                 modelAutoTemp.majAffichage(newAuto);
             }
             else //modif d'une autorisation permanente
             {
-                int hrsDebut=Integer.parseInt(tabHrsDebut[0]+tabHrsDebut[1]);
-                int hrsFin=Integer.parseInt(tabHrsFin[0]+tabHrsFin[1]);
-                monServAuto.modifierAutorisationPerm(matricule, idZone, hrsDebut, hrsFin);
-                AutorisationPerm newAuto = new AutorisationPerm(matricule, Integer.toString(idZone), jHrsDebutModif.getText(), jHrsFinModif.getText());
+                monServAuto.modifierAutorisationPerm(matricule, idZone, heureDebut, heureFin);
+                AutorisationPerm newAuto = new AutorisationPerm(matricule, nomZone, heureDebut, heureFin);
                 AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
                 modelAutoPerm.majAffichage(newAuto);
             }
@@ -530,18 +645,62 @@ public class FenGestionRespZone extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
+    private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
+        try {
+            String matricule = jMatSuppr.getText();
+            //autorisationTemp
+            if(!jDateDebutSuppr.getText().isEmpty())
+            {
+                monServAuto.supprimerAutorisationTemp(matricule, idZone);
+                AutorisationTempModel modelAutoTemp =  (AutorisationTempModel) jTableTemp.getModel();
+                modelAutoTemp.delete(jTableTemp.getSelectedRow());
+            }
+            else //autorisationPerm
+            {
+                monServAuto.supprimerAutorisationPerm(matricule, idZone);
+                AutorisationPermModel modelAutoPerm =  (AutorisationPermModel) jTablePerm.getModel();
+                modelAutoPerm.delete(jTablePerm.getSelectedRow());
+            }
+            //vidage des champs de modification d'une autorisation :
+            jLabelModif.setText("");
+            jHrsDebutModif.setText("");
+            jHrsFinModif.setText("");
+            jDateDebutModif.setDate(null);
+            jDateFinModif.setDate(null);
+
+            //vidage des champs de suppression d'une autorisation :
+            jMatSuppr.setText("");
+            jHrsDebutSuppr.setText("");
+            jHrsFinSuppr.setText("");
+            jDateDebutSuppr.setText("");
+            jDateFinSuppr.setText("");
+            
+        } catch (AutorisationInconnue ex) {
+            JOptionPane.showMessageDialog(this,
+                ex.raison,
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonSupprimerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonModifier;
+    private javax.swing.JButton jButtonSupprimer;
     private org.jdesktop.swingx.JXDatePicker jDateDebut;
     private org.jdesktop.swingx.JXDatePicker jDateDebutModif;
+    private javax.swing.JLabel jDateDebutSuppr;
     private org.jdesktop.swingx.JXDatePicker jDateFin;
     private org.jdesktop.swingx.JXDatePicker jDateFinModif;
+    private javax.swing.JLabel jDateFinSuppr;
     private javax.swing.JFormattedTextField jHrsDebut;
     private javax.swing.JFormattedTextField jHrsDebutModif;
+    private javax.swing.JLabel jHrsDebutSuppr;
     private javax.swing.JFormattedTextField jHrsFin;
     private javax.swing.JFormattedTextField jHrsFinModif;
+    private javax.swing.JLabel jHrsFinSuppr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -554,11 +713,19 @@ public class FenGestionRespZone extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelModif;
+    private javax.swing.JLabel jMatSuppr;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
