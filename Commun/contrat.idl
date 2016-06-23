@@ -73,9 +73,9 @@ module modEntreesSortiesZones
 	
 	typedef sequence<Zone> lesZones;
 	typedef sequence<Utilisateur> lesUtilisateurs;
-    typedef sequence<LogAcces> logsAcces;
-    typedef sequence<AutorisationPerm> lesAutorisationsPerm;
-    typedef sequence<AutorisationTemp> lesAutorisationsTemp;
+        typedef sequence<LogAcces> logsAcces;
+        typedef sequence<AutorisationPerm> lesAutorisationsPerm;
+        typedef sequence<AutorisationTemp> lesAutorisationsTemp;
 	
 	interface ServiceAuthentification
 	{	
@@ -95,14 +95,12 @@ module modEntreesSortiesZones
 		void ajouterCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurExistant);
 		void modifierCollaborateurTemp(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
 		boolean verifierMatriculeTemp(in Matricule matricule) raises (UtilisateurInconnu);
-        //verif de connexion pour la machine empreinte :
-		boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(in Matricule matricule) raises (UtilisateurInconnu);
 		
 		//Utilisateurs permanents :
 		void ajouterCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr, in PasswordPerm pwd) raises (UtilisateurExistant);
 		void modifierCollaborateurPerm(in Matricule matricule, in NomUsr nomUsr, in PrenomUsr preUsr, in PhotoUsr phoUsr) raises (UtilisateurInconnu);
 		boolean verifierMatriculePerm(in Matricule matricule) raises (UtilisateurInconnu);
-        //verif de connexion pour la machine empreinte :
+                //verif de connexion pour la machine empreinte :
 		boolean verifierAuthentificationMachineEmpreinteCollaborateurPerm(in Matricule matricule, in PasswordPerm pwd) raises (UtilisateurInconnu);
 		
 		//recuperer utilisateurs pour listes

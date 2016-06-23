@@ -50,12 +50,6 @@ public interface ServiceAuthentificationOperations
         throws modEntreesSortiesZones.UtilisateurInconnu;
 
     /**
-     * Operation verifierAuthentificationMachineEmpreinteCollaborateurTemp
-     */
-    public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule)
-        throws modEntreesSortiesZones.UtilisateurInconnu;
-
-    /**
      * Operation ajouterCollaborateurPerm
      */
     public void ajouterCollaborateurPerm(String matricule, String nomUsr, String preUsr, String phoUsr, String pwd)

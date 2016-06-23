@@ -214,7 +214,7 @@ public class FenConnexionCollab extends javax.swing.JFrame {
         //On vérifie d'abord si le champ de saisie n'est pas vide
         if (lMatCollabTemp != null && lMatCollabTemp.length() > 0) {
             try {
-                if (mServAuth.verifierAuthentificationMachineEmpreinteCollaborateurTemp(lMatCollabTemp)) {
+                if (mServAuth.verifierMatriculeTemp(lMatCollabTemp)) {
                     if (mServEmp.verifierEmpreinteTempExistante(lMatCollabTemp)) {
                         //Le collaborateur ne peut rien faire s'il a déjà ajouté son empreinte
                         JOptionPane.showMessageDialog(this,

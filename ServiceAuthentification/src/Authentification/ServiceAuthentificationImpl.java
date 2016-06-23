@@ -317,30 +317,6 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
     }
 
     @Override
-    public boolean verifierAuthentificationMachineEmpreinteCollaborateurTemp(String matricule) throws UtilisateurInconnu {
-        String query = "SELECT COUNT(*) AS rowcount FROM collaborateurTemp "
-                + "WHERE matricule_utilisateur = '" + matricule + "'";
-        int rowcount;
-        ResultSet rs;
-        boolean res = false;
-        try {
-            connexion("Temp");
-            rs = lancerInterrogation(query);
-            rs.next();
-            rowcount = rs.getInt("rowcount");
-            if (rowcount > 0) {
-                res = true;
-            } else {
-                throw new UtilisateurInconnu("Erreur: collaborateur temporaire inconnu.");
-            }
-            closeConnexion();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return res;
-    }
-
-    @Override
     public boolean verifierAuthentificationMachineEmpreinteCollaborateurPerm(String matricule, String pwd) throws UtilisateurInconnu {
         String query = "SELECT COUNT(*) AS rowcount FROM collaborateurPerm "
                 + "WHERE matricule_utilisateur = '" + matricule + "' "
@@ -364,7 +340,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         }
         return res;
     }
-
+    
     @Override
     public boolean verifierMatriculeTemp(String matricule) throws UtilisateurInconnu {
         String query = "SELECT COUNT(*) AS rowcount FROM collaborateurTemp "
