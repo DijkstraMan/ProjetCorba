@@ -400,7 +400,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
             rs = lancerInterrogation(query);
             while (rs.next()) {
                 //formattage des dates format FR
-                DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");
+                DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");
                 DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd");
                 String dateDebut = formatFR.format(formatSQL.parse(rs.getString("jourDebut")));
                 String dateFin = formatFR.format(formatSQL.parse(rs.getString("jourFin")));
