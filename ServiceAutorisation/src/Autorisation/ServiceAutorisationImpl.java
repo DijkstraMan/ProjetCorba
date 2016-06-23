@@ -15,7 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,7 +103,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     private boolean verifierAutorisationPerm(String matricule, int idZone) throws ClassNotFoundException, SQLException {
         boolean res = false;
 
-        String heureFormat = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        String heureFormat = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         
         String query = "SELECT COUNT(*) AS rowcount FROM autorisationPerm "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
@@ -126,8 +126,8 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
 
         boolean res = false;
 
-        String dateFormat = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        String heureFormat = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        String dateFormat = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String heureFormat = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 
         String query = "SELECT COUNT(*) AS rowcount FROM autorisationTemp "
                 + "WHERE matricule_utilisateur='" + matricule + "' "
@@ -157,7 +157,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
     @Override
     public boolean verifierAutorisation(String matricule, int idZone) throws AutorisationInconnue {
         boolean res = false;
-        String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         areaTextEvent.setText(areaTextEvent.getText() + "Demande d'autorisation " + matricule + " zone " + idZone + "\n");
         try {
             connexion();

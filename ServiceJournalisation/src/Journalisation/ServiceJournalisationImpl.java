@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -117,7 +118,8 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, rs.getDate("dateAcces").toString(), TypeAccesFromString.parse(rs.getString("acces"))));           
+                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
             }
             closeConnexion();
             LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
@@ -144,7 +146,8 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), rs.getDate("dateAcces").toString(), TypeAccesFromString.parse(rs.getString("acces"))));           
+                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
             }
             closeConnexion();
             LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
@@ -173,7 +176,8 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, rs.getDate("dateAcces").toString(), TypeAccesFromString.parse(rs.getString("acces"))));           
+                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), idZone, formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
             }
             closeConnexion();
             LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];
@@ -201,7 +205,8 @@ public class ServiceJournalisationImpl extends ServiceJournalisationPOA implemen
             rs = lancerInterrogation(query);
             while(rs.next())
             {
-                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), rs.getDate("dateAcces").toString(), TypeAccesFromString.parse(rs.getString("acces"))));           
+                String formatFR = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(rs.getDate("dateAcces"));
+                tabLogAcces.add(new LogAcces(rs.getString("matricule_utilisateur"), rs.getInt("idZone_zone"), formatFR, TypeAccesFromString.parse(rs.getString("acces"))));           
             }
             closeConnexion();
             LogAcces[] lesLogAcces = new LogAcces[tabLogAcces.size()];

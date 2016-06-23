@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -203,7 +204,8 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
                     lancerVerifierEmpreinte(empCollab, matricule);
                 } else {
                     areaTextEvent.setText(areaTextEvent.getText() + "Collaborateur inconnu : enregistrement journal\n");
-                    String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                    
+                    String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
                     
                     lancerAjouterEntree("inconnu", zone, formatSQL, TypeAcces.nonAuthentifie);
                     //Exception à catcher côté client scanneur d'empreinte :
@@ -216,7 +218,7 @@ public class ServiceAuthentificationImpl extends ServiceAuthentificationPOA impl
         } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
             Logger.getLogger(ServiceAuthentificationImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (EmpreinteInconnue ex) {
-            String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
             try {
                 lancerAjouterEntree(usr.matricule, zone, formatSQL, TypeAcces.nonAuthentifie);
             } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex1) {
