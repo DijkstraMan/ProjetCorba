@@ -41,6 +41,6 @@ public class Fonction {
     public static NamingContext resolveNamingService(org.omg.CORBA.ORB orb) throws InvalidName
     {
         //return org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-        return org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@172.17.56.88:20017/NameService"));
+        return org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.43.47:20017/NameService"));
     }
 }
