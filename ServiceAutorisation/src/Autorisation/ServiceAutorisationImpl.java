@@ -216,11 +216,14 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
 
     @Override
     public void modifierAutorisationTemp(String matricule, int idZone, String hrDebut, String hrFin, String jrDebut, String jrFin) throws AutorisationInconnue {
-        DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");
+        System.out.println(jrDebut);
+        DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd");
         try {
             String dateDebut = formatSQL.format(formatFR.parse(jrDebut));
             String dateFin = formatSQL.format(formatFR.parse(jrFin));
+            System.out.println(formatFR.parse(jrDebut));
+            
             String query = "update autorisationTemp set heureDebut='" + hrDebut + ":00', heureFin='" + hrFin + ":00', jourDebut='" + dateDebut + "', jourFin='" + dateFin + "' where matricule_utilisateur='" + matricule + "' and idZone_zone ='" + idZone + "'";
             connexion();
             if (lancerManipulation(query)) {
