@@ -187,7 +187,7 @@ public class ServiceAutorisationImpl extends ServiceAutorisationPOA implements R
         try {
             ServiceAuthentification servAuth = getServiceAuthentification();
             if (servAuth.verifierMatriculeTemp(matricule)) {
-                DateFormat formatFR = new SimpleDateFormat("MM/dd/yyyy");
+                DateFormat formatFR = new SimpleDateFormat("dd/MM/yyyy");
                 DateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd");
 
                 String dateDebut = formatSQL.format(formatFR.parse(jrDebut));
